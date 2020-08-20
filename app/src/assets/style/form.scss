@@ -1,0 +1,22 @@
+.field {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  .icon {
+    line-height: 1;
+  }
+}
+
+.label {
+  &:not(:last-child) {
+    margin-bottom: 3px;
+  }
+}
+
+.button {
+  &.button-submit {
+    margin-top: 4rem;
+    width: 100%;
+  }
+}

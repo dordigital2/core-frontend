@@ -1,0 +1,147 @@
+////////////////////////////////////////////////////////////// COLOURS
+
+$white: #ffffff;
+$black: #252525;
+
+$grey-darker: #8898AA;
+$grey-dark: #C4C4C4;
+$grey: #E5E5E5;
+$grey-light: #ebebeb;
+$grey-lighter: #818181;
+
+$orange: #E3713C;
+$blue: #303C6C;
+$red: #B41F43;
+
+////////////////////////////////////////////////////////////// BULMA OVERWRITE
+$primary: $orange;
+$link: $primary;
+$link-hover: $black;
+$text: $black;
+
+$radius: 8px;
+$radius-small: 4px;
+
+$size-1: 4rem;      // 64px
+$size-2: 2rem;      // 32px
+$size-3: 1.5rem;    // 24px
+$size-4: 1.25rem;   // 20px
+$size-5: 1rem;      // 16px
+$size-6: 0.875rem;  // 14px
+$size-7: 0.75rem;   // 12px
+
+$block-spacing: 30px;
+$subtitle-negative-margin: -14px;
+
+
+// body
+$family-primary: 'Inter', sans-serif;
+$family-primary-bold: 'Inter', sans-serif;
+$family-primary-italic: 'Inter', sans-serif;
+$body-background-color: $grey;
+$body-color: $black;
+$body-line-height: 1.5;
+
+
+// navbar + footer
+$navbar-background-color: $blue;
+// $navbar-item-color: $white;
+$navbar-item-hover-background-color: transparent;
+$navbar-item-img-max-height: none;
+$navbar-height: 6rem;
+$footer-color: $grey-darker;
+$footer-background-color: $grey-dark;
+$footer-padding: 14px 0 32px;
+
+
+// columns
+$column-gap: 15px;
+
+
+// box & buttons
+$control-padding-vertical: 8px;
+$control-padding-horizontal: 8px;
+$control-radius: $radius-small;
+$control-height: 40px;
+$control-line-height: inherit;
+
+$input-shadow: none;
+$input-radius: $radius;
+$input-focus-box-shadow-size: 0;
+
+$input-color: $white;
+$input-background-color: $grey;
+$input-placeholder-color: $grey-lighter;
+$input-border-color: $grey-darker;
+$input-focus-border-color: $grey-darker;
+$border-hover: $grey-darker;
+
+$input-arrow: $grey-lighter;
+$input-disabled-color: $grey-darker;
+$input-disabled-background-color: $grey;
+$input-disabled-border-color: $grey !important;
+
+$label-weight: normal;
+$label-color: $grey-darker;
+
+$button-padding-horizontal: 28px;
+
+
+// modal
+$modal-background-background-color: rgba(0, 0, 0, 0.9);
+$modal-content-width: auto;
+$modal-card-title-color: inherit;
+$modal-card-title-size: $size-5;
+$modal-card-head-padding: 32px;
+$modal-card-head-background-color: $grey;
+$modal-card-head-border-bottom: none;
+$modal-card-body-padding: 24px 32px 32px;
+$modal-card-body-background-color: $grey;
+$modal-card-foot-border-top: none;
+
+// card
+$card-background-color: transparent;
+$card-color: inherit;
+$card-shadow: none;
+$card-header-shadow: none;
+$card-footer-border-top: none;
+$card-header-padding: 0 0 16px;
+$card-content-padding: 24px 0 0;
+$card-footer-padding: 0;
+
+// datepicker
+$dropdown-content-background-color: $primary;
+// $dropdown-content-radius: 0px;
+// $dropdown-content-shadow: none;
+
+// tabs
+$tabs-border-bottom-color: $black;
+$tabs-boxed-link-radius: 4px;
+$tabs-toggle-link-radius: 2px;
+$tabs-link-padding: 20px 18px;
+$tabs-link-active-color: $black;
+$tabs-border-bottom-width: 0;
+$tabs-boxed-link-active-border-color: transparent;
+$tabs-boxed-link-hover-border-bottom-color: transparent;
+$tabs-boxed-link-active-background-color: $grey;
+// table
+$table-row-active-background-color: $blue;
+$table-row-active-color: $white;
+$table-row-hover-background-color: $blue;
+$table-cell-padding: 11px 16px 10px;
+$table-head-background-color: $white;
+$table-background-color: #efefef;
+
+// box
+$box-radius: $radius;
+$box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+$box-padding: 16px;
+// $box-color: $white;
+
+// screen
+$desktop: 1080px;
+$widescreen: 1440px;
+$fullhd-disabled: true;
+
+// buefy vars
+@import '~bulma/sass/utilities/_all.sass';
