@@ -36,6 +36,12 @@ export default {
       username: '',
       password: ''
     }
+  },
+  mounted() {
+    document.body.classList.add('account-view')
+  },
+  destroyed() {
+    document.body.classList.remove('account-view')
   }
 }
 </script>

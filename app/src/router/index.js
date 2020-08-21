@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import TokenService from '../services/storage'
 
-import AppBase from '@/views/AppBase'
+import Base from '@/views/Base'
 import Page404 from '@/views/404'
 
 Vue.use(VueRouter)
@@ -59,13 +59,19 @@ const routes = [
   {
     path: '/app',
     name: 'app',
-    component: AppBase,
+    component: Base,
     children: [
       {
         path: 'dashboard',
         name: 'dashboard',
         component: () =>
           import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
+      },
+      {
+        path: 'view-database',
+        name: 'view-database',
+        component: () =>
+          import(/* webpackChunkName: "database" */ '@/views/Database.vue')
       }
     ]
   },

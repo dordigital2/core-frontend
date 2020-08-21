@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h1>Hello</h1>
+    <header>
+      <p class="title">
+        @TODO: Dashboard ...computer says 'no'
+      </p>
+    </header>
   </div>
 </template>
 
@@ -8,8 +12,7 @@
 export default {
   name: 'Dashboard',
   data() {
-    return {
-    }
+    return {}
   }
 }
 </script>

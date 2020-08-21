@@ -4,7 +4,7 @@ $loading-background: $grey;
 
 // $notices-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04) !default;
 $toast-border-radius: 4px;
-// $toast-opacity: 0.92 !default;
+$toast-opacity: 1;
 
 // @import 'buefy/src/scss/components/_checkbox.scss';
 // @import 'buefy/src/scss/components/_dropdown.scss';
@@ -17,7 +17,7 @@ $toast-border-radius: 4px;
 @import 'buefy/src/scss/components/_notices.scss';
 // @import 'buefy/src/scss/components/_pagination.scss';
 // @import 'buefy/src/scss/components/_upload.scss';
-// @import 'buefy/src/scss/components/_table.scss';
+@import 'buefy/src/scss/components/_table.scss';
 // @import 'buefy/src/scss/components/_tabs.scss';
 // @import 'buefy/src/scss/components/_tag.scss';
 // @import 'buefy/src/scss/components/_tooltip.scss';

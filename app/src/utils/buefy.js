@@ -1,29 +1,32 @@
-import config from 'buefy/src/utils/config'
+import config, { setVueInstance } from 'buefy/src/utils/config'
 import IconMdi from '@/components/IconMdi'
 
 import {
   Button,
-  Table,
   Input,
   Checkbox,
-  Snackbar,
-  Toast,
-  Dropdown,
-  Pagination,
-  Field,
   Datepicker,
-  Tabs,
-  Modal,
+  Dialog,
+  Dropdown,
+  Field,
   Icon,
   Loading,
+  Menu,
+  Modal,
+  Pagination,
   Select,
-  Upload,
-  Dialog,
-  Tooltip
+  Snackbar,
+  Table,
+  Tabs,
+  Toast,
+  Tooltip,
+  Upload
 } from 'buefy/src/components'
 
 const MyBuefy = {
   install(Vue) {
+    setVueInstance(Vue)
+
     // Options
     config.defaultTrapFocus = true
     config.defaultIconComponent = 'icon-mdi'
@@ -83,23 +86,24 @@ const MyBuefy = {
 
     // Components
     Vue.use(Button)
-    Vue.use(Input)
     Vue.use(Checkbox)
-    Vue.use(Toast)
+    Vue.use(Datepicker)
+    Vue.use(Dialog)
     Vue.use(Dropdown)
+    Vue.use(Field)
+    Vue.use(Icon)
+    Vue.use(Input)
+    Vue.use(Loading)
+    Vue.use(Menu)
+    Vue.use(Modal)
     Vue.use(Pagination)
     Vue.use(Snackbar)
-    Vue.use(Datepicker)
-    Vue.use(Field)
-    Vue.use(Tabs)
-    Vue.use(Modal)
-    Vue.use(Icon)
-    Vue.use(Table)
-    Vue.use(Loading)
     Vue.use(Select)
-    Vue.use(Upload)
-    Vue.use(Dialog)
+    Vue.use(Table)
+    Vue.use(Tabs)
+    Vue.use(Toast)
     Vue.use(Tooltip)
+    Vue.use(Upload)
 
     Vue.component('icon-mdi', IconMdi)
   }

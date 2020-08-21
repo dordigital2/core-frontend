@@ -17,12 +17,11 @@ export default {
         let msg = JSON.stringify(err.response.data.non_field_errors || err.response.data)
         if (err.response.status == null) msg = 'Verificați conexiunea la internet'
 
-        console.log('err', JSON.stringify(err.response))
+        // console.log('err', JSON.stringify(err.response))
 
         Vue.prototype.$buefy.toast.open({
           message: `Eroare<br> ${msg}`,
-          type: 'is-danger',
-          duration: 5000
+          type: 'is-danger'
         })
         
         return Promise.reject(err)

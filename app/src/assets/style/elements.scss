@@ -1,0 +1,43 @@
+.icon {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+
+  .material-design-icon {
+    height: 1em;
+    width: 1em;
+    line-height: 1;
+  }
+  
+  .material-design-icon > .material-design-icon__svg {
+    height: 1em;
+    width: 1em;
+    fill: currentColor;
+  }
+}
+
+.box {
+  > .title {
+    font-size: 18px;
+    color: $blue;
+    line-height: 25px;
+    margin-bottom: 28px;
+  }
+
+  .is-spaced {
+    padding: 28px 24px;
+  }
+}
+
+.table {
+  th {
+    line-height: 1;
+    padding: 14px 24px;
+    font-size: $size-7;
+  }
+
+  td {
+    font-size: $size-6;
+    font-weight: $weight-semibold;
+  }
+}

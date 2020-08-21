@@ -6,8 +6,8 @@ $black: #252525;
 $grey-darker: #8898AA;
 $grey-dark: #C4C4C4;
 $grey: #E5E5E5;
-$grey-light: #ebebeb;
-$grey-lighter: #818181;
+$grey-light: #F6F9FC;
+$grey-lighter: #F0F0F0;
 
 $orange: #E3713C;
 $blue: #303C6C;
@@ -30,21 +30,29 @@ $size-5: 1rem;      // 16px
 $size-6: 0.875rem;  // 14px
 $size-7: 0.75rem;   // 12px
 
+$size-small : $size-6;
+$size-normal: $size-5;
+$size-medium: $size-4;
+$size-large : $size-3;
+
 $block-spacing: 30px;
+
+$title-color: $blue;
+$title-size: $size-2;
 $subtitle-negative-margin: -14px;
 
 
 // body
-$family-primary: 'Inter', sans-serif;
-$family-primary-bold: 'Inter', sans-serif;
-$family-primary-italic: 'Inter', sans-serif;
+$family-primary: 'Open Sans', sans-serif;
+$family-primary-bold: 'Open Sans', sans-serif;
+$family-primary-italic: 'Open Sans', sans-serif;
 $body-background-color: $grey;
 $body-color: $black;
 $body-line-height: 1.5;
 
 
 // navbar + footer
-$navbar-background-color: $blue;
+$navbar-background-color: transparent;
 // $navbar-item-color: $white;
 $navbar-item-hover-background-color: transparent;
 $navbar-item-img-max-height: none;
@@ -58,7 +66,7 @@ $footer-padding: 14px 0 32px;
 $column-gap: 15px;
 
 
-// box & buttons
+// controls & buttons
 $control-padding-vertical: 8px;
 $control-padding-horizontal: 8px;
 $control-radius: $radius-small;
@@ -86,6 +94,11 @@ $label-color: $grey-darker;
 
 $button-padding-horizontal: 28px;
 
+// menu
+$menu-item-color: $white;
+$menu-list-line-height: 19px;
+$menu-item-hover-background-color: transparent;
+$menu-item-active-background-color: transparent;
 
 // modal
 $modal-background-background-color: rgba(0, 0, 0, 0.9);
@@ -124,18 +137,22 @@ $tabs-border-bottom-width: 0;
 $tabs-boxed-link-active-border-color: transparent;
 $tabs-boxed-link-hover-border-bottom-color: transparent;
 $tabs-boxed-link-active-background-color: $grey;
+
 // table
-$table-row-active-background-color: $blue;
+$table-color: $grey-darker;
+$table-row-active-background-color: $grey-dark;
 $table-row-active-color: $white;
-$table-row-hover-background-color: $blue;
-$table-cell-padding: 11px 16px 10px;
-$table-head-background-color: $white;
-$table-background-color: #efefef;
+$table-row-hover-background-color: $grey-dark;
+$table-cell-padding: 24px;
+$table-cell-border: 1px solid $grey-lighter;
+$table-head-cell-border-width: 1px 0;
+$table-head-background-color: $grey-light;
+$table-background-color: $white;
 
 // box
 $box-radius: $radius;
 $box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-$box-padding: 16px;
+$box-padding: 0;
 // $box-color: $white;
 
 // screen

@@ -1,21 +1,28 @@
+@import '~bulma/sass/form/_all.sass';
+
 .field {
   &:not(:last-child) {
     margin-bottom: 10px;
   }
 
   .icon {
-    line-height: 1;
+    font-size: 24px;
   }
 }
 
 .label {
+  font-size: $size-6;
+
   &:not(:last-child) {
     margin-bottom: 3px;
   }
 }
 
 .button {
+  font-size: $size-6;
+
   &.button-submit {
+    font-size: $size-5;
     margin-top: 4rem;
     width: 100%;
   }
