@@ -19,7 +19,7 @@
     </nav>
 
     <div class="columns">
-      <div class="column is-narrow">
+      <div class="column is-narrow column-menu">
         <BaseMenu />
       </div>
       <div class="column">
@@ -49,3 +49,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.column-menu {
+  width: 294px;
+}
+</style>

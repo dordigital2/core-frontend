@@ -10,7 +10,7 @@
       <div class="navbar-menu">
         <div class="navbar-end">
           <router-link to="/account/forgot-password" class="navbar-item"
-            >Ai uitat parola?</router-link
+            >Forgot password?</router-link
           >
 
           <div class="navbar-item">

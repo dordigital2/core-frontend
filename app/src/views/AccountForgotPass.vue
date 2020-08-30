@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 class="title is-1">Ai uitat parola?</h1>
+    <h1 class="title is-1">Forgot password?</h1>
 
     <div class="subtitle">
-      Introduceti adresa de email pentru a primi instructiuni
+      Enter your email address to receive further instructions
     </div>
 
     <div class="form">
@@ -20,7 +20,7 @@
           class="button button-submit is-primary"
           @click="passes(submit)"
         >
-          Trimite sesizare
+          Send request
         </b-button>
       </ValidationObserver>
     </div>

@@ -8,7 +8,7 @@
     width: 1em;
     line-height: 1;
   }
-  
+
   .material-design-icon > .material-design-icon__svg {
     height: 1em;
     width: 1em;
@@ -16,28 +16,43 @@
   }
 }
 
-.box {
-  > .title {
-    font-size: 18px;
-    color: $blue;
-    line-height: 25px;
-    margin-bottom: 28px;
-  }
-
-  .is-spaced {
-    padding: 28px 24px;
-  }
-}
-
-.table {
+.b-table .table {
   th {
     line-height: 1;
     padding: 14px 24px;
     font-size: $size-7;
+    font-weight: $weight-bold;
   }
 
   td {
     font-size: $size-6;
     font-weight: $weight-semibold;
+    line-height: 19px;
+
+    &.actions {
+      > div {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        
+        a {
+          flex-shrink: 0;
+          display: inline-flex;
+          color: $blue;
+
+          &:hover {
+            color: $primary;
+          }
+
+          .icon {
+            font-size: $size-4;
+          }
+          
+          &:not(:last-child) {
+            margin-right: 16px;
+          }
+        }
+      }
+    }
   }
 }

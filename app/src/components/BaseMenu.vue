@@ -13,14 +13,6 @@
         label="View database"
         @click="$router.push('/app/view-database').catch(() => {})"
       ></b-menu-item>
-      <b-menu-item size="is-normal" :active="isActive">
-        <template slot="label" slot-scope="props">
-          Testing
-          <b-icon :icon="props.expanded ? 'menu-up' : 'menu-down'"></b-icon>
-        </template>
-
-        <b-menu-item size="is-normal" label="Users"></b-menu-item>
-      </b-menu-item>
     </b-menu-list>
   </b-menu>
 </template>
@@ -31,19 +23,16 @@ export default {
   components: {},
   data() {
     return {
-      isActive: false
+      // isActive: false
     }
-  },
-  props: {
-    icon: Array,
-    size: String
   }
 }
 </script>
 
 <style scoped lang="scss">
 .menu {
-  min-width: 264px;
+  position: fixed;
+  width: 264px;
   background-color: $blue;
   font-size: $size-6;
   padding: 12px 15px 36px;

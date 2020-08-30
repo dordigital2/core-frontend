@@ -1,18 +1,18 @@
 <template>
   <div>
-    <h1 class="title is-1">Reseteaza parola</h1>
+    <h1 class="title is-1">Password reset</h1>
 
     <div class="subtitle">
-      Introduceti parola noua
+      Enter a new password
     </div>
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VInput v-model="password" name="password" label="Parola" />
+        <VInput v-model="password" name="password" label="Password" />
         <VInput
           v-model="password_confirm"
           rules="required|confirmed:password"
-          label="Confirmare parola"
+          label="Confirm password"
         />
 
         <b-button
@@ -20,7 +20,7 @@
           class="button button-submit is-primary"
           @click="passes(submit)"
         >
-          Salveaza
+          Save
         </b-button>
       </ValidationObserver>
     </div>

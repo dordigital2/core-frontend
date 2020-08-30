@@ -7,8 +7,9 @@ import store from './store'
 
 import ApiService from './services/api'
 
-import './components/form/'
+import './components/'
 import './utils/form-validation'
+import './utils/filters'
 
 // Styles
 import './assets/style/base.scss'

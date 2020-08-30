@@ -20,3 +20,25 @@ nav.navbar {
     }
   }
 }
+
+.card {
+  border-radius: $radius;
+
+  .card-header {
+    min-height: 80px;
+    
+    .card-header-title {
+      font-size: 18px;
+    }
+    
+    .card-header-actions {
+      display: flex;
+      align-items: center;
+      padding: $card-header-padding;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 30px;
+  }
+}

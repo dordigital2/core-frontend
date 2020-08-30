@@ -3,13 +3,13 @@
     <h1 class="title is-1">Log in</h1>
 
     <div class="subtitle">
-      Introduceti datele de logare
+      Enter your login credentials
     </div>
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VInput v-model="username" label="E-mail" />
-        <VInput v-model="password" label="Parola" type="password" />
+        <VInput v-model="username" label="Email" />
+        <VInput v-model="password" label="Password" type="password" />
 
         <b-button
           native-type="submit"

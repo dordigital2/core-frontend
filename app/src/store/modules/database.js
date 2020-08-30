@@ -8,14 +8,14 @@ export default {
     database: []
   },
   mutations: {
-    get(state, data) {
+    set(state, data) {
       state.database = data
     }
   },
   actions: {
     get({ commit }) {
       DatabaseService.get().then(response => {
-        commit('get', response.data)
+        commit('set', response.data)
         // console.log(response)
       })
     }

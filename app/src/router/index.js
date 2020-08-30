@@ -72,7 +72,38 @@ const routes = [
         name: 'view-database',
         component: () =>
           import(/* webpackChunkName: "database" */ '@/views/Database.vue')
+      },
+      {
+        path: 'view-table/:id',
+        name: 'view-table',
+        component: () => {
+          import(/* webpackChunkName: "table" */ '@/views/Database.vue')
+        }
+      },
+      {
+        path: 'users',
+        name: 'users',
+        component: () =>
+          import(/* webpackChunkName: "user" */ '@/views/Users.vue')
       }
+      // {
+      //   path: 'users/profile/:username',
+      //   name: 'user-profile',
+      //   component: () =>
+      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfile.vue')
+      // },
+      // {
+      //   path: 'edit/:username',
+      //   name: 'user-edit',
+      //   component: () =>
+      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfileEdit.vue')
+      // },
+      // {
+      //   path: 'add',
+      //   name: 'user-add',
+      //   component: () =>
+      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfileEdit.vue')
+      // }
     ]
   },
   { path: '*', component: Page404 }

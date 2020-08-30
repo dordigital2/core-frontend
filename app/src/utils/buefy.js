@@ -1,5 +1,4 @@
 import config, { setVueInstance } from 'buefy/src/utils/config'
-import IconMdi from '@/components/IconMdi'
 
 import {
   Button,
@@ -104,8 +103,6 @@ const MyBuefy = {
     Vue.use(Toast)
     Vue.use(Tooltip)
     Vue.use(Upload)
-
-    Vue.component('icon-mdi', IconMdi)
   }
 }
 
