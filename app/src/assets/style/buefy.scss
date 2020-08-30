@@ -6,7 +6,16 @@ $loading-background: $grey;
 $toast-border-radius: 4px;
 $toast-opacity: 1;
 
-// @import 'buefy/src/scss/components/_checkbox.scss';
+$checkbox-active-background-color: $blue;
+$checkbox-border-radius: $radius-small;
+$checkbox-border-width: 1px;
+$checkbox-checkmark-color: $white;
+$checkbox-size: $size-5;
+$checkbox-border-color: #c2cbd4;
+
+$taginput-height: 2em;
+
+@import 'buefy/src/scss/components/_checkbox.scss';
 // @import 'buefy/src/scss/components/_dropdown.scss';
 // @import 'buefy/src/scss/components/_datepicker.scss';
 // @import 'buefy/src/scss/components/_dialog.scss';
@@ -20,8 +29,30 @@ $toast-opacity: 1;
 @import 'buefy/src/scss/components/_table.scss';
 // @import 'buefy/src/scss/components/_tabs.scss';
 // @import 'buefy/src/scss/components/_tag.scss';
+@import 'buefy/src/scss/components/_taginput.scss';
 // @import 'buefy/src/scss/components/_tooltip.scss';
 
 .notices {
   padding-top: 3rem;
+}
+
+.taginput {
+  .taginput-container {
+    min-height: 44px;
+    border: 2px solid $blue;
+    border-radius: $radius;
+    padding: 8px 8px 1px 1px;
+    
+    > .tag {
+      font-weight: $weight-semibold;
+      padding: 3px 8px;
+      font-size: $size-7;
+      margin-left: 7px;
+      margin-bottom: 7px;
+
+      .delete {
+        margin-left: 12px;
+      }
+    }
+  }
 }

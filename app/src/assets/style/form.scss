@@ -27,3 +27,20 @@
     width: 100%;
   }
 }
+
+.checkbox {
+  line-height: 1.5;
+
+  input[type='checkbox']:checked + .check {
+    background-size: 70% !important;
+  }
+}
+
+.checkbox-list {
+  .checkbox {
+    &:not(:last-child) {
+      margin-right: 32px;
+      // margin-bottom: 8px;
+    }
+  }
+}

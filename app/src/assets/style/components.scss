@@ -42,3 +42,19 @@ nav.navbar {
     margin-bottom: 30px;
   }
 }
+
+.modal {
+  .modal-card {
+    .modal-card-title {
+      font-weight: $weight-bold;
+    }
+
+    .modal-card-foot {
+      justify-content: flex-end;
+
+      .button:not(:last-child) {
+        margin-right: 8px;
+      }
+    }
+  }
+}

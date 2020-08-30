@@ -17,10 +17,12 @@
 </template>
 
 <script>
+import ModalColumns from '@/components/modals/ModalColumns'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Database',
+  components: {},
   data() {
     return {
       columns: {
@@ -88,6 +90,13 @@ export default {
   }),
   mounted() {
     this.$store.dispatch('database/get')
+    
+    this.$buefy.modal.open({
+      parent: this,
+      component: ModalColumns,
+      hasModalCard: true,
+      trapFocus: true
+    })
   }
 }
 </script>

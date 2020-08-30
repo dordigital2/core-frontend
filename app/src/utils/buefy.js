@@ -17,6 +17,7 @@ import {
   Snackbar,
   Table,
   Tabs,
+  Taginput,
   Toast,
   Tooltip,
   Upload
@@ -48,21 +49,21 @@ const MyBuefy = {
     }
 
     config.defaultFirstDayOfWeek = 1
-    config.defaultDayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S']
-    config.defaultMonthNames = [
-      'Ianuarie',
-      'Februarie',
-      'Martie',
-      'Aprilie',
-      'Mai',
-      'Iunie',
-      'Iulie',
-      'August',
-      'Septembrie',
-      'Octombrie',
-      'Noiembrie',
-      'Decembrie'
-    ]
+    // config.defaultDayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+    // config.defaultMonthNames = [
+    //   'Ianuarie',
+    //   'Februarie',
+    //   'Martie',
+    //   'Aprilie',
+    //   'Mai',
+    //   'Iunie',
+    //   'Iulie',
+    //   'August',
+    //   'Septembrie',
+    //   'Octombrie',
+    //   'Noiembrie',
+    //   'Decembrie'
+    // ]
 
     config.defaultDateFormatter = date => {
       if (Array.isArray(date)) {
@@ -79,8 +80,8 @@ const MyBuefy = {
     // config.defaultToastPosition = 'is-bottom'
     config.defaultInputHasCounter = false
     config.defaultUseHtml5Validation = false
-    config.defaultDialogConfirmText = 'Confirmă'
-    config.defaultDialogCancelText = 'Înapoi'
+    config.defaultDialogConfirmText = 'Confirm'
+    config.defaultDialogCancelText = 'Back'
     // config.defaultModalCanCancel = false
 
     // Components
@@ -100,6 +101,7 @@ const MyBuefy = {
     Vue.use(Select)
     Vue.use(Table)
     Vue.use(Tabs)
+    Vue.use(Taginput)
     Vue.use(Toast)
     Vue.use(Tooltip)
     Vue.use(Upload)

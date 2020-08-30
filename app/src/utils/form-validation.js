@@ -19,9 +19,18 @@ Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule])
 })
 
-extend('below', {
+extend('under', {
   validate(value, args) {
-    return value.length < args.length
+    console.log('under', value.length, args.length)
+    return value.length <= args.length
+  },
+  params: ['length']
+})
+
+extend('over', {
+  validate(value, args) {
+    console.log('over', value.length, args.length)
+    return value.length >= args.length
   },
   params: ['length']
 })

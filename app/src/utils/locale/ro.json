@@ -14,6 +14,8 @@
     "ext": "Câmpul trebuie să fie un nume de fișier valid",
     "image": "Câmpul trebuie să fie o imagine",
     "oneOf": "Câmpul trebuie să conțină o valoare validă",
+    "over": "Trebuie să selectezi minim {length} elemente",
+    "under": "Poți să selectezi maxim {length} elemente",
     "max": "Câmpul nu poate conține mai mult de {length} caractere",
     "max_value": "Valoarea câmpului trebuie să fie maxim {max}",
     "mimes": "Câmpul trebuie să conțină un fișier cu extensie validă",
