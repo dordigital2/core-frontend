@@ -74,6 +74,15 @@ const routes = [
           import(/* webpackChunkName: "database" */ '@/views/Database.vue')
       },
       {
+        path: 'edit-data',
+        name: 'edit-data',
+        component: () =>
+          import(/* webpackChunkName: "database" */ '@/views/Database.vue'),
+        props: {
+          isEditable: true
+        }
+      },
+      {
         path: 'view-table/:id',
         name: 'view-table',
         component: () => {

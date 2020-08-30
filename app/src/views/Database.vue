@@ -6,7 +6,12 @@
       title="Active tables"
       :data="database.active_tables"
       :columns="columns.active_tables"
-    />
+      ><template #actions v-if="$attrs.isEditable">
+        <button class="button is-primary">
+          Add a new table
+        </button>
+      </template>
+    </CardTable>
 
     <CardTable
       title="Archived tables"
@@ -90,7 +95,7 @@ export default {
   }),
   mounted() {
     this.$store.dispatch('database/get')
-    
+
     this.$buefy.modal.open({
       parent: this,
       component: ModalColumns,
