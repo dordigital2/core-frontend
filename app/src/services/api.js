@@ -5,17 +5,20 @@ import TokenService from './storage'
 
 // import { ToastProgrammatic as Toast } from 'buefy'
 
-export default {
+const ApiService = {
   init(baseURL) {
     console.log('baseURL', baseURL)
     axios.defaults.baseURL = baseURL
-    
+
     axios.interceptors.response.use(
       response => response,
       err => {
         // this.$store.commit('loading_stop')
-        let msg = JSON.stringify(err.response.data.non_field_errors || err.response.data)
-        if (err.response.status == null) msg = 'Verificați conexiunea la internet'
+        let msg = JSON.stringify(
+          err.response.data.non_field_errors || err.response.data
+        )
+        if (err.response.status == null)
+          msg = 'Verificați conexiunea la internet'
 
         // console.log('err', JSON.stringify(err.response))
 
@@ -23,7 +26,7 @@ export default {
           message: `Eroare<br> ${msg}`,
           type: 'is-danger'
         })
-        
+
         return Promise.reject(err)
       }
     )
@@ -59,3 +62,5 @@ export default {
     return axios(data)
   }
 }
+
+export default ApiService
