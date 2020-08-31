@@ -89,17 +89,13 @@ const routes = [
         path: 'table-view/:idTable',
         name: 'table-view',
         component: () =>
-          import(/* webpackChunkName: "table" */ '@/views/TableView.vue'),
-        children: [
-          {
-            path: 'entity-view/:idEntity',
-            name: 'entity-view',
-            component: () =>
-              import(
-                /* webpackChunkName: "table" */ '@/views/TableEntityView.vue'
-              )
-          }
-        ]
+          import(/* webpackChunkName: "table" */ '@/views/TableView.vue')
+      },
+      {
+        path: 'table-view/:idTable/entity-view/:idEntity',
+        name: 'entity-view',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableEntityView.vue')
       },
       {
         path: 'users',
