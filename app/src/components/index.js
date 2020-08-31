@@ -1,13 +1,11 @@
 import Vue from 'vue'
-
-import './form'
-
 import IconMdi from './IconMdi'
 import VTable from './table/VTable'
-import CardTable from './CardTable'
+import Card from './Card'
 import BaseTitle from './BaseTitle'
+import './form'
 
 Vue.component('icon-mdi', IconMdi)
 Vue.component('VTable', VTable)
-Vue.component('CardTable', CardTable)
+Vue.component('Card', Card)
 Vue.component('BaseTitle', BaseTitle)

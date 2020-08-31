@@ -1,7 +1,5 @@
 import Vue from 'vue'
+import Parser from './parser'
 
-const parseDate = function(date) {
-  return new Date(date).toLocaleDateString('ro-RO')
-}
-
-Vue.filter('parseDate', parseDate)
+Vue.filter('parseDate', Parser.date)
+Vue.filter('parseDatetime', Parser.datetime)

@@ -12,11 +12,28 @@ nav.navbar {
 
 .main-view {
   header {
+    display: flex;
+    align-items: center;
     margin-top: -64px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 
     .title {
-      line-height: 1;
+      line-height: 40px;
+    }
+
+    .back-button {
+      padding-right: 30px;
+      border-right: 1px solid $grey-dark;
+      margin-right: 30px;
+
+      .button {
+        z-index: 31;
+        box-shadow: 0px 2px 10px rgba(48, 60, 108, 0.1);
+
+        .icon {
+          font-size: $size-4;
+        }
+      }
     }
   }
 }
@@ -26,15 +43,27 @@ nav.navbar {
 
   .card-header {
     min-height: 80px;
-    
+    border-bottom: 1px solid $grey-lighter;
+
     .card-header-title {
       font-size: 18px;
+
+      .entries {
+        color: $primary;
+        padding-left: 20px;
+      }
     }
-    
+
     .card-header-actions {
       display: flex;
       align-items: center;
       padding: $card-header-padding;
+    }
+  }
+
+  .card-body {
+    .info {
+      padding: 20px 24px;
     }
   }
 
@@ -52,9 +81,23 @@ nav.navbar {
     .modal-card-foot {
       justify-content: flex-end;
 
-      .button:not(:last-child) {
-        margin-right: 8px;
+      .button {
+        height: 34px;
+
+        &:not(:last-child) {
+          margin-right: 8px;
+        }
       }
     }
+  }
+}
+
+.pagination {
+  .icon {
+    font-size: $size-4;
+  }
+
+  .pagination-link {
+    border-radius: 100%;
   }
 }

@@ -5,7 +5,7 @@ import router from '@/router'
 import UserService from '@/services/user'
 import TokenService from '@/services/storage'
 
-import database from './modules/database'
+import data from './modules/data'
 
 Vue.use(Vuex)
 
@@ -41,6 +41,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    database
+    data
   }
 })

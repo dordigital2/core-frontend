@@ -10,15 +10,8 @@
       <b-menu-item
         size="is-normal"
         icon="dns-outline"
-        label="View database"
-        @click="$router.push('/app/view-database').catch(() => {})"
-      ></b-menu-item>
-
-      <b-menu-item
-        size="is-normal"
-        icon="square-edit-outline"
-        label="Edit Data"
-        @click="$router.push('/app/edit-data').catch(() => {})"
+        label="Manage database"
+        @click="$router.push('/app/database-view').catch(() => {})"
       ></b-menu-item>
     </b-menu-list>
   </b-menu>

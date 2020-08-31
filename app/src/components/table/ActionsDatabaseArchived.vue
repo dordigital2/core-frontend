@@ -1,17 +1,17 @@
 <template>
   <div>
-    <ActionButtonView :path="'view-table/' + props.row.entries" />
+    <ActionButtonGoto :path="'table-view/' + props.id" />
     <ActionButtonDownload />
   </div>
 </template>
 
 <script>
 import ActionButtonDownload from './ActionButtonDownload'
-import ActionButtonView from './ActionButtonView'
+import ActionButtonGoto from './ActionButtonGoto'
 
 export default {
   components: {
-    ActionButtonView,
+    ActionButtonGoto,
     ActionButtonDownload
   },
   props: {

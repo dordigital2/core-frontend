@@ -1,18 +1,27 @@
 <template>
   <div>
-    <ActionButtonView :path="'view-table/' + props.row.entries" />
+    <ActionButtonGoto icon="eye-outline" :path="'table-view/' + props.id" />
+
+    <ActionButtonGoto
+      icon="square-edit-outline"
+      :path="'table-edit/' + props.id"
+    />
+
     <ActionButtonArchive />
+    <ActionButtonDelete />
   </div>
 </template>
 
 <script>
 import ActionButtonArchive from './ActionButtonArchive'
-import ActionButtonView from './ActionButtonView'
+import ActionButtonDelete from './ActionButtonDelete'
+import ActionButtonGoto from './ActionButtonGoto'
 
 export default {
   components: {
-    ActionButtonView,
-    ActionButtonArchive
+    ActionButtonArchive,
+    ActionButtonDelete,
+    ActionButtonGoto
   },
   props: {
     props: Object

@@ -18,6 +18,7 @@ $primary: $orange;
 $dark: $blue;
 $link: $primary;
 $link-hover: $black;
+
 $text: $black;
 
 $radius: 8px;
@@ -94,6 +95,7 @@ $input-disabled-border-color: $grey !important;
 $label-weight: normal;
 $label-color: $grey-darker;
 
+$button-color: $blue;
 $button-padding-horizontal: 28px;
 
 
@@ -158,6 +160,7 @@ $table-head-cell-border-width: 1px 0;
 $table-head-background-color: $grey-light;
 $table-background-color: $white;
 
+$pagination-item-font-size: $size-6;
 
 // box
 $box-radius: $radius;

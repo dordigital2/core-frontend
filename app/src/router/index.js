@@ -68,26 +68,38 @@ const routes = [
           import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
       },
       {
-        path: 'view-database',
-        name: 'view-database',
+        path: 'database-view',
+        name: 'database-view',
         component: () =>
-          import(/* webpackChunkName: "database" */ '@/views/Database.vue')
-      },
-      {
-        path: 'edit-data',
-        name: 'edit-data',
-        component: () =>
-          import(/* webpackChunkName: "database" */ '@/views/Database.vue'),
+          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue'),
         props: {
           isEditable: true
         }
       },
       {
-        path: 'view-table/:id',
-        name: 'view-table',
-        component: () => {
-          import(/* webpackChunkName: "table" */ '@/views/Database.vue')
+        path: 'edit-data',
+        name: 'edit-data',
+        component: () =>
+          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue'),
+        props: {
+          isEditable: true
         }
+      },
+      {
+        path: 'table-view/:idTable',
+        name: 'table-view',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableView.vue'),
+        children: [
+          {
+            path: 'entity-view/:idEntity',
+            name: 'entity-view',
+            component: () =>
+              import(
+                /* webpackChunkName: "table" */ '@/views/TableEntityView.vue'
+              )
+          }
+        ]
       },
       {
         path: 'users',
@@ -137,7 +149,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (isLoggedIn && anonymousOnly) {
-    return next('/dashboard')
+    return next('/app/dashboard')
   }
 
   next()

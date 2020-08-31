@@ -5,8 +5,11 @@
 <script>
 import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue'
 import ArchiveOutline from 'vue-material-design-icons/ArchiveOutline.vue'
+import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue'
 import ArrowUp from 'vue-material-design-icons/ArrowUp.vue'
 import ChartBoxOutline from 'vue-material-design-icons/ChartBoxOutline.vue'
+import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
+import ChevronRight from 'vue-material-design-icons/ChevronRight.vue'
 import DnsOutline from 'vue-material-design-icons/DnsOutline.vue'
 import Download from 'vue-material-design-icons/Download.vue'
 import EyeOutline from 'vue-material-design-icons/EyeOutline.vue'
@@ -15,14 +18,18 @@ import MenuUp from 'vue-material-design-icons/MenuUp.vue'
 import MonitorDashboard from 'vue-material-design-icons/MonitorDashboard.vue'
 import Power from 'vue-material-design-icons/Power.vue'
 import SquareEditOutline from 'vue-material-design-icons/SquareEditOutline.vue'
+import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
 export default {
   name: 'IconMdi',
   components: {
     AlertCircleOutline,
     ArchiveOutline,
+    ArrowLeft,
     ArrowUp,
     ChartBoxOutline,
+    ChevronLeft,
+    ChevronRight,
     DnsOutline,
     Download,
     EyeOutline,
@@ -30,7 +37,8 @@ export default {
     MenuUp,
     MonitorDashboard,
     Power,
-    SquareEditOutline
+    SquareEditOutline,
+    TrashCanOutline
   },
   props: {
     icon: Array,

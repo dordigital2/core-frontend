@@ -11,8 +11,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  h1 {
-    margin-top: 3rem;
-    text-align: center;
-  }
+h1 {
+  margin-top: 3rem;
+  text-align: center;
+}
 </style>

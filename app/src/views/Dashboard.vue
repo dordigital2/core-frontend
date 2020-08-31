@@ -2,7 +2,7 @@
   <div>
     <header>
       <p class="title">
-        @TODO: Dashboard ...computer says 'no'
+        @TODO: Dashboard
       </p>
     </header>
   </div>

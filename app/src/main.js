@@ -18,8 +18,7 @@ import './assets/style/base.scss'
 Vue.use(Buefy)
 
 // Services
-ApiService.init('http://dev.api.paul.ro:8000/')
-// ApiService.init(process.env.VUE_APP_ROOT_API)
+ApiService.init(process.env.VUE_APP_ROOT_API)
 ApiService.setHeader()
 
 Vue.config.productionTip = false
