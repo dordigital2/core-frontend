@@ -39,6 +39,7 @@ nav.navbar {
 }
 
 .card {
+  overflow: hidden;
   border-radius: $radius;
 
   .card-header {
@@ -64,6 +65,21 @@ nav.navbar {
   .card-body {
     .info {
       padding: 20px 24px;
+
+      .info-entry {
+        padding: 0 10px;
+        
+        .info-label {
+          font-size: $size-6;
+          color: $grey-darker;
+        }
+
+        .info-value {
+          font-size: $size-6;
+          color: $blue;
+          font-weight: $weight-semibold;
+        }
+      }
     }
   }
 

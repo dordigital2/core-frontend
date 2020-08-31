@@ -3,7 +3,25 @@
     <BaseTitle :title="'Entity view'" />
 
     <Card :title="`Table - ${table.name}`">
-      <pre>{{ entity.data }}</pre>
+      <VTable :data="[entity]" :columns="table.fields" />
+    </Card>
+
+    <Card :title="`Table - ${table.name}`">
+      <template #actions>
+        <button class="button is-primary">Edit entity</button>
+      </template>
+      <div class="columns is-multiline is-gapless info">
+        <div
+          class="column is-4-desktop is-3-widescreen"
+          v-for="(prop, index) in entity.data"
+          :key="`prop-${index}`"
+        >
+          <div class="info-entry">
+            <span class="info-label">{{ index }}: </span>
+            <span class="info-value">{{ prop }}</span>
+          </div>
+        </div>
+      </div>
     </Card>
   </div>
 </template>
