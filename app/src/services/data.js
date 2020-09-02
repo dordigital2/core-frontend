@@ -2,7 +2,7 @@ import ApiService from './api'
 import { QueryString } from '@/utils/helpers'
 
 const DatabaseService = {
-  get() {
+  getDatabase() {
     return ApiService.get('databases/')
   }
 }

@@ -61,7 +61,7 @@ export default {
         this.entity.data[linkField]
       )
 
-      TableService.get(idTable).then(response => {
+      TableService.getTable(idTable).then(response => {
         const table = response
 
         const query = {}

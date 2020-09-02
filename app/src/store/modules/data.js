@@ -26,7 +26,7 @@ export default {
   },
   actions: {
     getDatabase({ commit }) {
-      return DatabaseService.get().then(response => {
+      return DatabaseService.getDatabase().then(response => {
         commit('setDatabase', response)
         // console.log(response)
       })

@@ -83,7 +83,7 @@ const MyBuefy = {
     config.defaultInputHasCounter = false
     config.defaultUseHtml5Validation = false
     config.defaultDialogConfirmText = 'Confirm'
-    config.defaultDialogCancelText = 'Back'
+    config.defaultDialogCancelText = 'Cancel'
     // config.defaultModalCanCancel = false
 
     // Components

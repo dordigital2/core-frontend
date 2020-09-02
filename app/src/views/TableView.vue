@@ -16,6 +16,7 @@
     </BaseCard>
 
     <BaseCard
+      v-if="tableEntries"
       :title="
         `${title} <span class='entries'>${tableEntries.count} entries</span>`
       "
@@ -39,7 +40,6 @@
       </div>
 
       <BaseTable
-        v-if="tableEntries"
         :data="tableEntries.results"
         :columns="tableWithActions"
         :pagination="pagination"

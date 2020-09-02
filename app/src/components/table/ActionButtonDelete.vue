@@ -21,7 +21,8 @@ export default {
         type: 'is-danger',
         onConfirm: () => {
           this.$store.dispatch(this.storeAction, this.data)
-        }
+        },
+        confirmText: 'Delete'
       })
     }
   }

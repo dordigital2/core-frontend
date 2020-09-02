@@ -68,7 +68,7 @@ export default {
   }),
   methods: {
     getTableFields() {
-      TableService.get(this.idTable).then(response => {
+      TableService.getTable(this.idTable).then(response => {
         this.fields = response.fields
       })
     },
