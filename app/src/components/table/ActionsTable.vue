@@ -7,16 +7,25 @@
 
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="'entity-edit/' + props.id"
+      :path="{ name: 'entity-edit', params: { idEntity: props.id } }"
     />
 
-    <ActionButtonDelete />
+    <ActionButtonDelete
+      dialogTitle="Do you wish to delete this entity?"
+      dialogMessage="This operation permanently removes all the fields of this entry. Please check the data before proceeding."
+      storeAction="data/deleteEntity"
+      :data="{
+        idTable: $route.params.idTable,
+        idEntity: props.id
+      }"
+    />
   </div>
 </template>
 
 <script>
 import ActionButtonDelete from './ActionButtonDelete'
 import ActionButtonGoto from './ActionButtonGoto'
+// import { TableService } from '@/services/data'
 
 export default {
   components: {
@@ -25,6 +34,7 @@ export default {
   },
   props: {
     props: Object
-  }
+  },
+  methods: {}
 }
 </script>

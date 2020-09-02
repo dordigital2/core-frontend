@@ -24,8 +24,9 @@ export default new Vuex.Store({
   actions: {
     login({ commit }, { username, password }) {
       return UserService.login(username, password)
-        .then(result => {
-          commit('login', result)
+        .then(response => {
+          commit('login', response)
+          
           router.replace(
             router.history.current.query.redirect || '/app/dashboard'
           )

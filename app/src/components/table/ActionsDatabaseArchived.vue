@@ -1,6 +1,11 @@
 <template>
   <div>
-    <ActionButtonGoto :path="'table-view/' + props.id" />
+    <ActionButtonGoto icon="eye-outline" :path="'table-view/' + props.id" />
+    <ActionButtonGoto
+      icon="square-edit-outline"
+      :path="'table-edit/' + props.id"
+    />
+    <ActionButtonDelete />
     <ActionButtonDownload />
   </div>
 </template>

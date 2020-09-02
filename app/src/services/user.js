@@ -9,10 +9,10 @@ const UserService = {
     }).then(response => {
       // console.log(response)
 
-      TokenService.saveToken(response.data.token)
+      TokenService.saveToken(response.token)
       ApiService.setHeader()
 
-      return response.data.access_token
+      return response.access_token
     })
   },
 

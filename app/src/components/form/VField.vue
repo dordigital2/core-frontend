@@ -8,7 +8,6 @@
     tag="div"
   >
     <b-field
-      class="v-field"
       :type="{ 'is-danger': errors[0] }"
       :message="errors.length ? errors : null"
     >
@@ -32,18 +31,18 @@ import { ValidationProvider } from 'vee-validate'
 
 export default {
   components: {
-    ValidationProvider,
+    ValidationProvider
   },
   props: {
     rules: {
       type: [Object, String],
-      default: 'required',
+      default: 'required'
     },
     name: String,
     label: String,
     column: String,
     description: String,
-    labelInfo: String,
-  },
+    labelInfo: String
+  }
 }
 </script>

@@ -15,9 +15,14 @@ $checkbox-border-color: #c2cbd4;
 
 $taginput-height: 2em;
 
+$datepicker-item-color: $black;
+$datepicker-item-disabled-color: $grey-dark;
+$datepicker-header-color: $grey-darker;
+$datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
+
 @import 'buefy/src/scss/components/_checkbox.scss';
 // @import 'buefy/src/scss/components/_dropdown.scss';
-// @import 'buefy/src/scss/components/_datepicker.scss';
+@import 'buefy/src/scss/components/_datepicker.scss';
 // @import 'buefy/src/scss/components/_dialog.scss';
 // @import 'buefy/src/scss/components/_form.scss';
 // @import 'buefy/src/scss/components/_icon.scss';
@@ -27,6 +32,8 @@ $taginput-height: 2em;
 @import 'buefy/src/scss/components/_pagination.scss';
 // @import 'buefy/src/scss/components/_upload.scss';
 @import 'buefy/src/scss/components/_table.scss';
+// @import 'buefy/src/scss/components/_select.scss';
+@import 'buefy/src/scss/components/_switch.scss';
 // @import 'buefy/src/scss/components/_tabs.scss';
 // @import 'buefy/src/scss/components/_tag.scss';
 @import 'buefy/src/scss/components/_taginput.scss';
@@ -42,7 +49,7 @@ $taginput-height: 2em;
     border: 2px solid $blue;
     border-radius: $radius;
     padding: 8px 8px 1px 1px;
-    
+
     > .tag {
       font-weight: $weight-semibold;
       padding: 3px 8px;
@@ -54,5 +61,83 @@ $taginput-height: 2em;
         margin-left: 12px;
       }
     }
+  }
+}
+
+.datepicker.control {
+  font-size: 10px;
+
+  .dropdown-item {
+    padding: 8px;
+    outline: none;
+  }
+
+  .control {
+    > .icon {
+      background-color: $blue;
+      border-radius: $radius-small 0 0 $radius-small;
+      color: $white;
+      font-size: $size-4;
+    }
+
+    .input {
+      padding-left: 48px;
+
+      &:focus ~ .icon {
+        color: $white;
+      }
+    }
+  }
+
+  .pagination {
+    a {
+      border: 0;
+      border-radius: 0;
+      height: 16px;
+      margin: 0;
+
+      .icon {
+        font-size: $size-4;
+        color: $blue !important;
+        border: 0;
+      }
+
+      &.pagination-previous {
+        border-right: 1px solid $grey-dark;
+      }
+
+      &.pagination-next {
+        border-left: 1px solid $grey-dark;
+      }
+    }
+
+    .pagination-list {
+      margin: 0 16px;
+    }
+
+    .select {
+      height: 24px;
+
+      select {
+        height: 24px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        font-size: $size-7;
+        padding-right: 24px;
+      }
+
+      &:after {
+        margin-top: -0.35em;
+        width: 0.5em;
+        height: 0.5em;
+        right: 8px;
+      }
+    }
+  }
+
+  .datepicker-cell {
+    font-weight: $weight-semibold;
+    line-height: $size-6;
+    padding: 8px 10px;
   }
 }

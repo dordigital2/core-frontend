@@ -5,6 +5,7 @@ import {
   Input,
   Checkbox,
   Datepicker,
+  Datetimepicker,
   Dialog,
   Dropdown,
   Field,
@@ -15,6 +16,7 @@ import {
   Pagination,
   Select,
   Snackbar,
+  Switch,
   Table,
   Tabs,
   Taginput,
@@ -48,8 +50,8 @@ const MyBuefy = {
       }
     }
 
-    config.defaultFirstDayOfWeek = 1
-    // config.defaultDayNames = ['D', 'L', 'M', 'M', 'J', 'V', 'S']
+    // config.defaultFirstDayOfWeek = 1
+    // config.defaultDayNames = ['Sun', 'L', 'M', 'M', 'J', 'V', 'S']
     // config.defaultMonthNames = [
     //   'Ianuarie',
     //   'Februarie',
@@ -65,13 +67,13 @@ const MyBuefy = {
     //   'Decembrie'
     // ]
 
-    config.defaultDateFormatter = date => {
-      if (Array.isArray(date)) {
-        return date.map(e => e.toLocaleDateString('ro-RO')).join('—')
-      }
+    // config.defaultDateFormatter = date => {
+    //   if (Array.isArray(date)) {
+    //     return date.map(e => e.toLocaleDateString('ro-RO')).join('—')
+    //   }
 
-      return date.toLocaleDateString('ro-RO')
-    }
+    //   return date.toLocaleDateString('ro-RO')
+    // }
 
     // config.defaultDateParser = (date) => new Date(date.replace('.', '-'))
 
@@ -88,6 +90,7 @@ const MyBuefy = {
     Vue.use(Button)
     Vue.use(Checkbox)
     Vue.use(Datepicker)
+    Vue.use(Datetimepicker)
     Vue.use(Dialog)
     Vue.use(Dropdown)
     Vue.use(Field)
@@ -98,6 +101,7 @@ const MyBuefy = {
     Vue.use(Modal)
     Vue.use(Pagination)
     Vue.use(Snackbar)
+    Vue.use(Switch)
     Vue.use(Select)
     Vue.use(Table)
     Vue.use(Tabs)

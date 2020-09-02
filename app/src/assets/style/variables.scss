@@ -3,15 +3,20 @@
 $white: #ffffff;
 $black: #252525;
 
-$grey-darker: #8898AA;
-$grey-dark: #C4C4C4;
-$grey: #E5E5E5;
-$grey-light: #F6F9FC;
-$grey-lighter: #F0F0F0;
+$black-light: #28293D;
 
-$orange: #E3713C;
-$blue: #303C6C;
-$red: #B41F43;
+$grey-input: #babac8;
+$grey-select: #ededf1;
+
+$grey-darker: #8898aa;
+$grey-dark: #c4c4c4;
+$grey: #e5e5e5;
+$grey-light: #f6f9fc;
+$grey-lighter: #f0f0f0;
+
+$orange: #e3713c;
+$blue: #303c6c;
+$red: #b41f43;
 
 ////////////////////////////////////////////////////////////// BULMA OVERWRITE
 $primary: $orange;
@@ -25,25 +30,24 @@ $radius: 8px;
 $radius-small: 4px;
 $radius-large: 8px;
 
-$size-1: 4rem;      // 64px
-$size-2: 2rem;      // 32px
-$size-3: 1.5rem;    // 24px
-$size-4: 1.25rem;   // 20px
-$size-5: 1rem;      // 16px
-$size-6: 0.875rem;  // 14px
-$size-7: 0.75rem;   // 12px
+$size-1: 4rem; // 64px
+$size-2: 2rem; // 32px
+$size-3: 1.5rem; // 24px
+$size-4: 1.25rem; // 20px
+$size-5: 1rem; // 16px
+$size-6: 0.875rem; // 14px
+$size-7: 0.75rem; // 12px
 
-$size-small : $size-6;
+$size-small: $size-6;
 $size-normal: $size-5;
 $size-medium: $size-4;
-$size-large : $size-3;
+$size-large: $size-3;
 
 $block-spacing: 30px;
 
 $title-color: $blue;
 $title-size: $size-2;
 $subtitle-negative-margin: -14px;
-
 
 // body
 $family-primary: 'Open Sans', sans-serif;
@@ -52,7 +56,6 @@ $family-primary-italic: 'Open Sans', sans-serif;
 $body-background-color: $grey;
 $body-color: $black;
 $body-line-height: 1.5;
-
 
 // navbar + footer
 $navbar-background-color: transparent;
@@ -64,30 +67,29 @@ $footer-color: $grey-darker;
 $footer-background-color: $grey-dark;
 $footer-padding: 14px 0 32px;
 
-
 // columns
 $column-gap: 15px;
-
 
 // controls & buttons
 $control-padding-vertical: 8px;
 $control-padding-horizontal: 8px;
 $control-radius: $radius-small;
 $control-height: 40px;
-$control-line-height: inherit;
+// $control-line-height: inherit;
 
 $input-shadow: none;
-$input-radius: $radius;
+$input-radius: $radius-small;
 $input-focus-box-shadow-size: 0;
+$input-focus-box-shadow-color: $blue;
 
-$input-color: $white;
-$input-background-color: $grey;
+$input-color: $blue;
+$input-background-color: $white;
 $input-placeholder-color: $grey-darker;
-$input-border-color: $grey-darker;
-$input-focus-border-color: $grey-darker;
+$input-border-color: $grey-input;
+$input-focus-border-color: $blue;
 $border-hover: $grey-darker;
 
-$input-arrow: $grey-lighter;
+$input-arrow: $blue;
 $input-disabled-color: $grey-darker;
 $input-disabled-background-color: $grey;
 $input-disabled-border-color: $grey !important;
@@ -98,13 +100,11 @@ $label-color: $grey-darker;
 $button-color: $blue;
 $button-padding-horizontal: 28px;
 
-
 // menu
 $menu-item-color: $white;
 $menu-list-line-height: 19px;
 $menu-item-hover-background-color: transparent;
 $menu-item-active-background-color: transparent;
-
 
 // modal
 $modal-background-background-color: rgba(0, 0, 0, 0.4);
@@ -118,36 +118,19 @@ $modal-card-head-border-bottom: none;
 $modal-card-body-padding: 0 24px 6px;
 $modal-card-foot-border-top: none;
 
-
 // card
 $card-background-color: $white;
 $card-color: inherit;
 $card-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 $card-header-shadow: none;
 $card-header-color: $blue;
-$card-footer-border-top: none;
 $card-header-padding: 20px 24px;
 $card-content-padding: 0;
-$card-footer-padding: 0;
-
 
 // datepicker
-$dropdown-content-background-color: $primary;
+$dropdown-content-background-color: $white;
 // $dropdown-content-radius: 0px;
 // $dropdown-content-shadow: none;
-
-
-// tabs
-$tabs-border-bottom-color: $black;
-$tabs-boxed-link-radius: 4px;
-$tabs-toggle-link-radius: 2px;
-$tabs-link-padding: 20px 18px;
-$tabs-link-active-color: $black;
-$tabs-border-bottom-width: 0;
-$tabs-boxed-link-active-border-color: transparent;
-$tabs-boxed-link-hover-border-bottom-color: transparent;
-$tabs-boxed-link-active-background-color: $grey;
-
 
 // table
 $table-color: $grey-darker;
@@ -168,10 +151,8 @@ $box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 $box-padding: 0;
 // $box-color: $white;
 
-
 // tags
 $tag-radius: $radius-small;
-
 
 // screen
 $desktop: 1080px;

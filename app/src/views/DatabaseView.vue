@@ -1,23 +1,23 @@
 <template>
-  <div v-if="database != null">
+  <div v-if="database">
     <BaseTitle title="Manage database" :hasBackButton="false" />
 
-    <Card title="Active tables"
+    <BaseCard title="Active tables"
       ><template #actions v-if="$attrs.isEditable">
         <button class="button is-primary">
           Add a new table
         </button>
       </template>
 
-      <VTable :data="database.active_tables" :columns="columns.active_tables" />
-    </Card>
+      <BaseTable :data="database.active_tables" :columns="columns.active_tables" />
+    </BaseCard>
 
-    <Card title="Archived tables">
-      <VTable
+    <BaseCard title="Archived tables">
+      <BaseTable
         :data="database.archived_tables"
         :columns="columns.archived_tables"
       />
-    </Card>
+    </BaseCard>
   </div>
 </template>
 
@@ -80,7 +80,7 @@ export default {
             name: 'owner.username',
             sortable: true,
             display_name: 'Archived by',
-            component: 'OwnerLink'
+            component: 'FieldOwnerLink'
           },
           {
             name: 'actions',
@@ -93,7 +93,7 @@ export default {
     }
   },
   computed: mapState({
-    database: state => state.data.database[0]
+    database: state => state.data.database
   }),
   mounted() {
     this.$store.dispatch('data/getDatabase')

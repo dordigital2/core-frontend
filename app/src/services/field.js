@@ -1,13 +1,19 @@
-import Parser from '@/utils/parser'
+import { Parser } from '@/utils/helpers'
+
+const FieldComponentMap = {
+  enum: 'VSelect',
+  bool: 'b-checkbox',
+  date: 'VDate'
+}
 
 const FieldService = {
   getColumns() {},
   getParsedValue(value, type) {
-    if (Parser[type] != null) {
-      return Parser[type](value)
-    }
-
-    return value
+    return Parser[type] ? Parser[type](value) : value
+  },
+  // getWidgetValue()
+  getComponent(type) {
+    return FieldComponentMap[type] ? FieldComponentMap[type] : 'b-input'
   }
 }
 

@@ -1,4 +1,8 @@
 nav.navbar {
+  .navbar-brand {
+    position: fixed;
+  }
+
   .navbar-item {
     font-size: $size-6;
     line-height: 1;
@@ -11,7 +15,7 @@ nav.navbar {
 }
 
 .main-view {
-  header {
+  .main-header {
     display: flex;
     align-items: center;
     margin-top: -64px;
@@ -39,7 +43,7 @@ nav.navbar {
 }
 
 .card {
-  overflow: hidden;
+  // overflow: hidden;
   border-radius: $radius;
 
   .card-header {
@@ -63,12 +67,13 @@ nav.navbar {
   }
 
   .card-body {
-    .info {
+    .card-container {
       padding: 20px 24px;
 
       .info-entry {
-        padding: 0 10px;
-        
+        padding: 4px 8px;
+        line-height: 19px;
+
         .info-label {
           font-size: $size-6;
           color: $grey-darker;
@@ -80,7 +85,38 @@ nav.navbar {
           font-weight: $weight-semibold;
         }
       }
+
+      .button-column {
+        // display: flex;
+        // align-items: flex-end;
+      }
+
+      &.card-list-item {
+        padding: 18px;
+        margin-bottom: 0;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid $grey-lighter;
+        }
+      }
     }
+
+    .card-form {
+      .columns {
+        margin-top: -4px;
+        margin-bottom: -4px;
+        
+        .column {
+          padding-top: 4px;
+          padding-bottom: 4px;
+        }
+      }
+    }
+  }
+
+  .card-footer {
+    padding: 20px 24px;
+    justify-content: flex-end;
   }
 
   &:not(:last-child) {

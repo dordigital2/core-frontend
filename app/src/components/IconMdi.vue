@@ -6,7 +6,9 @@
 import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue'
 import ArchiveOutline from 'vue-material-design-icons/ArchiveOutline.vue'
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue'
+import ArrowRight from 'vue-material-design-icons/ArrowRight.vue'
 import ArrowUp from 'vue-material-design-icons/ArrowUp.vue'
+import CalendarBlankOutline from 'vue-material-design-icons/CalendarBlankOutline.vue'
 import ChartBoxOutline from 'vue-material-design-icons/ChartBoxOutline.vue'
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue'
@@ -26,7 +28,9 @@ export default {
     AlertCircleOutline,
     ArchiveOutline,
     ArrowLeft,
+    ArrowRight,
     ArrowUp,
+    CalendarBlankOutline,
     ChartBoxOutline,
     ChevronLeft,
     ChevronRight,

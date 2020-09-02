@@ -39,6 +39,7 @@ body.account-view {
 
       .input {
         background-color: $input-bg;
+        color: $white;
 
         &:not(.is-danger):not(:hover):not(:focus) {
           border-color: transparent;

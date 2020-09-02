@@ -8,12 +8,13 @@
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VInput v-model="password" name="password" label="Password" />
-        <VInput
-          v-model="password_confirm"
-          rules="required|confirmed:password"
-          label="Confirm password"
-        />
+        <VField label="Password">
+          <b-input v-model="password" name="password" />
+        </VField>
+
+        <VField rules="required|confirmed:password" label="Confirm password">
+          <b-input v-model="password_confirm"
+        /></VField>
 
         <b-button
           native-type="submit"

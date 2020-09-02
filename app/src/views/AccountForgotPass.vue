@@ -8,12 +8,9 @@
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VInput
-          v-model="email"
-          label="Email"
-          placeholder="e@mail.com"
-          rules="required|email"
-        />
+        <VField label="Email" rules="required|email">
+          <b-input v-model="email" placeholder="e@mail.com" />
+        </VField>
 
         <b-button
           native-type="submit"

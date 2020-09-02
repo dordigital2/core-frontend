@@ -1,10 +1,10 @@
 <template>
   <div>
-    <header>
-      <p class="title">
-        @TODO: Dashboard
-      </p>
-    </header>
+    <BaseTitle
+      title="
+        @TODO: Dashboard"
+      :hasBackButton="false"
+    />
   </div>
 </template>
 

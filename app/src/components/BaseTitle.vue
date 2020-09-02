@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <header class="main-header">
     <div class="back-button" v-if="hasBackButton">
       <button class="button" @click="$router.go(-1)">
         <b-icon icon="arrow-left" /><span>Back</span>

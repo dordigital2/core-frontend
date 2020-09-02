@@ -35,7 +35,7 @@
 import ActionsDatabaseArchived from './ActionsDatabaseArchived'
 import ActionsTable from './ActionsTable'
 import ActionsDatabaseActive from './ActionsDatabaseActive'
-import OwnerLink from './OwnerLink'
+import FieldOwnerLink from './FieldOwnerLink'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -45,7 +45,7 @@ export default {
     ActionsDatabaseArchived,
     ActionsDatabaseActive,
     ActionsTable,
-    OwnerLink
+    FieldOwnerLink
   },
   data() {
     return {}

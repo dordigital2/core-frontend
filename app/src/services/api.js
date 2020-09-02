@@ -11,19 +11,19 @@ const ApiService = {
     axios.defaults.baseURL = baseURL
 
     axios.interceptors.response.use(
-      response => response,
+      response => response.data,
       err => {
         // this.$store.commit('loading_stop')
         let msg = JSON.stringify(
           err.response.data.non_field_errors || err.response.data
         )
         if (err.response.status == null)
-          msg = 'Verificați conexiunea la internet'
+          msg = 'Check internet connection'
 
         // console.log('err', JSON.stringify(err.response))
 
         Vue.prototype.$buefy.toast.open({
-          message: `Eroare<br> ${msg}`,
+          message: `Error<br> ${msg}`,
           type: 'is-danger'
         })
 

@@ -1,4 +1,4 @@
-import { extend, localize, setInteractionMode } from 'vee-validate'
+import { extend, setInteractionMode } from 'vee-validate'
 
 import {
   required,
@@ -11,7 +11,7 @@ import {
   image
 } from 'vee-validate/dist/rules'
 
-import ro from './locale/ro.json'
+// import ro from './locale/ro.json'
 
 const rules = { required, max, min, length, email, size, confirmed, image }
 
@@ -35,6 +35,6 @@ extend('over', {
   params: ['length']
 })
 
-localize('ro', ro)
+// localize('ro', ro)
 // setInteractionMode('lazy')
 setInteractionMode('eager')

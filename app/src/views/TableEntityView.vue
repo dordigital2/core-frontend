@@ -1,53 +1,77 @@
 <template>
-  <div>
+  <div v-if="table && entity">
     <BaseTitle :title="'Entity view'" />
 
-    <Card :title="`Table - ${table.name}`">
-      <VTable :data="[entity]" :columns="table.fields" />
-    </Card>
+    <BaseCard :title="`Table – ${table.name}`">
+      <BaseTable :data="[entity]" :columns="table.fields" />
+    </BaseCard>
 
-    <Card :title="`Table - ${table.name}`">
-      <template #actions>
-        <button class="button is-primary">Edit entity</button>
-      </template>
-      <div class="columns is-multiline is-gapless info">
-        <div
-          class="column is-4-desktop is-3-widescreen"
-          v-for="(prop, index) in entity.data"
-          :key="`prop-${index}`"
-        >
-          <div class="info-entry">
-            <span class="info-label">{{ index }}: </span>
-            <span class="info-value">{{ prop }}</span>
-          </div>
-        </div>
-      </div>
-    </Card>
+    <TableEntityCard
+      v-for="(link, index) in tableLinks"
+      :key="`tableLink${index}`"
+      :table="link.table"
+      :entities="link.entities"
+      isEditable
+    />
+
+    <TableEntityLinkCard @input="addLinkTable" />
   </div>
 </template>
 
 <script>
-// import ModalColumns from '@/components/modals/ModalColumns'
+import TableEntityCard from '@/components/table/TableEntityCard'
+import TableEntityLinkCard from '@/components/table/TableEntityLinkCard'
+import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
   name: 'TableEntityView',
-  components: {},
+  components: { TableEntityCard, TableEntityLinkCard },
   data() {
-    return {}
+    return {
+      entity: null,
+      tableLinks: []
+    }
   },
-  computed: {
-    ...mapState({
-      table: state => state.data.table,
-      entity: state => state.data.entity
-    })
-  },
+  computed: mapState({
+    table: state => state.data.table
+  }),
   mounted() {
-    // console.log('mounted', this.$route.params.idTable, this.$route.params.idEntity)
-    this.$store.dispatch('data/getEntity', {
-      idTable: this.$route.params.idTable,
-      idEntity: this.$route.params.idEntity
-    })
+    this.$store
+      .dispatch('data/getTable', this.$route.params.idTable)
+      .then(() => {
+        this.getEntity()
+      })
+  },
+  methods: {
+    getEntity() {
+      TableService.getEntity(
+        this.$route.params.idTable,
+        this.$route.params.idEntity
+      ).then(response => {
+        this.entity = response
+        this.tableLinks.push({ table: this.table, entities: [response] })
+      })
+    },
+    addLinkTable({ idTable, linkField }) {
+      console.log(
+        'addLinkTable',
+        idTable,
+        linkField,
+        this.entity.data[linkField]
+      )
+
+      TableService.get(idTable).then(response => {
+        const table = response
+
+        const query = {}
+        query[linkField] = this.entity.data[linkField]
+
+        TableService.getEntityByQuery(idTable, query).then(response => {
+          this.tableLinks.push({ table, entities: response.results })
+        })
+      })
+    }
   }
 }
 </script>

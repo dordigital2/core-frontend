@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div v-if="table">
     <BaseTitle :title="title" />
 
-    <Card title="Filtering">
+    <BaseCard title="Filtering">
       <template #actions>
         <div class="buttons">
           <button class="button is-light">Reset filters</button>
@@ -10,21 +10,23 @@
         </div>
       </template>
 
-      <div class="info">
-        No filters yet
+      <div class="card-container">
+        @TODO: No filters yet
       </div>
-    </Card>
+    </BaseCard>
 
-    <Card
+    <BaseCard
       :title="
-        `${title} <span class='entries'>${table.entries_count} entries</span>`
+        `${title} <span class='entries'>${tableEntries.count} entries</span>`
       "
     >
       <template #actions>
-        <button class="button is-dark">Change view</button>
+        <button class="button is-dark" @click="openModalColumns">
+          Change view
+        </button>
       </template>
 
-      <div class="info">
+      <div class="card-container">
         Last edit: {{ table.last_edit_date | parseDate }}
         <span v-if="table.last_edit_user"
           >by
@@ -36,17 +38,18 @@
         >
       </div>
 
-      <VTable
+      <BaseTable
+        v-if="tableEntries"
         :data="tableEntries.results"
         :columns="tableWithActions"
         :pagination="pagination"
       />
-    </Card>
+    </BaseCard>
   </div>
 </template>
 
 <script>
-// import ModalColumns from '@/components/modals/ModalColumns'
+import ModalColumns from '@/components/modals/ModalColumns'
 import { mapState } from 'vuex'
 
 export default {
@@ -54,7 +57,10 @@ export default {
   components: {},
   data() {
     return {
-      pagination: {}
+      pagination: {
+        paginated: true,
+        perPage: 5
+      }
     }
   },
   computed: {
@@ -83,19 +89,20 @@ export default {
     this.$store
       .dispatch('data/getTable', this.$route.params.idTable)
       .then(() => {
-        this.pagination = {
-          paginated: true,
-          total: this.table.entries_count,
-          perPage: 5
-        }
+        this.pagination.total = this.table.entries_count
       })
 
-    // this.$buefy.modal.open({
-    //   parent: this,
-    //   component: ModalColumns,
-    //   hasModalCard: true,
-    //   trapFocus: true
-    // })
+    this.$store.dispatch('data/getTableEntries', this.$route.params.idTable)
+  },
+  methods: {
+    openModalColumns() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ModalColumns,
+        hasModalCard: true,
+        trapFocus: true
+      })
+    }
   }
 }
 </script>
