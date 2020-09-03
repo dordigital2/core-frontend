@@ -14,7 +14,6 @@
               <VField :label="field.display_name">
                 <component
                   :is="getComponent(field.field_type)"
-                  v-if="entity.data[field.name] != null"
                   v-model="entity.data[field.name]"
                   :choices="field.choices"
                 />
@@ -37,8 +36,9 @@
 
 <script>
 import { TableService } from '@/services/data'
-import { mapState } from 'vuex'
+import { ToastService } from '@/services/buefy'
 import FieldService from '@/services/field'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TableEntityEdit',
@@ -76,10 +76,7 @@ export default {
         this.$route.params.idEntity,
         this.entity.data
       ).then(() => {
-        this.$buefy.toast.open({
-          message: 'Update successful.',
-          type: 'is-success'
-        })
+        ToastService.open('Update successful')
       })
     }
   }

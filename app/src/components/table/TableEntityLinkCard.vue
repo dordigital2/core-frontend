@@ -4,8 +4,31 @@
       <div class="card-container" v-if="database">
         <div class="columns">
           <div class="column">
-            <VField label="Select table">
-              <b-select v-model="idTable" @input="getTableFields" expanded>
+            <VField label="Source field">
+              <b-select
+                placeholder="Select a field"
+                v-model="source"
+                @input="field = null"
+                expanded
+              >
+                <option
+                  v-for="(field, index) in table.fields"
+                  :value="index"
+                  :key="field.id"
+                >
+                  {{ field.display_name }}
+                </option>
+              </b-select>
+            </VField>
+          </div>
+          <div class="column">
+            <VField label="Table">
+              <b-select
+                placeholder="Select a table"
+                v-model="idTable"
+                @input="getTableFields"
+                expanded
+              >
                 <option
                   v-for="table in database.active_tables"
                   :value="table.id"
@@ -18,17 +41,18 @@
           </div>
 
           <div class="column">
-            <VField label="Select linked field">
+            <VField label="Linked field">
               <b-select
+                placeholder="Select a field"
                 v-model="field"
                 :loading="loading"
-                :disabled="loading"
                 expanded
               >
                 <option
                   v-for="field in fields"
                   :value="field.name"
                   :key="field.id"
+                  :disabled="checkLinkFieldtype(field.field_type)"
                 >
                   {{ field.display_name }}
                 </option>
@@ -56,36 +80,43 @@ export default {
   components: {},
   data() {
     return {
-      idTable: null,
-      available_tables: [],
-      fields: [],
       field: null,
-      loading: false
+      source: null,
+      idTable: null,
+      loading: false,
+      fields: []
     }
   },
+  props: {},
   computed: mapState({
-    database: state => state.data.database
+    database: state => state.data.database,
+    table: state => state.data.table
   }),
   methods: {
     getTableFields() {
+      this.loading = true
+      this.field = null
+
       TableService.getTable(this.idTable).then(response => {
         this.fields = response.fields
+        this.loading = false
       })
     },
-    removeTableFromList(id) {
-      console.log('removeTableFromList', id)
-
-      const index = this.available_tables.map(e => e.id).indexOf(id)
-      this.available_tables.slice(index, 1)
-    },
     addTableView() {
-      // this.removeTableFromList(this.idTable)
-      this.$emit('input', { idTable: this.idTable, linkField: this.field })
+      this.$emit('input', {
+        idTable: this.idTable,
+        linkField: this.field,
+        sourceField: this.table.fields[this.source].name
+      })
+    },
+    checkLinkFieldtype(type) {
+      if (this.source == null) return false
+
+      return this.table.fields[this.source].field_type != type
     }
   },
   mounted() {
     if (!this.database) this.$store.dispatch('data/getDatabase')
-    // this.available_tables = this.database.active_tables.slice()
   }
 }
 </script>

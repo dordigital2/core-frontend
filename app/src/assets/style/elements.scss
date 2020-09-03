@@ -19,7 +19,7 @@
 .b-table .table {
   border: 0;
   margin-top: -1px;
-  
+
   th {
     line-height: 1;
     padding: 14px 24px;
@@ -39,7 +39,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        
+
         a {
           flex-shrink: 0;
           display: inline-flex;
@@ -52,7 +52,7 @@
           .icon {
             font-size: $size-4;
           }
-          
+
           &:not(:last-child) {
             margin-right: 16px;
           }

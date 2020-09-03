@@ -1,5 +1,6 @@
 <template>
   <ValidationProvider
+    :mode="mode"
     :name="name || label"
     :rules="rules"
     v-slot="{ errors }"
@@ -42,7 +43,8 @@ export default {
     label: String,
     column: String,
     description: String,
-    labelInfo: String
+    labelInfo: String,
+    mode: String
   }
 }
 </script>

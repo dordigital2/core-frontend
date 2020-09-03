@@ -19,7 +19,7 @@ export default {
     choices: Array,
     customClass: String,
     disabled: String,
-    placeholder: String,
+    placeholder: { type: String, default: 'Select' },
     readonly: Boolean,
     value: null
   },

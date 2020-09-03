@@ -1,7 +1,6 @@
-import Vue from 'vue'
-
 import axios from 'axios'
 import TokenService from './storage'
+import { ToastService } from './buefy'
 
 // import { ToastProgrammatic as Toast } from 'buefy'
 
@@ -17,13 +16,11 @@ const ApiService = {
         let msg = JSON.stringify(
           err.response.data.non_field_errors || err.response.data
         )
-        if (err.response.status == null)
-          msg = 'Check internet connection'
+        if (err.response.status == null) msg = 'Check internet connection'
 
         // console.log('err', JSON.stringify(err.response))
 
-        Vue.prototype.$buefy.toast.open({
-          message: `Error<br> ${msg}`,
+        ToastService.open(`Error<br> ${msg}`, {
           type: 'is-danger'
         })
 

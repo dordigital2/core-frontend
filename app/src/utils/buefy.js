@@ -77,7 +77,7 @@ const MyBuefy = {
 
     // config.defaultDateParser = (date) => new Date(date.replace('.', '-'))
 
-    config.defaultNoticeQueue = true
+    config.defaultNoticeQueue = false
     config.defaultToastDuration = 3000
     // config.defaultToastPosition = 'is-bottom'
     config.defaultInputHasCounter = false

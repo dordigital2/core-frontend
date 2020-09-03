@@ -1,6 +1,7 @@
 // import router from '@/router'
 
 import { DatabaseService, TableService } from '@/services/data'
+import { ToastService } from '@/services/buefy'
 
 export default {
   namespaced: true,
@@ -28,7 +29,6 @@ export default {
     getDatabase({ commit }) {
       return DatabaseService.getDatabase().then(response => {
         commit('setDatabase', response)
-        // console.log(response)
       })
     },
 
@@ -53,10 +53,7 @@ export default {
     deleteTable({ dispatch }, idTable) {
       return TableService.deleteTable(idTable).then(() => {
         dispatch('getDatabase').then(
-          this._vm.$buefy.toast.open({
-            message: 'The table has been deleted',
-            type: 'is-success'
-          })
+          ToastService.open('The table has been deleted')
         )
       })
     },
@@ -64,10 +61,7 @@ export default {
     deleteEntity({ dispatch }, { idTable, idEntity }) {
       return TableService.deleteEntity(idTable, idEntity).then(() => {
         dispatch('getTableEntries', idTable).then(() => {
-          this._vm.$buefy.toast.open({
-            message: 'The entity has been deleted',
-            type: 'is-success'
-          })
+          ToastService.open('The entity has been deleted')
         })
       })
     }

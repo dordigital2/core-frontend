@@ -53,19 +53,19 @@ export default {
         this.tableLinks.push({ table: this.table, entities: [response] })
       })
     },
-    addLinkTable({ idTable, linkField }) {
-      console.log(
-        'addLinkTable',
-        idTable,
-        linkField,
-        this.entity.data[linkField]
-      )
+    addLinkTable({ idTable, linkField, sourceField }) {
+      // console.log(
+      //   'addLinkTable',
+      //   idTable,
+      //   linkField,
+      //   this.entity.data[sourceField]
+      // )
 
       TableService.getTable(idTable).then(response => {
         const table = response
 
         const query = {}
-        query[linkField] = this.entity.data[linkField]
+        query[linkField] = this.entity.data[sourceField]
 
         TableService.getEntityByQuery(idTable, query).then(response => {
           this.tableLinks.push({ table, entities: response.results })
