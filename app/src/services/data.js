@@ -1,4 +1,3 @@
-import router from '@/router/'
 import ApiService from './api'
 import { QueryString } from '@/utils/helpers'
 
@@ -18,9 +17,7 @@ const TableService = {
     return ApiService.delete(`tables/${id}/`)
   },
 
-  getEntries(id) {
-    // console.log(id, router)
-    const query = router.currentRoute.query
+  getEntries(id, query) {
     const queryString = query != null ? '?' + QueryString(query) : ''
 
     return ApiService.get(`tables/${id}/entries/${queryString}`)

@@ -68,7 +68,10 @@ export default {
         .catch(() => {})
         .then(() => {
           this.$store
-            .dispatch('data/getTableEntries', this.$route.params.idTable)
+            .dispatch('data/getTableEntries', {
+              idTable: this.$route.params.idTable,
+              query: this.$route.query
+            })
             .then(() => {
               this.$emit('close')
             })

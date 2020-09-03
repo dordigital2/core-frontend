@@ -38,8 +38,8 @@ export default {
       })
     },
 
-    getTableEntries({ commit }, idTable) {
-      return TableService.getEntries(idTable).then(response => {
+    getTableEntries({ commit }, { idTable, query }) {
+      return TableService.getEntries(idTable, query).then(response => {
         commit('setTableEntries', response)
       })
     },

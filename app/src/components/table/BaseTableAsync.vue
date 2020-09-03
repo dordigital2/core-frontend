@@ -13,7 +13,7 @@
     >
       <b-table-column
         v-for="(column, index) in columns"
-        :key="`${index}-${column.name}`"
+        :key="`${column.name}-${index}`"
         v-bind="{
           label: column.display_name || column.name,
           cellClass: column.custom_class,
@@ -97,7 +97,7 @@ export default {
 
       if (selectedFields != null) {
         selectedFields = selectedFields.split(',')
-        
+
         selectedFields.forEach(e => {
           fields.push(this.table.fields.find(t => t.name == e))
         })
@@ -136,13 +136,15 @@ export default {
     getTableEntries() {
       this.loading = true
 
-      TableService.getEntries(this.table.id).then(response => {
-        this.data = response.results
-        this.count = response.count
-        this.$emit('update', this.count)
+      TableService.getEntries(this.table.id, this.$route.query).then(
+        response => {
+          this.data = response.results
+          this.count = response.count
+          this.$emit('update', this.count)
 
-        this.loading = false
-      })
+          this.loading = false
+        }
+      )
     },
     getValue(row, field, type) {
       const value = getNestedObj(row, field)
@@ -164,7 +166,7 @@ export default {
       this.updateQueryRequest({ page })
     },
     onPerPageChange() {
-      this.perPage = Math.min(this.perPageModel, 1000)
+      this.perPage = Math.min(this.perPageModel, 100)
       this.perPageModel = this.perPage
       // this.page = 1
       this.updateQueryRequest({ perPage: this.perPage })
