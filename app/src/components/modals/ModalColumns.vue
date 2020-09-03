@@ -61,14 +61,17 @@ export default {
     submit() {
       this.$router
         .push({
-          query: { __fields: this.selectedColumns.join(',') }
+          query: Object.assign({}, this.$route.query, {
+            __fields: this.selectedColumns.join(',')
+          })
         })
         .catch(() => {})
-
-      this.$store
-        .dispatch('data/getTableEntries', this.$route.params.idTable)
         .then(() => {
-          this.$emit('close')
+          this.$store
+            .dispatch('data/getTableEntries', this.$route.params.idTable)
+            .then(() => {
+              this.$emit('close')
+            })
         })
     }
   }

@@ -20,7 +20,7 @@
   .table-container {
     overflow: scroll;
   }
-  
+
   .table {
     border: 0;
     margin-top: -1px;
@@ -51,7 +51,7 @@
       &.actions {
         right: 0;
         // background-color: $grey-light;
-        
+
         > div {
           display: flex;
           justify-content: flex-end;
@@ -74,6 +74,25 @@
               margin-right: 16px;
             }
           }
+        }
+      }
+    }
+  }
+
+  .level {
+    padding: 20px 24px;
+
+    .pagination-per-page {
+      display: flex;
+      font-size: $size-6;
+      align-items: center;
+
+      .control {
+        margin: 0 10px;
+
+        .input {
+          width: 50px;
+          text-align: center;
         }
       }
     }

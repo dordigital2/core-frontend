@@ -42,10 +42,3 @@
     }
   }
 }
-
-.select.is-loading {
-  &:after {
-    border-left-color: $blue;
-    border-bottom-color: $blue;
-  }
-}

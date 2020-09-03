@@ -20,11 +20,7 @@ const TableService = {
 
   getEntries(id) {
     // console.log(id, router)
-    const fields = router.currentRoute.query.__fields
-
-    const query = {}
-    if (fields != null) query.__fields = fields
-
+    const query = router.currentRoute.query
     const queryString = query != null ? '?' + QueryString(query) : ''
 
     return ApiService.get(`tables/${id}/entries/${queryString}`)

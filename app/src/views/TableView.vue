@@ -15,12 +15,7 @@
       </div>
     </BaseCard>
 
-    <BaseCard
-      v-if="tableEntries"
-      :title="
-        `${title} <span class='entries'>${tableEntries.count} entries</span>`
-      "
-    >
+    <BaseCard :title="titleWithCount">
       <template #actions>
         <button class="button is-dark" @click="openModalColumns">
           Change view
@@ -39,11 +34,7 @@
         >
       </div>
 
-      <BaseTable
-        :data="tableEntries.results"
-        :columns="tableColumns"
-        :pagination="pagination"
-      />
+      <BaseTableAsync :tableDef="table" @update="updateCount" />
     </BaseCard>
   </div>
 </template>
@@ -57,10 +48,7 @@ export default {
   components: {},
   data() {
     return {
-      pagination: {
-        paginated: true,
-        perPage: 5
-      }
+      count: null
     }
   },
   computed: {
@@ -71,40 +59,23 @@ export default {
     title() {
       return 'Table – ' + this.table.name
     },
-    tableColumns() {
-      if (this.table.fields == null) return
-
-      let fields = this.table.fields.slice()
-
-      const selectedFields = this.$route.query.__fields
-      if (selectedFields != null) {
-        selectedFields.split(',')
-        fields = fields.filter(e => selectedFields.indexOf(e.name) != -1)
-      }
-
-      console.log(fields, selectedFields)
-
-      fields.push({
-        name: 'actions',
-        custom_class: 'actions',
-        component: 'ActionsTable',
-        display_name: ' ',
-        sticky: true
-      })
-
-      return fields
+    titleWithCount() {
+      return (
+        this.title +
+        (this.count
+          ? ` <span class='entries'>${this.count} entries</span>`
+          : '')
+      )
     }
   },
   mounted() {
-    this.$store
-      .dispatch('data/getTable', this.$route.params.idTable)
-      .then(() => {
-        this.pagination.total = this.table.entries_count
-      })
-
-    this.$store.dispatch('data/getTableEntries', this.$route.params.idTable)
+    this.$store.dispatch('data/getTable', this.$route.params.idTable)
+    // this.$store.dispatch('data/getTableEntries', this.$route.params.idTable)
   },
   methods: {
+    updateCount(count) {
+      this.count = count
+    },
     openModalColumns() {
       this.$buefy.modal.open({
         parent: this,

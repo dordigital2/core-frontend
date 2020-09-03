@@ -16,7 +16,7 @@ nav.navbar {
 
 .main-view {
   padding-left: 294px;
-  
+
   .main-header {
     display: flex;
     align-items: center;
@@ -107,7 +107,7 @@ nav.navbar {
       .columns {
         margin-top: -4px;
         margin-bottom: -4px;
-        
+
         .column {
           padding-top: 4px;
           padding-bottom: 4px;
@@ -121,9 +121,7 @@ nav.navbar {
     justify-content: flex-end;
   }
 
-  &:not(:last-child) {
-    margin-bottom: 30px;
-  }
+  margin-bottom: 30px;
 }
 
 .modal {
