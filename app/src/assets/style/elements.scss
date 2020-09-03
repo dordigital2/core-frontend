@@ -31,6 +31,15 @@
       font-size: $size-7;
       font-weight: $weight-bold;
       letter-spacing: 0.9px;
+
+      &.is-sticky {
+        background-color: $table-head-background-color;
+        background-color: transparent;
+      }
+
+      &.actions {
+        right: 0;
+      }
     }
 
     td {
@@ -40,8 +49,8 @@
       color: $blue;
 
       &.actions {
-        position: sticky;
         right: 0;
+        // background-color: $grey-light;
         
         > div {
           display: flex;

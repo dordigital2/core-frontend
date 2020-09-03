@@ -63,8 +63,8 @@ export default {
 
         query[linkField] = this.entity.data[sourceField]
 
-        TableService.getEntityByQuery(idTable, query).then(response => {
-          console.log('getEntityByQuery', response)
+        TableService.getEntries(idTable, query).then(response => {
+          // console.log('getEntries', response)
           this.tableLinks.push({ table, entities: response.results })
         })
       })

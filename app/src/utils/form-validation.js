@@ -21,7 +21,6 @@ Object.keys(rules).forEach(rule => {
 
 extend('under', {
   validate(value, args) {
-    console.log('under', value.length, args.length)
     return value.length <= args.length
   },
   params: ['length']
@@ -29,7 +28,6 @@ extend('under', {
 
 extend('over', {
   validate(value, args) {
-    console.log('over', value.length, args.length)
     return value.length >= args.length
   },
   params: ['length']

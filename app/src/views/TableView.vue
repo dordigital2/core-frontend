@@ -41,7 +41,7 @@
 
       <BaseTable
         :data="tableEntries.results"
-        :columns="tableWithActions"
+        :columns="tableColumns"
         :pagination="pagination"
       />
     </BaseCard>
@@ -71,15 +71,24 @@ export default {
     title() {
       return 'Table – ' + this.table.name
     },
-    tableWithActions() {
+    tableColumns() {
       if (this.table.fields == null) return
 
-      const fields = this.table.fields.slice()
+      let fields = this.table.fields.slice()
+
+      const selectedFields = this.$route.query.__fields
+      if (selectedFields != null) {
+        selectedFields.split(',')
+        fields = fields.filter(e => selectedFields.indexOf(e.name) != -1)
+      }
+
+      console.log(fields, selectedFields)
 
       fields.push({
+        name: 'actions',
         custom_class: 'actions',
         component: 'ActionsTable',
-        display_name: '',
+        display_name: ' ',
         sticky: true
       })
 
@@ -101,7 +110,10 @@ export default {
         parent: this,
         component: ModalColumns,
         hasModalCard: true,
-        trapFocus: true
+        trapFocus: true,
+        props: {
+          table: this.table
+        }
       })
     }
   }

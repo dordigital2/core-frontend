@@ -9,7 +9,10 @@
         </button>
       </template>
 
-      <BaseTable :data="database.active_tables" :columns="columns.active_tables" />
+      <BaseTable
+        :data="database.active_tables"
+        :columns="columns.active_tables"
+      />
     </BaseCard>
 
     <BaseCard title="Archived tables">
@@ -56,7 +59,8 @@ export default {
             name: 'actions',
             display_name: ' ',
             component: 'ActionsDatabaseActive',
-            custom_class: 'actions'
+            custom_class: 'actions',
+            sticky: true
           }
         ],
         archived_tables: [
@@ -86,7 +90,8 @@ export default {
             name: 'actions',
             display_name: ' ',
             component: 'ActionsDatabaseArchived',
-            custom_class: 'actions'
+            custom_class: 'actions',
+            sticky: true
           }
         ]
       }

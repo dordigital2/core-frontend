@@ -1,3 +1,4 @@
+import router from '@/router/'
 import ApiService from './api'
 import { QueryString } from '@/utils/helpers'
 
@@ -18,15 +19,19 @@ const TableService = {
   },
 
   getEntries(id) {
-    return ApiService.get(`tables/${id}/entries/`)
+    // console.log(id, router)
+    const fields = router.currentRoute.query.__fields
+
+    const query = {}
+    if (fields != null) query.__fields = fields
+
+    const queryString = query != null ? '?' + QueryString(query) : ''
+
+    return ApiService.get(`tables/${id}/entries/${queryString}`)
   },
 
   getEntity(idTable, idEntity) {
     return ApiService.get(`tables/${idTable}/entries/${idEntity}/`)
-  },
-
-  getEntityByQuery(idTable, query) {
-    return ApiService.get(`tables/${idTable}/entries/?${QueryString(query)}`)
   },
 
   putEntity(idTable, idEntity, data) {

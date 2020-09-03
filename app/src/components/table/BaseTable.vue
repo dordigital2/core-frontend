@@ -1,28 +1,28 @@
 <template>
   <b-table :data="data" :loading="!data" v-bind="pagination">
-    <template v-for="column in columns">
-      <b-table-column
-        :key="column.id || column.name"
-        v-bind="{
-          label: column.display_name || column.name,
-          cellClass: column.custom_class,
-          sticky: column.sticky
-        }"
-      >
-        <template v-slot="props">
-          <template v-if="column.component">
-            <component
-              :is="column.component"
-              v-bind="{ props: props.row }"
-            ></component>
-          </template>
-
-          <template v-else>
-            {{ getValue(props.row.data, column.name, column.field_type) }}
-          </template>
+    <b-table-column
+      v-for="(column, index) in columns"
+      :key="`${index}-${column.name}`"
+      v-bind="{
+        label: column.display_name || column.name,
+        cellClass: column.custom_class,
+        headerClass: column.custom_class,
+        sticky: column.sticky
+      }"
+    >
+      <template v-slot="props">
+        <template v-if="column.component">
+          <component
+            :is="column.component"
+            v-bind="{ props: props.row }"
+          ></component>
         </template>
-      </b-table-column>
-    </template>
+
+        <template v-else>
+          {{ getValue(props.row.data, column.name, column.field_type) }}
+        </template>
+      </template>
+    </b-table-column>
 
     <template slot="empty">
       <p class="has-text-centered">
