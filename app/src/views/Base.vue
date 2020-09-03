@@ -18,15 +18,10 @@
       </div>
     </nav>
 
-    <div class="columns">
-      <div class="column is-narrow column-menu">
-        <BaseMenu />
-      </div>
-      <div class="column">
-        <div class="main-view">
-          <router-view />
-        </div>
-      </div>
+    <BaseMenu />
+
+    <div class="main-view">
+      <router-view />
     </div>
   </div>
 </template>

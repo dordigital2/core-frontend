@@ -5,7 +5,8 @@
         :key="column.id || column.name"
         v-bind="{
           label: column.display_name || column.name,
-          cellClass: column.custom_class
+          cellClass: column.custom_class,
+          sticky: column.sticky
         }"
       >
         <template v-slot="props">

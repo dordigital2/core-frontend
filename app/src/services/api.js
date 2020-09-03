@@ -14,11 +14,12 @@ const ApiService = {
       err => {
         // this.$store.commit('loading_stop')
         let msg = JSON.stringify(
-          err.response.data.non_field_errors || err.response.data
+          // err.response.data.non_field_errors || err.response.data
+          err.response.data.non_field_errors || err.response.status
         )
         if (err.response.status == null) msg = 'Check internet connection'
 
-        // console.log('err', JSON.stringify(err.response))
+        // console.log('err', JSON.stringify(err))
 
         ToastService.open(`Error<br> ${msg}`, {
           type: 'is-danger'

@@ -79,7 +79,8 @@ export default {
       fields.push({
         custom_class: 'actions',
         component: 'ActionsTable',
-        display_name: ''
+        display_name: '',
+        sticky: true
       })
 
       return fields
