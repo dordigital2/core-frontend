@@ -89,10 +89,7 @@ export default {
     columns() {
       if (this.table.fields == null) return
 
-      console.log('updating columns')
-
       let fields = []
-
       let selectedFields = this.$route.query.__fields
 
       if (selectedFields != null) {
@@ -101,8 +98,6 @@ export default {
         selectedFields.forEach(e => {
           fields.push(this.table.fields.find(t => t.name == e))
         })
-
-        // fields = fields.filter(e => selectedFields.indexOf(e.name) != -1)
       } else fields = this.table.fields.slice()
 
       fields.push({
@@ -139,6 +134,7 @@ export default {
       TableService.getEntries(this.table.id, this.$route.query).then(
         response => {
           this.data = response.results
+          // this.$set(this, 'data', response.results)
           this.count = response.count
           this.$emit('update', this.count)
 

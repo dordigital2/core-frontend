@@ -3,7 +3,7 @@
     <b-table v-if="data && columns" :data="data">
       <b-table-column
         v-for="(column, index) in columns"
-        :key="`${index}-${column.name}`"
+        :key="`${column.name}-${index}`"
         v-bind="{
           label: column.display_name || column.name,
           cellClass: column.custom_class,
@@ -54,7 +54,7 @@ export default {
     return {}
   },
   props: {
-    columns: Object,
+    columns: Array,
     data: Array
   },
   methods: {
