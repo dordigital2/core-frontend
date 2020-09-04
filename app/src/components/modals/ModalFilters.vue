@@ -104,7 +104,6 @@ export default {
       return FieldService.getFilterComponent(type)
     },
     getFilterLabel(field) {
-      console.log('getFilterLabel', field)
       let label = field.display_name
       const filter = this.filterData[field.name]
 
@@ -118,7 +117,7 @@ export default {
     },
     submit() {
       this.$store.commit('data/setFilters', this.filterData)
-      
+
       let query = {}
 
       Object.keys(this.filterData).forEach(key => {
@@ -139,9 +138,12 @@ export default {
         }
       })
 
+      // @TODO: better query composition for all possible non-table fields
+      const queryBase = this.$route.query.__fields ? { __fields: this.$route.query.__fields } : {}
+
       this.$router
         .push({
-          query: Object.assign({ __fields: this.$route.query.__fields }, query)
+          query: Object.assign(queryBase, query)
         })
         .catch(() => {})
         .then(() => {

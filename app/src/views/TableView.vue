@@ -80,7 +80,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('data/getTable', this.idTable).then(() => {
-      this.openModalFilters()
+      // this.openModalFilters()
     })
 
     // this.$store.dispatch('data/getTableEntries', { idTable: this.idTable })
