@@ -4,7 +4,7 @@
       <p class="modal-card-title">Choose which columns to display</p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
-    <pre>{{ selectedColumns }}</pre>
+    
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <section class="modal-card-body">
         <VField label="Selected columns" rules="">
