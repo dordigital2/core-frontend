@@ -1,0 +1,23 @@
+name: Update dev-server
+
+on: [push]
+
+env:
+    VUE_APP_ROOT_API: http://dev.api.paul.ro:8000/
+
+jobs:
+  build:
+    name: Update paul-web
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: executing remote ssh commands
+          if: github.ref == 'refs/heads/master'
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.DEV_SERVER_IP }}
+            username: ${{ secrets.DEV_SERVER_SSH_USERNAME }}
+            key: ${{ secrets.DEV_SERVER_SSH_KEY }}
+            script: "/root/paul-web/deploy/deploy.sh"
+
+
