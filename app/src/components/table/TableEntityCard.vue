@@ -42,6 +42,7 @@
 
 <script>
 import FieldService from '@/services/field'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TableEntityCard',
@@ -49,8 +50,14 @@ export default {
   data() {
     return {}
   },
+  computed: mapState({
+    table: function(state) {
+      return state.data.table[this.idTable]
+    }
+  }),
+
   props: {
-    table: Object,
+    idTable: Number,
     entities: Array,
     isEditable: Boolean
   },

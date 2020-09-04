@@ -1,12 +1,12 @@
 <template>
   <div>
     <b-table
-      v-if="data && columns"
-      :data="data"
+      v-if="tableEntries && columns"
+      :data="tableEntries.results"
       :loading="loading"
       :per-page="perPage"
       :current-page="page"
-      :total="count"
+      :total="tableEntries.count"
       @page-change="onPageChange"
       paginated
       backend-pagination
@@ -25,7 +25,7 @@
           <template v-if="column.component">
             <component
               :is="column.component"
-              v-bind="{ props: props.row }"
+              v-bind="{ props: props.row, ...column.props }"
             ></component>
           </template>
 
@@ -53,41 +53,42 @@
 </template>
 
 <script>
-import ActionsDatabaseArchived from './ActionsDatabaseArchived'
 import ActionsTable from './ActionsTable'
-import ActionsDatabaseActive from './ActionsDatabaseActive'
 import FieldOwnerLink from './FieldOwnerLink'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
 
-import { TableService } from '@/services/data'
+import { mapState } from 'vuex'
 
 export default {
   components: {
-    ActionsDatabaseArchived,
-    ActionsDatabaseActive,
     ActionsTable,
     FieldOwnerLink
   },
   data() {
     return {
       loading: false,
-      data: [],
-      table: this.tableDef,
       perPage: 10,
       perPageModel: 10,
-      page: 1,
-      count: 0
+      page: 1
     }
   },
   props: {
-    tableDef: Object,
-    pagination: Object
+    idTable: Number,
+    query: Object
   },
   computed: {
+    ...mapState({
+      table: function(state) {
+        return state.data.table[this.idTable]
+      },
+      tableEntries: function(state) {
+        return state.data.tableEntries[this.idTable]
+      }
+    }),
     columns() {
-      if (this.table.fields == null) return
+      if (this.table == null) return
 
       let fields = []
       let selectedFields = this.$route.query.__fields
@@ -105,7 +106,10 @@ export default {
         custom_class: 'actions',
         component: 'ActionsTable',
         display_name: ' ',
-        sticky: true
+        sticky: true,
+        props: {
+          idTable: this.idTable
+        }
       })
 
       return fields
@@ -114,10 +118,8 @@ export default {
   mounted() {
     this.loading = true
 
-    if (!this.tableDef) {
-      TableService.getTable(this.table.id).then(response => {
-        this.table = response
-      })
+    if (!this.table) {
+      this.$store.dispatch('data/getTable', this.idTable)
     }
 
     if (this.$route.query.perPage)
@@ -131,16 +133,14 @@ export default {
     getTableEntries() {
       this.loading = true
 
-      TableService.getEntries(this.table.id, this.$route.query).then(
-        response => {
-          this.data = response.results
-          // this.$set(this, 'data', response.results)
-          this.count = response.count
-          this.$emit('update', this.count)
-
+      this.$store
+        .dispatch('data/getTableEntries', {
+          idTable: this.table.id,
+          query: Object.assign({}, this.$route.query, this.query)
+        })
+        .then(() => {
           this.loading = false
-        }
-      )
+        })
     },
     getValue(row, field, type) {
       const value = getNestedObj(row, field)

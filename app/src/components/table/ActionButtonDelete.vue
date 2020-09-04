@@ -20,6 +20,7 @@ export default {
         message: this.dialogMessage,
         type: 'is-danger',
         onConfirm: () => {
+          // console.log('delete', this.storeAction, this.data)
           this.$store.dispatch(this.storeAction, this.data)
         },
         confirmText: 'Delete'

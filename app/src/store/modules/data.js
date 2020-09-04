@@ -1,5 +1,5 @@
 // import router from '@/router'
-
+import Vue from 'vue'
 import { DatabaseService, TableService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
@@ -7,19 +7,21 @@ export default {
   namespaced: true,
   state: {
     database: null,
-    table: null,
-    tableEntries: null,
+    table: {},
+    tableEntries: {},
     entity: null
   },
   mutations: {
     setDatabase(state, data) {
       state.database = data[0]
     },
-    setTable(state, data) {
-      state.table = data
+    setTable(state, { idTable, data }) {
+      Vue.set(state.table, idTable, data)
+      // state.table = data
     },
-    setTableEntries(state, data) {
-      state.tableEntries = data
+    setTableEntries(state, { idTable, data }) {
+      Vue.set(state.tableEntries, idTable, data)
+      // state.tableEntries = data
     },
     setEntity(state, data) {
       state.entity = data
@@ -34,13 +36,13 @@ export default {
 
     getTable({ commit }, idTable) {
       return TableService.getTable(idTable).then(response => {
-        commit('setTable', response)
+        commit('setTable', { idTable, data: response })
       })
     },
 
     getTableEntries({ commit }, { idTable, query }) {
       return TableService.getEntries(idTable, query).then(response => {
-        commit('setTableEntries', response)
+        commit('setTableEntries', { idTable, data: response })
       })
     },
 
@@ -60,7 +62,7 @@ export default {
 
     deleteEntity({ dispatch }, { idTable, idEntity }) {
       return TableService.deleteEntity(idTable, idEntity).then(() => {
-        dispatch('getTableEntries', idTable).then(() => {
+        dispatch('getTableEntries', { idTable }).then(() => {
           ToastService.open('The entity has been deleted')
         })
       })

@@ -2,12 +2,12 @@
   <div>
     <ActionButtonGoto
       icon="eye-outline"
-      :path="{ name: 'entity-view', params: { idEntity: props.id } }"
+      :path="{ name: 'entity-view', params: { idTable, idEntity: props.id } }"
     />
 
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="{ name: 'entity-edit', params: { idEntity: props.id } }"
+      :path="{ name: 'entity-edit', params: { idTable, idEntity: props.id } }"
     />
 
     <ActionButtonDelete
@@ -15,7 +15,7 @@
       dialogMessage="This operation permanently removes all the fields of this entry. Please check the data before proceeding."
       storeAction="data/deleteEntity"
       :data="{
-        idTable: $route.params.idTable,
+        idTable,
         idEntity: props.id
       }"
     />
@@ -33,6 +33,7 @@ export default {
     ActionButtonGoto
   },
   props: {
+    idTable: Number,
     props: Object
   },
   methods: {}

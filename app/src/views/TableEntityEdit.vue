@@ -45,23 +45,25 @@ export default {
   components: {},
   data() {
     return {
+      idTable: Number(this.$route.params.idTable),
       entity: null
     }
   },
   computed: {
     ...mapState({
-      table: state => state.data.table
+      table: function(state) {
+        return state.data.table[this.idTable]
+      }
     })
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.$route.params.idTable)
+    this.$store.dispatch('data/getTable', this.idTable)
 
-    TableService.getEntity(
-      this.$route.params.idTable,
-      this.$route.params.idEntity
-    ).then(response => {
-      this.entity = response
-    })
+    TableService.getEntity(this.idTable, this.$route.params.idEntity).then(
+      response => {
+        this.entity = response
+      }
+    )
   },
   methods: {
     findField(name) {
@@ -72,7 +74,7 @@ export default {
     },
     save() {
       return TableService.putEntity(
-        this.$route.params.idTable,
+        this.idTable,
         this.$route.params.idEntity,
         this.entity.data
       ).then(() => {

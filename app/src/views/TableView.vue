@@ -34,7 +34,7 @@
         >
       </div>
 
-      <BaseTableAsync :tableDef="table" @update="updateCount" />
+      <BaseTableAsync :idTable="table.id" />
     </BaseCard>
   </div>
 </template>
@@ -48,13 +48,18 @@ export default {
   components: {},
   data() {
     return {
-      count: null
+      count: null,
+      idTable: Number(this.$route.params.idTable)
     }
   },
   computed: {
     ...mapState({
-      table: state => state.data.table,
-      tableEntries: state => state.data.tableEntries
+      table: function(state) {
+        return state.data.table[this.idTable]
+      },
+      tableEntries: function(state) {
+        return state.data.tableEntries[this.idTable]
+      }
     }),
     title() {
       return 'Table – ' + this.table.name
@@ -62,20 +67,17 @@ export default {
     titleWithCount() {
       return (
         this.title +
-        (this.count
-          ? ` <span class='entries'>${this.count} entries</span>`
+        (this.tableEntries
+          ? ` <span class='entries'>${this.tableEntries.count} entries</span>`
           : '')
       )
     }
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.$route.params.idTable)
-    // this.$store.dispatch('data/getTableEntries', this.$route.params.idTable)
+    this.$store.dispatch('data/getTable', this.idTable)
+    // this.$store.dispatch('data/getTableEntries', { idTable: this.idTable })
   },
   methods: {
-    updateCount(count) {
-      this.count = count
-    },
     openModalColumns() {
       this.$buefy.modal.open({
         parent: this,

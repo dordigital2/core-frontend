@@ -25,7 +25,7 @@
             <VField label="Table">
               <b-select
                 placeholder="Select a table"
-                v-model="idTable"
+                v-model="idLinkTable"
                 @input="getTableFields"
                 expanded
               >
@@ -82,29 +82,33 @@ export default {
     return {
       field: null,
       source: null,
-      idTable: null,
+      idLinkTable: null,
       loading: false,
       fields: []
     }
   },
-  props: {},
+  props: {
+    idTable: Number
+  },
   computed: mapState({
     database: state => state.data.database,
-    table: state => state.data.table
+    table: function(state) {
+      return state.data.table[this.idTable]
+    }
   }),
   methods: {
     getTableFields() {
       this.loading = true
       this.field = null
 
-      TableService.getTable(this.idTable).then(response => {
+      TableService.getTable(this.idLinkTable).then(response => {
         this.fields = response.fields
         this.loading = false
       })
     },
     addTableView() {
       this.$emit('input', {
-        idTable: this.idTable,
+        idLinkTable: this.idLinkTable,
         linkField: this.field,
         sourceField: this.table.fields[this.source].name
       })
