@@ -9,9 +9,9 @@
     <TableEntityCard
       v-for="(link, index) in tableLinks"
       :key="`tableLink${index}`"
-      :table="link.table"
-      :idTable="idTable"
-      :entities="link.entities"
+      :idTable="link.idLinkTable"
+      :entity="link.entity"
+      :query="link.query"
       isEditable
     />
 
@@ -50,24 +50,21 @@ export default {
       TableService.getEntity(this.idTable, this.$route.params.idEntity).then(
         response => {
           this.entity = response
-          this.tableLinks.push({ table: this.table, entities: [response] })
+          this.tableLinks.push({
+            idLinkTable: this.idTable,
+            entity: response,
+            table: this.table
+          })
         }
       )
     },
-    addLinkTable({ idLinkTable, linkField, sourceField }) {
-      TableService.getTable(idLinkTable).then(response => {
-        const table = response
+    addLinkTable({ sourceField, idLinkTable, linkField }) {
+      const query = {
+        __fields: 'ALL',
+        [linkField]: this.entity.data[sourceField]
+      }
 
-        const query = {
-          __fields: 'ALL',
-          [linkField]: this.entity.data[sourceField]
-        }
-
-        TableService.getEntries(idLinkTable, query).then(response => {
-          // console.log('getEntries', response)
-          this.tableLinks.push({ table, entities: response.results })
-        })
-      })
+      this.tableLinks.push({ idLinkTable, query })
     }
   }
 }

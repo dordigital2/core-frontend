@@ -1,17 +1,17 @@
 <template>
-  <BaseCard :title="`Table – ${table.name}`">
+  <BaseCard :title="`Table – ${table.name}`" v-if="table && entities">
     <template #actions v-if="entities.length == 1">
       <router-link
         :to="{
           name: 'entity-edit',
-          params: { idTable: table.id, idEntity: entities[0].id }
+          params: { idTable: idTable, idEntity: entities[0].id }
         }"
         class="button is-primary"
         >Edit entity</router-link
       >
     </template>
 
-    <template v-if="entities.length">
+    <template v-if="entities">
       <div
         class="columns is-multiline is-gapless card-container card-list-item"
         v-for="(entity, index) in entities"
@@ -48,17 +48,22 @@ export default {
   name: 'TableEntityCard',
   components: {},
   data() {
-    return {}
+    return {
+      entities: []
+    }
   },
   computed: mapState({
     table: function(state) {
       return state.data.table[this.idTable]
+    },
+    tableEntries: function(state) {
+      return state.data.tableEntries[this.idTable]
     }
   }),
-
   props: {
     idTable: Number,
-    entities: Array,
+    query: Object,
+    entity: Object,
     isEditable: Boolean
   },
   methods: {
@@ -66,6 +71,20 @@ export default {
       return FieldService.getParsedValue(value, type)
     }
   },
-  mount: {}
+  mounted() {
+    if (!this.table) this.$store.dispatch('data/getTable', this.idTable)
+
+    if (this.entity) this.entities = [this.entity]
+    else
+      this.$store.dispatch('data/getTableEntries', {
+        idTable: this.idTable,
+        query: this.query
+      })
+  },
+  watch: {
+    tableEntries(value) {
+      this.entities = value.results
+    }
+  }
 }
 </script>

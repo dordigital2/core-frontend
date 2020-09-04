@@ -15,7 +15,7 @@
       <template slot="label" v-if="label">
         {{ label }}
         <b-tooltip v-if="labelInfo" type="is-dark" :label="labelInfo">
-          <b-icon icon="question-circle" size="is-small"></b-icon>
+          <b-icon icon="help-circle-outline" class="is-size-5"></b-icon>
         </b-tooltip>
       </template>
 
@@ -37,7 +37,7 @@ export default {
   props: {
     rules: {
       type: [Object, String],
-      default: 'required'
+      default: ''
     },
     name: String,
     label: String,

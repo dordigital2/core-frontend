@@ -8,7 +8,7 @@
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VField label="Password">
+        <VField label="Password" rules="required">
           <b-input v-model="password" name="password" />
         </VField>
 

@@ -19,6 +19,7 @@ import MenuDown from 'vue-material-design-icons/MenuDown.vue'
 import MenuUp from 'vue-material-design-icons/MenuUp.vue'
 import MonitorDashboard from 'vue-material-design-icons/MonitorDashboard.vue'
 import Power from 'vue-material-design-icons/Power.vue'
+import HelpCircleOutline from 'vue-material-design-icons/HelpCircleOutline.vue'
 import SquareEditOutline from 'vue-material-design-icons/SquareEditOutline.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
@@ -41,6 +42,7 @@ export default {
     MenuUp,
     MonitorDashboard,
     Power,
+    HelpCircleOutline,
     SquareEditOutline,
     TrashCanOutline
   },

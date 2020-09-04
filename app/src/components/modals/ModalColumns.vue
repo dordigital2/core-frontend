@@ -69,7 +69,7 @@ export default {
         .then(() => {
           this.$store
             .dispatch('data/getTableEntries', {
-              idTable: Number(this.$route.params.idTable),
+              idTable: this.$route.params.idTable,
               query: this.$route.query
             })
             .then(() => {

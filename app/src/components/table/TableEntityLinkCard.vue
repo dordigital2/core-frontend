@@ -41,7 +41,7 @@
           </div>
 
           <div class="column">
-            <VField label="Linked field">
+            <VField label="Linked field" labelInfo="Field types must match">
               <b-select
                 placeholder="Select a field"
                 v-model="field"
@@ -108,9 +108,9 @@ export default {
     },
     addTableView() {
       this.$emit('input', {
+        sourceField: this.table.fields[this.source].name,
         idLinkTable: this.idLinkTable,
-        linkField: this.field,
-        sourceField: this.table.fields[this.source].name
+        linkField: this.field
       })
     },
     checkLinkFieldtype(type) {

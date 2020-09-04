@@ -1,7 +1,7 @@
 <template>
   <div class="modal-card" style="width: 960px">
     <header class="modal-card-head">
-      <p class="modal-card-title">Choose which columns to display</p>
+      <p class="modal-card-title">Filter options</p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
     
@@ -69,7 +69,7 @@ export default {
         .then(() => {
           this.$store
             .dispatch('data/getTableEntries', {
-              idTable: Number(this.$route.params.idTable),
+              idTable: this.$route.params.idTable,
               query: this.$route.query
             })
             .then(() => {
