@@ -81,6 +81,7 @@ $input-shadow: none;
 $input-radius: $radius-small;
 $input-focus-box-shadow-size: 0;
 $input-focus-box-shadow-color: $blue;
+$input-icon-color: $grey-darker;
 
 $input-color: $blue;
 $input-background-color: $white;
@@ -153,6 +154,7 @@ $box-padding: 0;
 
 // tags
 $tag-radius: $radius-small;
+$tag-background-color: $grey-select;
 
 // screen
 $desktop: 1080px;

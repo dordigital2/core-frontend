@@ -98,3 +98,26 @@
     }
   }
 }
+
+.filter-display {
+  .label {
+    font-size: $size-7;
+  }
+  
+  .tag {
+    font-weight: $weight-medium;
+    font-size: $size-7;
+    white-space: normal;
+    min-height: 2em;
+    height: auto;
+  }
+
+  &.is-horizontal {
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    .field {
+      margin-right: 12px;
+    }
+  }
+}

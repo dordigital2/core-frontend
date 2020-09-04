@@ -18,6 +18,7 @@ import {
   Snackbar,
   Switch,
   Table,
+  Tag,
   Tabs,
   Taginput,
   Toast,
@@ -105,6 +106,7 @@ const MyBuefy = {
     Vue.use(Select)
     Vue.use(Table)
     Vue.use(Tabs)
+    Vue.use(Tag)
     Vue.use(Taginput)
     Vue.use(Toast)
     Vue.use(Tooltip)

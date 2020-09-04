@@ -22,7 +22,7 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
 // @import 'buefy/src/scss/components/_dropdown.scss';
 @import 'buefy/src/scss/components/_datepicker.scss';
 @import 'buefy/src/scss/components/_dialog.scss';
-// @import 'buefy/src/scss/components/_form.scss';
+@import 'buefy/src/scss/components/_form.scss';
 // @import 'buefy/src/scss/components/_icon.scss';
 @import 'buefy/src/scss/components/_loading.scss';
 // @import 'buefy/src/scss/components/_modal.scss';
@@ -32,7 +32,7 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
 @import 'buefy/src/scss/components/_table.scss';
 // @import 'buefy/src/scss/components/_select.scss';
 @import 'buefy/src/scss/components/_switch.scss';
-// @import 'buefy/src/scss/components/_tabs.scss';
+@import 'buefy/src/scss/components/_tabs.scss';
 // @import 'buefy/src/scss/components/_tag.scss';
 @import 'buefy/src/scss/components/_taginput.scss';
 @import 'buefy/src/scss/components/_tooltip.scss';
@@ -145,5 +145,50 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
   &:after {
     border-left-color: $blue;
     border-bottom-color: $blue;
+  }
+}
+
+.b-tabs {
+  &.filter-tabs {
+    flex-wrap: nowrap;
+
+    .tab-content {
+      margin-top: -24px;
+      padding: 0 0 0 64px;
+
+      .tab-content-head {
+        text-align: right;
+        padding: 0 0 15px 0;
+      }
+    }
+
+    .tabs {
+      margin-left: -10px;
+
+      li {
+        a {
+          color: $grey-darker;
+          border: 0;
+          line-height: 24px;
+          padding: 0 30px 0 10px;
+          border-radius: $radius-small;
+          font-size: $size-6;
+          width: 100%;
+        }
+
+        &.is-active {
+          a {
+            background-color: $blue;
+            color: $white;
+          }
+        }
+
+        &.is-highlight:not(.is-active) {
+          a {
+            color: $blue;
+          }
+        }
+      }
+    }
   }
 }

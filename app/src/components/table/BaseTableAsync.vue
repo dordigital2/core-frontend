@@ -167,6 +167,11 @@ export default {
       // this.page = 1
       this.updateQueryRequest({ perPage: this.perPage })
     }
+  },
+  watch: {
+    '$route.query'() {
+      this.getTableEntries()
+    }
   }
 }
 </script>

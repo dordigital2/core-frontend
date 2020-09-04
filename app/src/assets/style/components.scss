@@ -130,6 +130,12 @@ nav.navbar {
       font-weight: $weight-bold;
     }
 
+    .modal-card-body {
+      .button {
+        height: 34px;
+      }
+    }
+
     .modal-card-foot {
       justify-content: flex-end;
 

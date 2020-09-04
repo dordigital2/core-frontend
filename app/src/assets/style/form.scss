@@ -26,6 +26,13 @@
   }
 }
 
+.control {
+  .icon.is-clickable {
+    color: $grey-dark;
+    font-size: $size-3;
+  }
+}
+
 .checkbox {
   line-height: 1.5;
 

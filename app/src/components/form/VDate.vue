@@ -4,7 +4,7 @@
     iconPrev="arrow-left"
     iconNext="arrow-right"
     v-model="innerValue"
-    v-bind="{ customClass, disabled, placeholder, readonly }"
+    v-bind="{ customClass, disabled, placeholder, readonly, inline }"
   />
 </template>
 
@@ -15,12 +15,13 @@ export default {
     customClass: String,
     disabled: String,
     placeholder: String,
+    inline: Boolean,
     readonly: Boolean,
     value: null
   },
   data() {
     return {
-      innerValue: new Date(this.value)
+      innerValue: this.value ? new Date(this.value) : null
     }
   },
   watch: {

@@ -4,79 +4,177 @@
       <p class="modal-card-title">Filter options</p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
-    
-    <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <section class="modal-card-body">
-        <VField label="Selected columns" rules="">
-          <b-taginput v-model="selectedColumns" type="is-dark" :maxtags="0" />
-        </VField>
 
-        <VField label="Column list" rules="required|over:2|under:7">
-          <div class="checkbox-list is-size-6">
-            <b-checkbox
-              v-for="(col, index) in table.fields"
-              :key="'check' + index"
-              v-model="selectedColumns"
-              :native-value="col.name"
+    <section class="modal-card-body" v-if="table">
+      <div class="columns">
+        <div class="column">
+          <p class="has-text-weight-semibold is-size-6">Filter list</p>
+
+          <b-tabs
+            v-model="activeTab"
+            class="filter-tabs"
+            :animated="false"
+            vertical
+          >
+            <b-tab-item
+              v-for="field in table.fields"
+              :key="field.id"
+              :label="getFilterLabel(field)"
+              :header-class="{
+                'is-highlight':
+                  filterData[field.name] != null &&
+                  filterData[field.name].length
+              }"
             >
-              {{ col.display_name }}
-            </b-checkbox>
-          </div>
-        </VField>
-      </section>
-      <footer class="modal-card-foot">
-        <button class="button is-dark is-outlined" @click="$emit('close')">
-          Cancel
-        </button>
-        <button class="button is-dark" @click="passes(submit)">Apply</button>
-      </footer>
-    </ValidationObserver>
+              <div class="tab-content-head">
+                <b-button
+                  type="is-dark"
+                  :disabled="
+                    !(
+                      (filterData[field.name] &&
+                        filterData[field.name].length) ||
+                      filterData[field.name] === true
+                    )
+                  "
+                  @click="$set(filterData, field.name, undefined)"
+                  >Clear filter</b-button
+                >
+              </div>
+
+              <component
+                v-model="filterData[field.name]"
+                :placeholder="field.display_name"
+                :choices="field.choices"
+                :name="field.name"
+                :is="getComponent(field.field_type)"
+              />
+            </b-tab-item>
+          </b-tabs>
+        </div>
+        <div class="column is-3">
+          <p class="has-text-weight-semibold is-size-6">Selected filters</p>
+          <br />
+
+          <FilterDisplay :fields="table.fields" />
+        </div>
+      </div>
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-dark is-outlined" @click="$emit('close')">
+        Cancel
+      </button>
+      <button class="button is-dark" @click="submit">Apply</button>
+    </footer>
   </div>
 </template>
 
 <script>
-// @TODO: disable checkboxes? :disabled="selectedColumns.length == 7 && selectedColumns.indexOf(col) == -1"
+import FieldService from '@/services/field'
+
+import FilterEnum from '@/components/filters/FilterEnum'
+import FilterNumeric from '@/components/filters/FilterNumeric'
+import FilterDate from '@/components/filters/FilterDate'
+import FilterDisplay from '@/components/filters/FilterDisplay'
+
+import { mapState } from 'vuex'
 
 export default {
-  name: 'ModalColumns',
+  name: 'ModalFilters',
+  components: { FilterEnum, FilterNumeric, FilterDisplay, FilterDate },
   props: {
     table: Object
   },
   data() {
     return {
-      selectedColumns: this.table.default_fields
+      activeTab: 0,
+      filterData: {}
     }
   },
+  computed: mapState({
+    filters: state => state.data.filters
+  }),
   mounted() {
-    if (this.$route.query.__fields != null)
-      this.selectedColumns = this.$route.query.__fields.split(',')
+    if (this.filters != null) this.filterData = Object.assign({}, this.filters)
+    // this.table.fields.forEach(e => {
+    //   this.$set(this.filters, e.name, null)
+    // })
   },
   methods: {
-    columnTags() {
-      // return this.selectedColumns.map(e => this.columns.find(c => c.name == e))
+    getComponent(type) {
+      return FieldService.getFilterComponent(type)
     },
-    compareArrays(a, b) {
-      return JSON.stringify(a) == JSON.stringify(b)
+    getFilterLabel(field) {
+      console.log('getFilterLabel', field)
+      let label = field.display_name
+      const filter = this.filterData[field.name]
+
+      if (filter != null) {
+        if (Array.isArray(filter)) {
+          if (filter.length) label += ` (${this.filterData[field.name].length})`
+        } else label += ' (1)'
+      }
+
+      return label
     },
     submit() {
+      this.$store.commit('data/setFilters', this.filterData)
+      
+      let query = {}
+
+      Object.keys(this.filterData).forEach(key => {
+        let e = this.filterData[key]
+
+        if (e != null) {
+          if (Array.isArray(e) && e.length) {
+            query[key] = e.join(',')
+          } else if (typeof e == 'object') {
+            if (e.type == 'interval') {
+              query[`${key}__gte`] = e.values[0]
+              query[`${key}__lte`] = e.values[1]
+            } else {
+              query[key] = e.values[0]
+            }
+            // } else if (typeof e == 'string') query[`${key}__icontains`] = e
+          } else query[key] = e.toString()
+        }
+      })
+
       this.$router
         .push({
-          query: Object.assign({}, this.$route.query, {
-            __fields: this.selectedColumns.join(',')
-          })
+          query: Object.assign({ __fields: this.$route.query.__fields }, query)
         })
         .catch(() => {})
         .then(() => {
-          this.$store
-            .dispatch('data/getTableEntries', {
-              idTable: this.$route.params.idTable,
-              query: this.$route.query
-            })
-            .then(() => {
-              this.$emit('close')
-            })
+          this.$emit('close')
         })
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.modal-card {
+  overflow: visible;
+
+  .modal-card-head {
+    border-bottom: 1px solid $grey-lighter;
+  }
+
+  .modal-card-foot {
+    border-top: 1px solid $grey-lighter;
+  }
+
+  .modal-card-body {
+    padding: 15px 24px;
+    overflow: visible;
+    //
+    .columns {
+      .column {
+        &:last-child {
+          border-left: 1px solid $grey-lighter;
+        }
+      }
+    }
+  }
+}
+</style>

@@ -9,7 +9,8 @@ export default {
     database: null,
     table: {},
     tableEntries: {},
-    entity: null
+    entity: null,
+    filters: {}
   },
   mutations: {
     setDatabase(state, data) {
@@ -25,6 +26,9 @@ export default {
     },
     setEntity(state, data) {
       state.entity = data
+    },
+    setFilters(state, data) {
+      state.filters = data
     }
   },
   actions: {

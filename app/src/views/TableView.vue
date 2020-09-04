@@ -5,13 +5,15 @@
     <BaseCard title="Filtering">
       <template #actions>
         <div class="buttons">
-          <button class="button is-light">Reset filters</button>
-          <button class="button is-dark">Add filters</button>
+          <button class="button is-light" @click="resetFilters">Reset filters</button>
+          <button class="button is-dark" @click="openModalFilters">
+            Add filters
+          </button>
         </div>
       </template>
 
       <div class="card-container">
-        @TODO: No filters yet
+        <FilterDisplay :fields="table.fields" class="is-horizontal" />
       </div>
     </BaseCard>
 
@@ -41,11 +43,14 @@
 
 <script>
 import ModalColumns from '@/components/modals/ModalColumns'
+import ModalFilters from '@/components/modals/ModalFilters'
+import FilterDisplay from '@/components/filters/FilterDisplay'
+
 import { mapState } from 'vuex'
 
 export default {
   name: 'TableView',
-  components: {},
+  components: { FilterDisplay },
   data() {
     return {
       count: null,
@@ -53,12 +58,12 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('data', {
       table: function(state) {
-        return state.data.table[this.idTable]
+        return state.table[this.idTable]
       },
       tableEntries: function(state) {
-        return state.data.tableEntries[this.idTable]
+        return state.tableEntries[this.idTable]
       }
     }),
     title() {
@@ -74,7 +79,10 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.idTable)
+    this.$store.dispatch('data/getTable', this.idTable).then(() => {
+      this.openModalFilters()
+    })
+
     // this.$store.dispatch('data/getTableEntries', { idTable: this.idTable })
   },
   methods: {
@@ -88,6 +96,22 @@ export default {
           table: this.table
         }
       })
+    },
+
+    openModalFilters() {
+      this.$buefy.modal.open({
+        parent: this,
+        component: ModalFilters,
+        hasModalCard: true,
+        trapFocus: true,
+        props: {
+          table: this.table
+        }
+      })
+    },
+
+    resetFilters() {
+      this.$store.commit('data/setFilters', {})
     }
   }
 }
