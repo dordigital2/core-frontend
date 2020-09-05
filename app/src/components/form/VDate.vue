@@ -26,11 +26,10 @@ export default {
   },
   watch: {
     innerValue(input) {
-      this.$emit('input', input)
+      this.$emit('input', input.toISOString())
     },
-
     value(input) {
-      this.innerValue = input
+      this.innerValue = new Date(input)
     }
   }
 }

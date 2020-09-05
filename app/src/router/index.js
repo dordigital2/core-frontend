@@ -98,7 +98,7 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableEntityView.vue')
       },
       {
-        path: 'table-view/:idTable/entity-edit/:idEntity',
+        path: 'table-view/:idTable/entity-edit/:idEntity?',
         name: 'entity-edit',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableEntityEdit.vue')

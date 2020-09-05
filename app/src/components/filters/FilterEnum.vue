@@ -35,7 +35,7 @@ export default {
     return {
       search: null,
       filterChoices: this.choices,
-      innerValue: this.value != null || []
+      innerValue: this.value != null ? this.value : []
     }
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
   },
   watch: {
     innerValue(input) {
-      this.$emit('input', input)
+      this.$emit('input', input.length ? input : undefined)
     },
 
     value(input) {

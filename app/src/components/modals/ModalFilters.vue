@@ -36,7 +36,7 @@
                       filterData[field.name] === true
                     )
                   "
-                  @click="$set(filterData, field.name, undefined)"
+                  @click="$delete(filterData, field.name)"
                   >Clear filter</b-button
                 >
               </div>
@@ -55,7 +55,9 @@
           <p class="has-text-weight-semibold is-size-6">Selected filters</p>
           <br />
 
-          <FilterDisplay :fields="table.fields" />
+          <pre>{{ filterData }}</pre>
+
+          <FilterDisplay :fields="table.fields" :filterData="filterData" />
         </div>
       </div>
     </section>
@@ -94,7 +96,7 @@ export default {
     filters: state => state.data.filters
   }),
   mounted() {
-    if (this.filters != null) this.filterData = Object.assign({}, this.filters)
+    if (this.filters != null) this.filterData = { ...this.filters }
     // this.table.fields.forEach(e => {
     //   this.$set(this.filters, e.name, null)
     // })
@@ -118,6 +120,7 @@ export default {
     submit() {
       this.$store.commit('data/setFilters', this.filterData)
 
+      // console.log(JSON.stringify(this.filterData), JSON.stringify(query))
       let query = {}
 
       Object.keys(this.filterData).forEach(key => {
@@ -131,24 +134,23 @@ export default {
               query[`${key}__gte`] = e.values[0]
               query[`${key}__lte`] = e.values[1]
             } else {
-              query[key] = e.values[0]
+              query[`${key}__${e.type}`] = e.values[0]
             }
             // } else if (typeof e == 'string') query[`${key}__icontains`] = e
-          } else query[key] = e.toString()
+          } else query[`${key}__icontains`] = e.toString()
         }
       })
 
-      // @TODO: better query composition for all possible non-table fields
-      const queryBase = this.$route.query.__fields ? { __fields: this.$route.query.__fields } : {}
+      const __fields = this.$route.query.__fields
 
       this.$router
         .push({
-          query: Object.assign(queryBase, query)
+          query: Object.assign({ ...(__fields && { __fields }) }, query)
         })
         .catch(() => {})
-        .then(() => {
-          this.$emit('close')
-        })
+        .then(() => {})
+
+      this.$emit('close')
     }
   }
 }

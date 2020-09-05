@@ -76,7 +76,7 @@ export default {
   },
   props: {
     idTable: Number,
-    query: Object
+    updateQueryNav: { type: Boolean, default: false }
   },
   computed: {
     ...mapState({
@@ -136,7 +136,7 @@ export default {
       this.$store
         .dispatch('data/getTableEntries', {
           idTable: this.table.id,
-          query: Object.assign({}, this.$route.query, this.query)
+          query: Object.assign({}, this.$route.query)
         })
         .then(() => {
           this.loading = false
@@ -149,11 +149,12 @@ export default {
       return null
     },
     updateQueryRequest(obj) {
-      this.$router
-        .push({
-          query: Object.assign({}, this.$route.query, obj)
-        })
-        .catch(() => {})
+      if (this.updateQueryNav)
+        this.$router
+          .push({
+            query: Object.assign({}, this.$route.query, obj)
+          })
+          .catch(() => {})
 
       this.getTableEntries()
     },

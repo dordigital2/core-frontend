@@ -5,7 +5,9 @@
     <BaseCard title="Filtering">
       <template #actions>
         <div class="buttons">
-          <button class="button is-light" @click="resetFilters">Reset filters</button>
+          <button class="button is-light" @click="resetFilters">
+            Reset filters
+          </button>
           <button class="button is-dark" @click="openModalFilters">
             Add filters
           </button>
@@ -19,9 +21,18 @@
 
     <BaseCard :title="titleWithCount">
       <template #actions>
-        <button class="button is-dark" @click="openModalColumns">
-          Change view
-        </button>
+        <div class="buttons">
+          <button class="button is-dark" @click="openModalColumns">
+            Change view
+          </button>
+
+          <router-link
+            class="button is-primary"
+            :to="{ name: `entity-edit`, params: { idTable } }"
+          >
+            Add new entry
+          </router-link>
+        </div>
       </template>
 
       <div class="card-container">
@@ -36,7 +47,7 @@
         >
       </div>
 
-      <BaseTableAsync :idTable="table.id" />
+      <BaseTableAsync :idTable="table.id" updateQueryNav />
     </BaseCard>
   </div>
 </template>
@@ -54,7 +65,11 @@ export default {
   data() {
     return {
       count: null,
-      idTable: Number(this.$route.params.idTable)
+      idTable: Number(this.$route.params.idTable),
+      query: {
+        fields: null,
+        filters: null
+      }
     }
   },
   computed: {
@@ -79,9 +94,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.idTable).then(() => {
-      // this.openModalFilters()
-    })
+    this.$store.dispatch('data/getTable', this.idTable).then(() => {})
 
     // this.$store.dispatch('data/getTableEntries', { idTable: this.idTable })
   },
@@ -112,6 +125,16 @@ export default {
 
     resetFilters() {
       this.$store.commit('data/setFilters', {})
+
+      const __fields = this.$route.query.__fields
+
+      this.$router
+        .push({
+          query: { ...(__fields && { __fields }) }
+        })
+        .catch(() => {})
+
+      console.log(this.$route.query)
     }
   }
 }

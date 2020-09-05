@@ -27,6 +27,11 @@ const TableService = {
     return ApiService.get(`tables/${idTable}/entries/${idEntity}/`)
   },
 
+  postEntity(idTable, data) {
+    // console.log(JSON.stringify(data))
+    return ApiService.post(`tables/${idTable}/entries/`, data)
+  },
+  
   putEntity(idTable, idEntity, data) {
     return ApiService.put(`tables/${idTable}/entries/${idEntity}/`, data)
   },
