@@ -25,10 +25,10 @@
         </VField>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-dark is-outlined" @click="$emit('close')">
+        <b-button class="is-dark is-outlined" @click="$emit('close')">
           Cancel
-        </button>
-        <button class="button is-dark" @click="passes(submit)">Apply</button>
+        </b-button>
+        <b-button class="is-dark" @click="passes(submit)">Apply</b-button>
       </footer>
     </ValidationObserver>
   </div>

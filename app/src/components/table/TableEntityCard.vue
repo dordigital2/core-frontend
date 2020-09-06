@@ -63,8 +63,7 @@ export default {
   props: {
     idTable: Number,
     query: Object,
-    entity: Object,
-    isEditable: Boolean
+    entity: Object
   },
   methods: {
     getParsedValue(value, type) {

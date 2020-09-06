@@ -12,7 +12,6 @@
       :idTable="link.idLinkTable"
       :entity="link.entity"
       :query="link.query"
-      isEditable
     />
 
     <TableEntityLinkCard :idTable="Number(idTable)" @input="addLinkTable" />

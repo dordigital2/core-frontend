@@ -1,9 +1,9 @@
 <template>
   <header class="main-header">
     <div class="back-button" v-if="hasBackButton">
-      <button class="button" @click="$router.go(-1)">
-        <b-icon icon="arrow-left" /><span>Back</span>
-      </button>
+      <b-button @click="goBack" iconLeft="arrow-left">
+        Back
+      </b-button>
     </div>
     <p class="title">{{ title }}</p>
   </header>
@@ -18,6 +18,13 @@ export default {
     hasBackButton: {
       type: Boolean,
       default: true
+    },
+    backTo: String
+  },
+  methods: {
+    goBack() {
+      if (!this.backTo) this.$router.go(-1)
+      else this.$router.push({ name: this.backTo })
     }
   }
 }

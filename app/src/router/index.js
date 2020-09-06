@@ -71,19 +71,13 @@ const routes = [
         path: 'database-view',
         name: 'database-view',
         component: () =>
-          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue'),
-        props: {
-          isEditable: true
-        }
+          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue')
       },
       {
         path: 'edit-data',
         name: 'edit-data',
         component: () =>
-          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue'),
-        props: {
-          isEditable: true
-        }
+          import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue')
       },
       {
         path: 'table-view/:idTable',
@@ -92,10 +86,28 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableView.vue')
       },
       {
+        path: 'table-add/',
+        name: 'table-add',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableAdd.vue')
+      },
+      {
+        path: 'table-edit/:idTable?',
+        name: 'table-edit',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableEdit.vue')
+      },
+      {
         path: 'table-view/:idTable/entity-view/:idEntity',
         name: 'entity-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableEntityView.vue')
+      },
+      {
+        path: 'table-import',
+        name: 'table-import',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableImport.vue')
       },
       {
         path: 'table-view/:idTable/entity-edit/:idEntity?',

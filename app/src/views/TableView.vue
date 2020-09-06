@@ -5,12 +5,12 @@
     <BaseCard title="Filtering">
       <template #actions>
         <div class="buttons">
-          <button class="button is-light" @click="resetFilters">
+          <b-button class="is-light" @click="resetFilters">
             Reset filters
-          </button>
-          <button class="button is-dark" @click="openModalFilters">
+          </b-button>
+          <b-button class="is-dark" @click="openModalFilters">
             Add filters
-          </button>
+          </b-button>
         </div>
       </template>
 
@@ -22,9 +22,9 @@
     <BaseCard :title="titleWithCount">
       <template #actions>
         <div class="buttons">
-          <button class="button is-dark" @click="openModalColumns">
+          <b-button class="is-dark" @click="openModalColumns">
             Change view
-          </button>
+          </b-button>
 
           <router-link
             class="button is-primary"
@@ -32,6 +32,10 @@
           >
             Add new entry
           </router-link>
+
+          <a :href="exportPath" class="button is-primary" target="_blank">
+            Export
+          </a>
         </div>
       </template>
 
@@ -57,6 +61,8 @@ import ModalColumns from '@/components/modals/ModalColumns'
 import ModalFilters from '@/components/modals/ModalFilters'
 import FilterDisplay from '@/components/filters/FilterDisplay'
 
+import ApiService from '@/services/api'
+
 import { mapState } from 'vuex'
 
 export default {
@@ -64,7 +70,6 @@ export default {
   components: { FilterDisplay },
   data() {
     return {
-      count: null,
       idTable: Number(this.$route.params.idTable),
       query: {
         fields: null,
@@ -91,6 +96,9 @@ export default {
           ? ` <span class='entries'>${this.tableEntries.count} entries</span>`
           : '')
       )
+    },
+    exportPath() {
+      return ApiService.getPath(`tables/${this.idTable}/csv-export/`)
     }
   },
   mounted() {
@@ -134,7 +142,7 @@ export default {
         })
         .catch(() => {})
 
-      console.log(this.$route.query)
+      // console.log(this.$route.query)
     }
   }
 }

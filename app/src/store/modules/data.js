@@ -1,6 +1,6 @@
 // import router from '@/router'
 import Vue from 'vue'
-import { DatabaseService, TableService } from '@/services/data'
+import { DatabaseService, TableService, ImportService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 export default {
@@ -10,7 +10,8 @@ export default {
     table: {},
     tableEntries: {},
     entity: null,
-    filters: {}
+    filters: {},
+    import: null
   },
   mutations: {
     setDatabase(state, data) {
@@ -29,6 +30,9 @@ export default {
     },
     setFilters(state, data) {
       state.filters = data
+    },
+    setImport(state, data) {
+      state.import = data
     }
   },
   actions: {
@@ -69,6 +73,12 @@ export default {
         dispatch('getTableEntries', { idTable }).then(() => {
           ToastService.open('The entity has been deleted')
         })
+      })
+    },
+
+    prepareImport({ commit }, { idTable, data }) {
+      return ImportService.prepare(idTable, data).then(response => {
+        commit('setImport', response)
       })
     }
   }

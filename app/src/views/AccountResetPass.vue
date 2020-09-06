@@ -18,7 +18,7 @@
 
         <b-button
           native-type="submit"
-          class="button button-submit is-primary"
+          class="button-submit is-primary"
           @click="passes(submit)"
         >
           Save

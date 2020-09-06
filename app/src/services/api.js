@@ -15,11 +15,9 @@ const ApiService = {
         // this.$store.commit('loading_stop')
         let msg =
           err.response.data.detail ||
-          JSON.stringify(
-            err.response.data.non_field_errors
-          ) ||
+          err.response.data.non_field_errors[0] ||
           err.response.status
-        
+
         if (err.response.status == null) msg = 'Check internet connection'
 
         // console.log('err', JSON.stringify(err))
@@ -31,6 +29,10 @@ const ApiService = {
         return Promise.reject(err)
       }
     )
+  },
+
+  getPath(path) {
+    return axios.defaults.baseURL + path
   },
 
   setHeader() {

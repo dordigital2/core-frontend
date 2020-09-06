@@ -3,10 +3,10 @@
     <BaseTitle title="Manage database" :hasBackButton="false" />
 
     <BaseCard title="Active tables"
-      ><template #actions v-if="$attrs.isEditable">
-        <button class="button is-primary">
+      ><template #actions>
+        <router-link :to="{ name: 'table-add' }" class="button is-primary">
           Add a new table
-        </button>
+        </router-link>
       </template>
 
       <BaseTable

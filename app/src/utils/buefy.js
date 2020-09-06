@@ -14,6 +14,7 @@ import {
   Menu,
   Modal,
   Pagination,
+  Radio,
   Select,
   Snackbar,
   Switch,
@@ -101,6 +102,7 @@ const MyBuefy = {
     Vue.use(Menu)
     Vue.use(Modal)
     Vue.use(Pagination)
+    Vue.use(Radio)
     Vue.use(Snackbar)
     Vue.use(Switch)
     Vue.use(Select)

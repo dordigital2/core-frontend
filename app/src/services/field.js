@@ -14,6 +14,15 @@ const FieldFilterComponentMap = {
   float: 'FilterNumeric'
 }
 
+const FieldTypes = {
+  enum: 'Enum',
+  date: 'Date',
+  int: 'Integer',
+  float: 'Float',
+  bool: 'Boolean',
+  text: 'Text'
+}
+
 const FilterOptions = {
   number: {
     gt: 'Greater than',
@@ -38,7 +47,9 @@ const FieldService = {
   getParsedValue(value, type) {
     return Parser[type] ? Parser[type](value) : value
   },
-  // getWidgetValue()
+  getFieldTypes() {
+    return FieldTypes
+  },
   getComponent(type) {
     return FieldComponentMap[type] ? FieldComponentMap[type] : 'b-input'
   },

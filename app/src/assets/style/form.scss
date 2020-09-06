@@ -49,3 +49,25 @@
     }
   }
 }
+
+.radio-list {
+  .label {
+    margin-bottom: 12px;
+  }
+
+  .field-body {
+    .field {
+      flex-direction: column;
+
+      .b-radio.radio {
+        &:not(:last-child) {
+          margin-bottom: 24px;
+        }
+        
+        input[type='radio']:checked + .check + .control-label {
+          color: $primary;
+        }
+      }
+    }
+  }
+}

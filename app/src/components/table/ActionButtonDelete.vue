@@ -10,21 +10,21 @@ export default {
     path: String,
     dialogTitle: String,
     dialogMessage: String,
-    storeAction: String,
-    data: [Object, Number, String]
+    bypassDialog: Boolean
   },
   methods: {
     deleteAction() {
-      this.$buefy.dialog.confirm({
-        title: this.dialogTitle,
-        message: this.dialogMessage,
-        type: 'is-danger',
-        onConfirm: () => {
-          // console.log('delete', this.storeAction, this.data)
-          this.$store.dispatch(this.storeAction, this.data)
-        },
-        confirmText: 'Delete'
-      })
+      if (this.bypassDialog) this.$emit('on-confirm')
+      else
+        this.$buefy.dialog.confirm({
+          title: this.dialogTitle,
+          message: this.dialogMessage,
+          type: 'is-danger',
+          onConfirm: () => {
+            this.$emit('on-confirm')
+          },
+          confirmText: 'Delete'
+        })
     }
   }
 }

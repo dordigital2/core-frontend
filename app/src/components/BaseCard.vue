@@ -26,9 +26,7 @@ export default {
     return {}
   },
   props: {
-    title: String,
-    data: Array,
-    columns: Array
+    title: String
   }
 }
 </script>

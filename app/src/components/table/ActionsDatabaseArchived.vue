@@ -5,19 +5,25 @@
       icon="square-edit-outline"
       :path="'table-edit/' + props.id"
     />
-    <ActionButtonDelete />
+    <ActionButtonDelete
+      dialogTitle="Do you wish to delete this table?"
+      dialogMessage="This operation permanently removes all the entries of this table. Please check the data before proceeding."
+      @on-confirm="$store.dispatch('data/deleteTable', props.id)"
+    />
     <ActionButtonDownload />
   </div>
 </template>
 
 <script>
 import ActionButtonDownload from './ActionButtonDownload'
+import ActionButtonDelete from './ActionButtonDelete'
 import ActionButtonGoto from './ActionButtonGoto'
 
 export default {
   components: {
     ActionButtonGoto,
-    ActionButtonDownload
+    ActionButtonDownload,
+    ActionButtonDelete
   },
   props: {
     props: Object

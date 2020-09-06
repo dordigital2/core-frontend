@@ -9,7 +9,7 @@
     tag="div"
   >
     <b-field
-      v-bind="{ grouped }"
+      v-bind="{ grouped, expanded }"
       :type="{ 'is-danger': errors[0] }"
       :message="errors.length ? errors : null"
     >
@@ -46,7 +46,8 @@ export default {
     description: String,
     labelInfo: String,
     mode: String,
-    grouped: Boolean
+    grouped: Boolean,
+    expanded: Boolean
   }
 }
 </script>

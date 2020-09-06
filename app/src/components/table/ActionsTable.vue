@@ -13,11 +13,12 @@
     <ActionButtonDelete
       dialogTitle="Do you wish to delete this entity?"
       dialogMessage="This operation permanently removes all the fields of this entry. Please check the data before proceeding."
-      storeAction="data/deleteEntity"
-      :data="{
-        idTable,
-        idEntity: props.id
-      }"
+      @on-confirm="
+        $store.dispatch('data/deleteEntity', {
+          idTable,
+          idEntity: props.id
+        })
+      "
     />
   </div>
 </template>

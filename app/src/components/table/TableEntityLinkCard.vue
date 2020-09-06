@@ -63,9 +63,9 @@
       </div>
 
       <template #footer>
-        <button class="button is-dark" @click="passes(addTableView)">
+        <b-button class="is-dark" @click="passes(addTableView)">
           Add view
-        </button>
+        </b-button>
       </template>
     </BaseCard>
   </ValidationObserver>

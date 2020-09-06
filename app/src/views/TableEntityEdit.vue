@@ -23,9 +23,9 @@
         </div>
 
         <template #footer>
-          <button class="button is-primary" @click="passes(save)">
+          <b-button class="is-primary" @click="passes(save)">
             Save changes
-          </button>
+          </b-button>
         </template>
 
         <pre>{{ entity }}</pre>

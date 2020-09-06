@@ -55,17 +55,15 @@
           <p class="has-text-weight-semibold is-size-6">Selected filters</p>
           <br />
 
-          <pre>{{ filterData }}</pre>
-
           <FilterDisplay :fields="table.fields" :filterData="filterData" />
         </div>
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button is-dark is-outlined" @click="$emit('close')">
+      <b-button class="is-dark is-outlined" @click="$emit('close')">
         Cancel
-      </button>
-      <button class="button is-dark" @click="submit">Apply</button>
+      </b-button>
+      <b-button class="is-dark" @click="submit">Apply</b-button>
     </footer>
   </div>
 </template>
