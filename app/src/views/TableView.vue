@@ -14,9 +14,15 @@
         </div>
       </template>
 
-      <div class="card-container">
-        <FilterDisplay :fields="table.fields" class="is-horizontal" />
-      </div>
+      <template #default v-if="filters">
+        <div class="card-container">
+          <FilterDisplay
+            :fields="table.fields"
+            :filterData="filters"
+            class="is-horizontal"
+          />
+        </div>
+      </template>
     </BaseCard>
 
     <BaseCard :title="titleWithCount">
@@ -25,6 +31,13 @@
           <b-button class="is-dark" @click="openModalColumns">
             Change view
           </b-button>
+
+          <router-link
+            class="button is-primary"
+            :to="{ name: `table-edit`, params: { idTable } }"
+          >
+            Edit table
+          </router-link>
 
           <router-link
             class="button is-primary"
@@ -84,7 +97,8 @@ export default {
       },
       tableEntries: function(state) {
         return state.tableEntries[this.idTable]
-      }
+      },
+      filters: state => state.filters
     }),
     title() {
       return 'Table – ' + this.table.name

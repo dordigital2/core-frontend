@@ -1,6 +1,6 @@
 <template>
   <div class="filter-display">
-    <template v-for="(filter, index) in filterData || filters">
+    <template v-for="(filter, index) in filterData">
       <b-field
         v-if="filter != null"
         :label="getFieldDef(index).display_name"
@@ -22,8 +22,6 @@
 import FieldService from '@/services/field'
 import { FilterOptions } from '@/services/field'
 
-import { mapState } from 'vuex'
-
 export default {
   props: {
     fields: Array,
@@ -31,11 +29,6 @@ export default {
   },
   data() {
     return {}
-  },
-  computed: {
-    ...mapState('data', {
-      filters: state => state.filters
-    })
   },
   methods: {
     getFieldDef(field_name) {

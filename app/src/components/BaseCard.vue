@@ -3,7 +3,7 @@
     <div class="card-header">
       <div class="card-header-title" v-html="title"></div>
 
-      <div class="card-header-actions" v-if="!!this.$slots.actions">
+      <div class="card-header-actions" v-if="!!$slots.actions">
         <slot name="actions"></slot>
       </div>
     </div>
@@ -12,7 +12,7 @@
       <slot></slot>
     </div>
 
-    <div class="card-footer" v-if="!!this.$slots.footer">
+    <div class="card-footer" v-if="!!$slots.footer">
       <slot name="footer"></slot>
     </div>
   </div>

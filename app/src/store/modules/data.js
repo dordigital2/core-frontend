@@ -10,7 +10,7 @@ export default {
     table: {},
     tableEntries: {},
     entity: null,
-    filters: {},
+    filters: null,
     import: null
   },
   mutations: {
