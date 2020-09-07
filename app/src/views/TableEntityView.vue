@@ -10,7 +10,7 @@
       v-for="(link, index) in tableLinks"
       :key="`tableLink${index}`"
       :idTable="link.idLinkTable"
-      :entity="link.entity"
+      :entity="[link.entity]"
       :query="link.query"
     />
 

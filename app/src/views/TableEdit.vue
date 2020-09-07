@@ -119,7 +119,7 @@ export default {
     // })
     // @TODO: Update fields after `getImportData` contains initial detected columns if user refreshes page
     // temp fix: go back and reimport
-    
+
     if (this.idImport) {
       if (!this.importData) this.$router.go(-1)
       else this.fields = [...this.importData.fields]
@@ -151,7 +151,11 @@ export default {
           ...resource
         }).then(() => {
           ToastService.open('Table was imported successfuly.')
-          this.$router.push({ name: 'table-import-result' })
+          this.$router.push({
+            name: 'table-import-result',
+            params: { idImport: this.importData.import_id },
+            query: { name: this.$route.query.name }
+          })
         })
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {

@@ -1,17 +1,87 @@
 <template>
   <div>
-    <BaseTitle title="Table import result" />
+    <BaseTitle title="Table import result" :hasBackButton="false" />
 
-    <BaseCard :title="`Errors`"></BaseCard>
+    <template v-if="importData">
+      <BaseCard
+        :title="`Table ${name && JSON.stringify(name)} has been created`"
+      >
+        <template #actions v-if="importData.imports_count" class="da">
+          <router-link
+            class="button is-dark"
+            :to="{ name: 'table-view', params: { idTable } }"
+            >View table</router-link
+          >
+        </template>
+
+        <div class="card-container">
+          {{ importData.imports_count }} rows have been imported successfully!
+        </div>
+      </BaseCard>
+
+      <BaseCard
+        :title="`${importData.errors_count} rows have errors`"
+        v-if="importData.errors_count"
+      >
+        <template #default>
+          <b-table :data="importData.errors">
+            <b-table-column
+              v-for="(field, index) in Object.keys(importData.errors[0].row)"
+              :key="`column-${index}`"
+              v-bind="{
+                label: field
+              }"
+            >
+              <template v-slot="props"
+                ><span
+                  :class="{
+                    'has-text-danger is-bold': props.row.errors[field]
+                  }"
+                  >{{ props.row.row[field] }}</span
+                ></template
+              >
+            </b-table-column>
+          </b-table>
+        </template>
+
+        <template #actions>
+          <a class="button is-primary" target="_blank" :href="exportPath()"
+            >Download these fields</a
+          >
+        </template>
+      </BaseCard>
+    </template>
   </div>
 </template>
 
 <script>
+// @TODO: use BaseTable to display errors
+
+import ApiService from '@/services/api'
+import { mapState } from 'vuex'
+
 export default {
   name: 'TableImportResult',
   data() {
-    return {}
+    return {
+      idImport: this.$route.params.idImport,
+      name: this.$route.query.name || '',
+      idTable: 56
+    }
   },
-  methods: {}
+  computed: mapState('data', {
+    importData: state => state.import
+  }),
+  mounted() {
+    this.$store.dispatch('data/getImportData', this.idImport)
+  },
+  methods: {
+    exportPath() {
+      return ApiService.getPath(
+        `csv-imports/${this.idImport}/export-errors/`,
+        true
+      )
+    }
+  }
 }
 </script>

@@ -10,15 +10,19 @@
       @page-change="onPageChange"
       paginated
       backend-pagination
+      backend-sorting
+      @sort="onSort"
     >
       <b-table-column
         v-for="(column, index) in columns"
         :key="`${column.name}-${index}`"
         v-bind="{
           label: column.display_name || column.name,
+          field: column.name,
           cellClass: column.custom_class,
           headerClass: column.custom_class,
-          sticky: column.sticky
+          sticky: column.sticky,
+          sortable: column.sortable
         }"
       >
         <template v-slot="props">
@@ -71,7 +75,8 @@ export default {
       loading: false,
       perPage: this.$route.query.perPage || 10,
       perPageModel: this.$route.query.perPage || 10,
-      page: this.$route.query.page ? Number(this.$route.query.page) : 1
+      page: this.$route.query.page ? Number(this.$route.query.page) : 1,
+      orderBy: this.$route.query.orderBy || null
     }
   },
   props: {
@@ -101,6 +106,11 @@ export default {
           fields.push(this.table.fields.find(t => t.name == e))
         })
       } else fields = this.table.fields.slice()
+
+      fields = fields.map(e => {
+        e.sortable = true
+        return e
+      })
 
       fields.push({
         name: 'actions',
@@ -162,6 +172,10 @@ export default {
       this.perPageModel = this.perPage
       // this.page = 1
       this.updateQueryRequest({ perPage: this.perPage })
+    },
+    onSort(field, order) {
+      console.log(field, order)
+      this.updateQueryRequest({ __order: (order == 'desc' ? '-' : '') + field })
     }
   },
   watch: {
