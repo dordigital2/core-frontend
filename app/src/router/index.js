@@ -116,6 +116,12 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableEntityEdit.vue')
       },
       {
+        path: 'filtered-view',
+        name: 'filtered-view',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/FilteredView.vue')
+      },
+      {
         path: 'users',
         name: 'users',
         component: () =>

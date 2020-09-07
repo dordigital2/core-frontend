@@ -5,13 +5,19 @@
         size="is-normal"
         icon="chart-box-outline"
         label="Dashboard"
-        @click="$router.push('/app/dashboard').catch(() => {})"
+        @click="$router.push({ name: 'dashboard' }).catch(() => {})"
       ></b-menu-item>
       <b-menu-item
         size="is-normal"
         icon="dns-outline"
         label="Manage database"
-        @click="$router.push('/app/database-view').catch(() => {})"
+        @click="$router.push({ name: 'database-view' }).catch(() => {})"
+      ></b-menu-item
+      ><b-menu-item
+        size="is-normal"
+        icon="tune"
+        label="Filtered views"
+        @click="$router.push({ name: 'filtered-view' }).catch(() => {})"
       ></b-menu-item>
     </b-menu-list>
   </b-menu>

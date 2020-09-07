@@ -18,7 +18,7 @@
                 :label="`Column name #${index + 1}`"
                 rules="required"
               >
-                <b-input v-model="field.name" placeholder="" />
+                <b-input v-model="field.display_name" placeholder="" />
               </VField>
 
               <br />
@@ -52,8 +52,8 @@
                   <ActionButtonDelete
                     :dialogTitle="
                       `Delete column ${
-                        field.name != null
-                          ? JSON.stringify(field.name)
+                        field.display_name != null
+                          ? JSON.stringify(field.display_name)
                           : ''
                       }`
                     "
@@ -139,10 +139,12 @@ export default {
 
       if (this.importData) {
         TableService.putTable(this.idTable, resource).then(() => {
-          ImportService.run(this.idTable, this.importData.import_id).then(() => {
-            ToastService.open('Table was imported successfuly.')
-            this.$router.push({ name: 'database-view' })
-          })
+          ImportService.run(this.idTable, this.importData.import_id).then(
+            () => {
+              ToastService.open('Table was imported successfuly.')
+              this.$router.push({ name: 'database-view' })
+            }
+          )
         })
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {

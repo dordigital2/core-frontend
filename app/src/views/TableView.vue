@@ -43,7 +43,7 @@
             class="button is-primary"
             :to="{ name: `entity-edit`, params: { idTable } }"
           >
-            Add new entry
+            Add new entity
           </router-link>
 
           <a :href="exportPath" class="button is-primary" target="_blank">

@@ -7,10 +7,10 @@ const UserService = {
       username,
       password
     }).then(response => {
-      // console.log(response)
-
       TokenService.saveToken(response.token)
       ApiService.setHeader()
+
+      console.log(response)
 
       return response.access_token
     })
@@ -23,5 +23,3 @@ const UserService = {
 }
 
 export default UserService
-
-// export { UserService, AuthenticationError }

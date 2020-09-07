@@ -1,6 +1,6 @@
 // import router from '@/router'
 import Vue from 'vue'
-import { DatabaseService, TableService, ImportService } from '@/services/data'
+import { DatabaseService, TableService, ImportService, TableviewsService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 export default {
@@ -80,6 +80,10 @@ export default {
       return ImportService.prepare(idTable, data).then(response => {
         commit('setImport', response)
       })
+    },
+
+    getTableviews({commit}) {
+      return 
     }
   }
 }
