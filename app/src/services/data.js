@@ -62,10 +62,10 @@ const ImportService = {
   }
 }
 
-const ViewsService = {
-  getFilters() {
+const TableViewService = {
+  getTableViews() {
     return ApiService.get('filters/')
   }
 }
 
-export { DatabaseService, TableService, ImportService, ViewsService }
+export { DatabaseService, TableService, ImportService, TableViewService }

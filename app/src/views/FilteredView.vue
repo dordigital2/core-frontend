@@ -1,15 +1,15 @@
 <template>
-  <div v-if="database">
-    <BaseTitle title="Manage database" :hasBackButton="false" />
+  <div>
+    <BaseTitle title="Filtered views" :hasBackButton="false" />
 
-    <BaseCard title="Active tables"
+    <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
         <router-link :to="{ name: 'table-add' }" class="button is-primary">
-          Add a new table
+          Add a new view
         </router-link>
       </template>
 
-      <BaseTable :data="database.active_tables" :columns="columns" />
+      <BaseTable :data="tableViews.results" :columns="columns" />
     </BaseCard>
   </div>
 </template>

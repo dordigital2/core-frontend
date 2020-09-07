@@ -1,6 +1,6 @@
 // import router from '@/router'
 import Vue from 'vue'
-import { DatabaseService, TableService, ImportService, TableviewsService } from '@/services/data'
+import { DatabaseService, TableService, ImportService, TableViewService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 export default {
@@ -11,7 +11,8 @@ export default {
     tableEntries: {},
     entity: null,
     filters: null,
-    import: null
+    import: null,
+    tableViews: null
   },
   mutations: {
     setDatabase(state, data) {
@@ -33,6 +34,9 @@ export default {
     },
     setImport(state, data) {
       state.import = data
+    },
+    setTableViews(state, data) {
+      state.tableViews = data
     }
   },
   actions: {
@@ -82,8 +86,10 @@ export default {
       })
     },
 
-    getTableviews({commit}) {
-      return 
+    getTableViews({commit}) {
+      return TableViewService.getTableViews().then(response => {
+        commit('setTableViews', response)
+      })
     }
   }
 }

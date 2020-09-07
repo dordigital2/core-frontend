@@ -95,7 +95,7 @@ export default {
       idTable: Number(this.$route.params.idTable),
       importMode: Number(this.$route.query.import),
       name: this.$route.query.name,
-      fields: [{ name: null, field_type: null }],
+      fields: [{ display_name: null, field_type: null }],
       fieldTypes: FieldService.getFieldTypes()
     }
   },
@@ -114,7 +114,7 @@ export default {
   mounted() {
     if (!this.database) this.$store.dispatch('data/getDatabase')
 
-    if (this.importData) {
+    if (this.importMode) {
       this.fields = [...this.importData.fields]
     } else if (this.idTable)
       this.$store.dispatch('data/getTable', this.idTable).then(() => {
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     addColumn() {
-      this.fields.push({ name: null, field_type: null })
+      this.fields.push({ display_name: null, field_type: null })
     },
     deleteColumn(index) {
       this.fields.length > 1 && this.fields.splice(index, 1)
@@ -137,7 +137,7 @@ export default {
         active: true
       }
 
-      if (this.importData) {
+      if (this.importMode) {
         TableService.putTable(this.idTable, resource).then(() => {
           ImportService.run(this.idTable, this.importData.import_id).then(
             () => {
