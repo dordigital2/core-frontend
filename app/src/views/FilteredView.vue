@@ -4,12 +4,12 @@
 
     <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
-        <router-link :to="{ name: 'table-add' }" class="button is-primary">
+        <router-link :to="{ name: 'view-add' }" class="button is-primary">
           Create view
         </router-link>
       </template>
 
-      <BaseTable :data="tableViews.results" :columns="columns" />
+      <BaseTable :data="tableViews" :columns="columns" />
     </BaseCard>
   </div>
 </template>

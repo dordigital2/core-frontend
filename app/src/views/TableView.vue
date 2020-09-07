@@ -51,20 +51,22 @@
           </a>
         </div>
       </template>
+      
+      <template #default>
+        <div class="card-container">
+          Last edit: {{ table.last_edit_date | parseDate }}
+          <span v-if="table.last_edit_user"
+            >by
+            <router-link :to="`user-profile/${table.last_edit_user.id}`">{{
+              table.last_edit_user.first_name +
+                ' ' +
+                table.last_edit_user.last_name
+            }}</router-link></span
+          >
+        </div>
 
-      <div class="card-container">
-        Last edit: {{ table.last_edit_date | parseDate }}
-        <span v-if="table.last_edit_user"
-          >by
-          <router-link :to="`user-profile/${table.last_edit_user.id}`">{{
-            table.last_edit_user.first_name +
-              ' ' +
-              table.last_edit_user.last_name
-          }}</router-link></span
-        >
-      </div>
-
-      <BaseTableAsync :idTable="table.id" updateQueryNav />
+        <BaseTableAsync :idTable="table.id" updateQueryNav />
+      </template>
     </BaseCard>
   </div>
 </template>

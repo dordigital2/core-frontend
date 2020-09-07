@@ -22,7 +22,8 @@
           cellClass: column.custom_class,
           headerClass: column.custom_class,
           sticky: column.sticky,
-          sortable: column.sortable
+          sortable: column.sortable,
+          numeric: ['int', 'float'].indexOf(column.field_type) != -1
         }"
       >
         <template v-slot="props">
@@ -107,10 +108,7 @@ export default {
         })
       } else fields = this.table.fields.slice()
 
-      fields = fields.map(e => {
-        e.sortable = true
-        return e
-      })
+      fields = fields.map(e => Object.assign(e, { sortable: true }))
 
       fields.push({
         name: 'actions',
