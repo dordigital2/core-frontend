@@ -46,8 +46,12 @@ const TableService = {
 }
 
 const ImportService = {
-  prepare(idTable, data) {
-    return ApiService.put(`tables/${idTable}/csv-prepare-fields/`, data, {
+  getData(idImport) {
+    return ApiService.get(`csv-imports/${idImport}/`)
+  },
+
+  prepare(data) {
+    return ApiService.post(`csv-imports/`, data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }

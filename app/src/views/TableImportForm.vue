@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'TableImport',
+  name: 'TableImportForm',
   data() {
     return {
       name: this.$route.query.name,
@@ -52,20 +52,16 @@ export default {
   },
   methods: {
     submit() {
-      const idTable = 46
       const formData = new FormData()
       formData.append('file', this.file)
       formData.append('delimiter', this.delimiter)
 
-      this.$store
-        .dispatch('data/prepareImport', { idTable, data: formData })
-        .then(() => {
-          this.$router.push({
-            name: 'table-edit',
-            params: { idTable },
-            query: { importMode: true }
-          })
+      this.$store.dispatch('data/prepareImport', formData).then(response => {
+        this.$router.push({
+          name: 'table-edit',
+          query: { idImport: response.import_id, ...this.$route.query }
         })
+      })
     }
   }
 }

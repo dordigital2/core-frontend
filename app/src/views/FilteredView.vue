@@ -5,7 +5,7 @@
     <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
         <router-link :to="{ name: 'table-add' }" class="button is-primary">
-          Add a new view
+          Create view
         </router-link>
       </template>
 
@@ -22,38 +22,37 @@ export default {
   components: {},
   data() {
     return {
-      columns: {
-        active_tables: [
-          {
-            name: 'name',
-            sortable: true,
-            display_name: 'Table name'
-          },
-          {
-            name: 'last_edit_date',
-            sortable: true,
-            field_type: 'date',
-            display_name: 'Last edit'
-          },
-          {
-            name: 'entries',
-            sortable: true,
-            display_name: 'Entries'
-          },
-          {
-            name: 'last_edit_user.username',
-            sortable: true,
-            display_name: 'Last edit made by'
-          },
-          {
-            name: 'actions',
-            display_name: ' ',
-            component: 'ActionsDatabaseActive',
-            custom_class: 'actions',
-            sticky: true
+      columns: [
+        {
+          name: 'name',
+          sortable: true,
+          display_name: 'View name'
+        },
+        {
+          name: 'creation_date',
+          field_type: 'date',
+          display_name: 'Creation date'
+        },
+        {
+          name: 'tables',
+          display_name: 'Tables',
+          component: 'FieldTagList',
+          props: {
+            name: 'tables'
           }
-        ]
-      }
+        },
+        {
+          name: 'owner.username',
+          display_name: 'Created by'
+        },
+        {
+          name: 'actions',
+          display_name: ' ',
+          component: 'ActionsDatabaseActive',
+          custom_class: 'actions',
+          sticky: true
+        }
+      ]
     }
   },
   computed: mapState({

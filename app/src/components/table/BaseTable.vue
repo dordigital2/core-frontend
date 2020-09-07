@@ -15,7 +15,7 @@
           <template v-if="column.component">
             <component
               :is="column.component"
-              v-bind="{ props: props.row }"
+              v-bind="{ props: props.row, ...column.props }"
             ></component>
           </template>
 
@@ -36,9 +36,11 @@
 
 <script>
 import ActionsDatabaseArchived from './ActionsDatabaseArchived'
-import ActionsTable from './ActionsTable'
 import ActionsDatabaseActive from './ActionsDatabaseActive'
+
+import ActionsTable from './ActionsTable'
 import FieldOwnerLink from './FieldOwnerLink'
+import FieldTagList from './FieldTagList'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -48,7 +50,8 @@ export default {
     ActionsDatabaseArchived,
     ActionsDatabaseActive,
     ActionsTable,
-    FieldOwnerLink
+    FieldOwnerLink,
+    FieldTagList
   },
   data() {
     return {}

@@ -81,6 +81,7 @@ import { mapState } from 'vuex'
 export default {
   name: 'TableView',
   components: { FilterDisplay },
+  props: { filterViewMode: Boolean },
   data() {
     return {
       idTable: Number(this.$route.params.idTable),

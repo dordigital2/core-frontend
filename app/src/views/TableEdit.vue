@@ -8,7 +8,7 @@
           <div class="columns">
             <div class="column is-4">
               <VField label="Table name">
-                <b-input v-model="name" :disabled="!idTable" />
+                <b-input v-model="name" />
               </VField>
             </div>
             <div class="column is-5">
@@ -84,7 +84,7 @@
 import ActionButtonDelete from '@/components/table/ActionButtonDelete'
 import FieldService from '@/services/field'
 import { ToastService } from '@/services/buefy'
-import { TableService, ImportService } from '@/services/data'
+import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       idTable: Number(this.$route.params.idTable),
-      importMode: Number(this.$route.query.import),
+      idImport: this.$route.query.idImport,
       name: this.$route.query.name,
       fields: [{ display_name: null, field_type: null }],
       fieldTypes: FieldService.getFieldTypes()
@@ -114,13 +114,21 @@ export default {
   mounted() {
     if (!this.database) this.$store.dispatch('data/getDatabase')
 
-    if (this.importMode) {
-      this.fields = [...this.importData.fields]
-    } else if (this.idTable)
+    // this.$store.dispatch('data/getImportData', this.idImport).then(() => {
+    //   this.fields = [...this.importData.fields]
+    // })
+    // @TODO: Update fields after `getImportData` contains initial detected columns if user refreshes page
+    // temp fix: go back and reimport
+    
+    if (this.idImport) {
+      if (!this.importData) this.$router.go(-1)
+      else this.fields = [...this.importData.fields]
+    } else if (this.idTable) {
       this.$store.dispatch('data/getTable', this.idTable).then(() => {
         this.name = this.table.name
         this.fields = this.table.fields.map(e => ({ ...e, disabled: true }))
       })
+    }
   },
   methods: {
     addColumn() {
@@ -137,14 +145,13 @@ export default {
         active: true
       }
 
-      if (this.importMode) {
-        TableService.putTable(this.idTable, resource).then(() => {
-          ImportService.run(this.idTable, this.importData.import_id).then(
-            () => {
-              ToastService.open('Table was imported successfuly.')
-              this.$router.push({ name: 'database-view' })
-            }
-          )
+      if (this.idImport) {
+        TableService.postTable({
+          import_id: this.importData.import_id,
+          ...resource
+        }).then(() => {
+          ToastService.open('Table was imported successfuly.')
+          this.$router.push({ name: 'table-import-result' })
         })
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {

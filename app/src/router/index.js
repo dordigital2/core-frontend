@@ -107,7 +107,13 @@ const routes = [
         path: 'table-import',
         name: 'table-import',
         component: () =>
-          import(/* webpackChunkName: "table" */ '@/views/TableImport.vue')
+          import(/* webpackChunkName: "table" */ '@/views/TableImportForm.vue')
+      },
+      {
+        path: 'table-import-result',
+        name: 'table-import-result',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableImportResult.vue')
       },
       {
         path: 'table-view/:idTable/entity-edit/:idEntity?',
@@ -120,6 +126,15 @@ const routes = [
         name: 'filtered-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/FilteredView.vue')
+      },
+      {
+        path: 'filter-table-view/',
+        name: 'filtered-table-view',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableView.vue'),
+        props: {
+          filterViewMode: true
+        }
       },
       {
         path: 'users',

@@ -1,6 +1,11 @@
 // import router from '@/router'
 import Vue from 'vue'
-import { DatabaseService, TableService, ImportService, TableViewService } from '@/services/data'
+import {
+  DatabaseService,
+  TableService,
+  ImportService,
+  TableViewService
+} from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 export default {
@@ -80,13 +85,20 @@ export default {
       })
     },
 
-    prepareImport({ commit }, { idTable, data }) {
-      return ImportService.prepare(idTable, data).then(response => {
+    getImportData({ commit }, idImport) {
+      return ImportService.getData(idImport).then(response => {
         commit('setImport', response)
       })
     },
 
-    getTableViews({commit}) {
+    prepareImport({ commit }, data) {
+      return ImportService.prepare(data).then(response => {
+        commit('setImport', response)
+        return response
+      })
+    },
+
+    getTableViews({ commit }) {
       return TableViewService.getTableViews().then(response => {
         commit('setTableViews', response)
       })
