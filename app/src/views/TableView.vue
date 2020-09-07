@@ -98,7 +98,7 @@ export default {
       )
     },
     exportPath() {
-      return ApiService.getPath(`tables/${this.idTable}/csv-export/`)
+      return ApiService.getPath(`tables/${this.idTable}/csv-export/`, true)
     }
   },
   mounted() {

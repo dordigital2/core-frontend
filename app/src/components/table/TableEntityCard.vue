@@ -11,7 +11,7 @@
       >
     </template>
 
-    <template v-if="entities">
+    <template v-if="entities && entities.length">
       <div
         class="columns is-multiline is-gapless card-container card-list-item"
         v-for="(entity, index) in entities"
@@ -34,7 +34,7 @@
 
     <template v-else>
       <div class="card-container is-size-6">
-        No results
+        No results for {{ query }}
       </div>
     </template>
   </BaseCard>
@@ -75,15 +75,14 @@ export default {
 
     if (this.entity) this.entities = [this.entity]
     else
-      this.$store.dispatch('data/getTableEntries', {
-        idTable: this.idTable,
-        query: this.query
-      })
-  },
-  watch: {
-    tableEntries(value) {
-      this.entities = value.results
-    }
+      this.$store
+        .dispatch('data/getTableEntries', {
+          idTable: this.idTable,
+          query: this.query
+        })
+        .then(() => {
+          this.entities = this.tableEntries.results
+        })
   }
 }
 </script>

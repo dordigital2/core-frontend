@@ -31,8 +31,12 @@ const ApiService = {
     )
   },
 
-  getPath(path) {
-    return axios.defaults.baseURL + path
+  getPath(path, appendToken) {
+    return (
+      axios.defaults.baseURL +
+      path +
+      (appendToken && `?token=${TokenService.getToken()}`)
+    )
   },
 
   setHeader() {

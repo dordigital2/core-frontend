@@ -6,6 +6,7 @@
           <div class="column">
             <VField label="Source field">
               <b-select
+                v-if="table"
                 placeholder="Select a field"
                 v-model="source"
                 @input="field = null"
@@ -49,7 +50,7 @@
                 expanded
               >
                 <option
-                  v-for="field in fields"
+                  v-for="field in linkTable.fields"
                   :value="field.name"
                   :key="field.id"
                   :disabled="checkLinkFieldtype(field.field_type)"
@@ -72,7 +73,6 @@
 </template>
 
 <script>
-import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -94,6 +94,9 @@ export default {
     database: state => state.data.database,
     table: function(state) {
       return state.data.table[this.idTable]
+    },
+    linkTable: function(state) {
+      return state.data.table[this.idLinkTable] || { fields: [] }
     }
   }),
   methods: {
@@ -101,8 +104,7 @@ export default {
       this.loading = true
       this.field = null
 
-      TableService.getTable(this.idLinkTable).then(response => {
-        this.fields = response.fields
+      this.$store.dispatch('data/getTable', this.idLinkTable).then(() => {
         this.loading = false
       })
     },

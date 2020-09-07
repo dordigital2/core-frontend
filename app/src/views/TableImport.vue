@@ -62,7 +62,8 @@ export default {
         .then(() => {
           this.$router.push({
             name: 'table-edit',
-            params: { idTable }
+            params: { idTable },
+            query: { importMode: true }
           })
         })
     }

@@ -51,8 +51,7 @@ export default {
           this.entity = response
           this.tableLinks.push({
             idLinkTable: this.idTable,
-            entity: response,
-            table: this.table
+            entity: response
           })
         }
       )

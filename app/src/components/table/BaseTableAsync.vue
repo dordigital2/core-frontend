@@ -69,13 +69,14 @@ export default {
   data() {
     return {
       loading: false,
-      perPage: 10,
-      perPageModel: 10,
-      page: 1
+      perPage: this.$route.query.perPage || 10,
+      perPageModel: this.$route.query.perPage || 10,
+      page: this.$route.query.page ? Number(this.$route.query.page) : 1
     }
   },
   props: {
     idTable: Number,
+    query: String,
     updateQueryNav: { type: Boolean, default: false }
   },
   computed: {
@@ -122,11 +123,6 @@ export default {
       this.$store.dispatch('data/getTable', this.idTable)
     }
 
-    if (this.$route.query.perPage)
-      this.perPage = this.perPageModel = this.$route.query.perPage
-
-    if (this.$route.query.page) this.page = Number(this.$route.query.page)
-
     this.getTableEntries()
   },
   methods: {
@@ -155,8 +151,7 @@ export default {
             query: Object.assign({}, this.$route.query, obj)
           })
           .catch(() => {})
-
-      this.getTableEntries()
+      else this.getTableEntries()
     },
     onPageChange(page) {
       // console.log('onPageChange', page)
@@ -171,7 +166,7 @@ export default {
   },
   watch: {
     '$route.query'() {
-      this.getTableEntries()
+      if (this.updateQueryNav) this.getTableEntries()
     }
   }
 }

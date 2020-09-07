@@ -41,7 +41,7 @@
                   expanded
                 >
                   <option
-                    v-for="(type, key) in field_types"
+                    v-for="(type, key) in fieldTypes"
                     :key="key"
                     :value="key"
                     >{{ type }}</option
@@ -93,9 +93,10 @@ export default {
   data() {
     return {
       idTable: Number(this.$route.params.idTable),
+      importMode: Number(this.$route.query.import),
       name: this.$route.query.name,
       fields: [{ name: null, field_type: null }],
-      field_types: FieldService.getFieldTypes()
+      fieldTypes: FieldService.getFieldTypes()
     }
   },
   computed: {
