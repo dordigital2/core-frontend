@@ -1,8 +1,13 @@
 <template>
-  <div v-if="table && entity">
+  <div>
     <BaseTitle :title="pageTitle" />
 
-    <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
+    <ValidationObserver
+      v-slot="{ passes }"
+      @submit.prevent
+      slim
+      v-if="table && entity"
+    >
       <BaseCard :title="`Table – ${table.name}: ${pageTitle}`">
         <div class="card-container card-form">
           <div class="columns is-multiline">

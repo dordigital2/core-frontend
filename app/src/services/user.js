@@ -10,8 +10,6 @@ const UserService = {
       TokenService.saveToken(response.token)
       ApiService.setHeader()
 
-      console.log(response)
-
       return response.access_token
     })
   },

@@ -11,6 +11,7 @@
     <b-field
       v-bind="{ grouped, expanded }"
       :type="{ 'is-danger': errors[0] }"
+      :class="{ 'is-danger': errors[0] }"
       :message="errors.length ? errors : null"
     >
       <template slot="label" v-if="label">

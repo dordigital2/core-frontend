@@ -4,8 +4,8 @@
 
     <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
-        <router-link :to="{ name: 'view-add' }" class="button is-primary">
-          Create view
+        <router-link :to="{ name: 'filter-add' }" class="button is-primary">
+          Add view
         </router-link>
       </template>
 
@@ -18,7 +18,7 @@
 import { mapState } from 'vuex'
 
 export default {
-  name: 'FilteredView',
+  name: 'FilterView',
   components: {},
   data() {
     return {

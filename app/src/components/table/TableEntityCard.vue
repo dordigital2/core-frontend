@@ -34,7 +34,7 @@
 
     <template v-else>
       <div class="card-container is-size-6">
-        No results for {{ query }}
+        No results
       </div>
     </template>
   </BaseCard>
@@ -73,7 +73,7 @@ export default {
   mounted() {
     if (!this.table) this.$store.dispatch('data/getTable', this.idTable)
 
-    if (this.entity) this.entities = this.entity
+    if (this.entity) this.entities = [this.entity]
     else
       this.$store
         .dispatch('data/getTableEntries', {

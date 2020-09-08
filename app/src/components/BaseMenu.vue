@@ -2,23 +2,34 @@
   <b-menu class="is-size-6">
     <b-menu-list>
       <b-menu-item
-        size="is-normal"
         icon="chart-box-outline"
         label="Dashboard"
-        @click="$router.push({ name: 'dashboard' }).catch(() => {})"
+        @click="goto('dashboard')"
       ></b-menu-item>
       <b-menu-item
-        size="is-normal"
         icon="dns-outline"
         label="Manage database"
-        @click="$router.push({ name: 'database-view' }).catch(() => {})"
+        @click="goto('database-view')"
       ></b-menu-item
       ><b-menu-item
-        size="is-normal"
         icon="tune"
         label="Filtered views"
-        @click="$router.push({ name: 'filtered-view' }).catch(() => {})"
+        @click="goto('filter-view')"
       ></b-menu-item>
+
+      <b-menu-item icon="application-import" :active="isActive" expanded>
+        <template slot="label" slot-scope="props">
+          <span>Import data</span>
+          <b-icon
+            class="menu-tick"
+            :icon="props.expanded ? 'menu-up' : 'menu-down'"
+          ></b-icon>
+        </template>
+        <b-menu-item
+          label="Manual"
+          @click="goto('table-import', { query: { manual: true } })"
+        ></b-menu-item>
+      </b-menu-item>
     </b-menu-list>
   </b-menu>
 </template>
@@ -29,7 +40,12 @@ export default {
   components: {},
   data() {
     return {
-      // isActive: false
+      isActive: false
+    }
+  },
+  methods: {
+    goto(name, opts) {
+      this.$router.push({ name, ...opts }).catch(() => {})
     }
   }
 }
@@ -51,9 +67,21 @@ export default {
       padding: 12px 7px;
     }
 
+    span:not(.icon) {
+      flex-grow: 1;
+    }
+
     .icon {
-      margin-right: 16px;
       font-size: $size-3;
+      &:not(.menu-tick) {
+        margin-right: 16px;
+      }
+    }
+
+    li ul {
+      padding-left: 28px;
+      margin-top: 0;
+      // border-left: 0;
     }
   }
 }

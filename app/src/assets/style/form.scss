@@ -42,6 +42,8 @@
 }
 
 .checkbox-list {
+  font-size: $size-6;
+  
   .checkbox {
     &:not(:last-child) {
       margin-right: 32px;

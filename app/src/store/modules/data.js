@@ -98,6 +98,10 @@ export default {
       })
     },
 
+    // manualImport({commit}, data) {
+      
+    // },
+
     getTableViews({ commit }) {
       return TableViewService.getTableViews().then(response => {
         commit('setTableViews', response)

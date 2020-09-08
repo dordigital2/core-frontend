@@ -6,11 +6,12 @@
       <BaseTable :data="[entity]" :columns="table.fields" />
     </BaseCard>
 
+    <TableEntityCard :idTable="idTable" :entity="entity" />
+
     <TableEntityCard
       v-for="(link, index) in tableLinks"
       :key="`tableLink${index}`"
       :idTable="link.idLinkTable"
-      :entity="[link.entity]"
       :query="link.query"
     />
 
@@ -49,10 +50,6 @@ export default {
       TableService.getEntity(this.idTable, this.$route.params.idEntity).then(
         response => {
           this.entity = response
-          this.tableLinks.push({
-            idLinkTable: this.idTable,
-            entity: response
-          })
         }
       )
     },

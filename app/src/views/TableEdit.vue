@@ -4,6 +4,8 @@
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <BaseCard :title="title">
+        <b-loading :is-full-page="false" v-model="loading" />
+
         <div class="card-container">
           <div class="columns">
             <div class="column is-4">
@@ -11,57 +13,69 @@
                 <b-input v-model="name" />
               </VField>
             </div>
-            <div class="column is-5">
-              <VField
+            <div class="column is-8">
+              <div
+                class="columns field-list"
                 v-for="(field, index) in fields"
                 :key="`cname-${index}`"
-                :label="`Column name #${index + 1}`"
-                rules="required"
               >
-                <b-input v-model="field.display_name" placeholder="" />
-              </VField>
-
-              <br />
-              <b-button class="is-dark" @click="addColumn" expanded
-                >Add another column</b-button
-              >
-            </div>
-            <div class="column is-3">
-              <VField
-                v-for="(field, index) in fields"
-                :key="`ctype-${index}`"
-                :label="`Column type #${index + 1}`"
-                rules="required"
-                grouped
-              >
-                <b-select
-                  v-model="field.field_type"
-                  placeholder=""
-                  :disabled="field.disabled"
-                  expanded
-                >
-                  <option
-                    v-for="(type, key) in fieldTypes"
-                    :key="key"
-                    :value="key"
-                    >{{ type }}</option
+                <div class="column is-7">
+                  <VField :label="`Column name #${index + 1}`" rules="required">
+                    <div class="field-container">
+                      <b-input v-model="field.display_name" placeholder="" />
+                      <b-tag
+                        v-if="importData && importData.fields[index]"
+                        class="csv-field"
+                        >{{ importData.fields[index].display_name }}</b-tag
+                      >
+                    </div>
+                  </VField>
+                </div>
+                <div class="column is-5">
+                  <VField
+                    :label="`Column type #${index + 1}`"
+                    rules="required"
+                    grouped
                   >
-                </b-select>
+                    <b-select
+                      v-model="field.field_type"
+                      placeholder=""
+                      :disabled="field.disabled"
+                      expanded
+                    >
+                      <option
+                        v-for="(type, key) in fieldTypes"
+                        :key="key"
+                        :value="key"
+                        >{{ type }}</option
+                      >
+                    </b-select>
 
-                <b-button class="is-white" :disabled="fields.length == 1">
-                  <ActionButtonDelete
-                    :dialogTitle="
-                      `Delete column ${
-                        field.display_name != null
-                          ? JSON.stringify(field.display_name)
-                          : ''
-                      }`
-                    "
-                    dialogMessage="Are you sure?"
-                    :bypassDialog="!idTable"
-                    @on-confirm="deleteColumn(index)"
-                /></b-button>
-              </VField>
+                    <b-button class="is-white" :disabled="fields.length == 1">
+                      <ActionButtonDelete
+                        :dialogTitle="
+                          `Delete column ${
+                            field.display_name != null
+                              ? JSON.stringify(field.display_name)
+                              : ''
+                          }`
+                        "
+                        dialogMessage="Are you sure?"
+                        :bypassDialog="!idTable"
+                        @on-confirm="deleteColumn(index)"
+                    /></b-button>
+                  </VField>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column is-7">
+                  <br />
+                  <b-button class="is-dark" @click="addColumn" expanded
+                    >Add another column</b-button
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -73,10 +87,6 @@
         </template>
       </BaseCard>
     </ValidationObserver>
-
-    <BaseCard
-      ><pre>{{ importData }}</pre></BaseCard
-    >
   </div>
 </template>
 
@@ -96,7 +106,8 @@ export default {
       idImport: this.$route.query.idImport,
       name: this.$route.query.name,
       fields: [{ display_name: null, field_type: null }],
-      fieldTypes: FieldService.getFieldTypes()
+      fieldTypes: FieldService.getFieldTypes(),
+      loading: false
     }
   },
   computed: {
@@ -108,7 +119,9 @@ export default {
       importData: state => state.import
     }),
     title() {
-      return this.idTable ? `Edit table — ${this.table.name}` : 'Build table'
+      return this.idTable && !this.idImport
+        ? `Edit table — ${this.table.name}`
+        : 'Build table'
     }
   },
   mounted() {
@@ -121,13 +134,22 @@ export default {
     // temp fix: go back and reimport
 
     if (this.idImport) {
-      if (!this.importData) this.$router.go(-1)
-      else this.fields = [...this.importData.fields]
-    } else if (this.idTable) {
+      if (!this.importData) {
+        this.$router.go(-1)
+        return
+      }
+    }
+
+    if (this.idTable) {
       this.$store.dispatch('data/getTable', this.idTable).then(() => {
         this.name = this.table.name
-        this.fields = this.table.fields.map(e => ({ ...e, disabled: true }))
+        this.fields = this.table.fields.map(e => ({
+          ...e,
+          disabled: true
+        }))
       })
+    } else if (this.idImport) {
+      this.fields = [...this.importData.fields]
     }
   },
   methods: {
@@ -146,16 +168,21 @@ export default {
       }
 
       if (this.idImport) {
+        this.loading = true
         TableService.postTable({
           import_id: this.importData.import_id,
           ...resource
         }).then(() => {
           ToastService.open('Table was imported successfuly.')
-          this.$router.push({
-            name: 'table-import-result',
-            params: { idImport: this.importData.import_id },
-            query: { name: this.$route.query.name }
-          })
+          this.$router
+            .push({
+              name: 'table-import-result',
+              params: { idImport: this.importData.import_id },
+              query: { name: this.$route.query.name }
+            })
+            .catch(() => {
+              this.loading = false
+            })
         })
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {
@@ -171,3 +198,22 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.field-list {
+  .column {
+    margin-bottom: -15px;
+  }
+}
+
+.field-container {
+  position: relative;
+
+  .csv-field {
+    z-index: 5;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+  }
+}
+</style>

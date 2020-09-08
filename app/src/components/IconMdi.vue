@@ -4,6 +4,7 @@
 
 <script>
 import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue'
+import ApplicationImport from 'vue-material-design-icons/ApplicationImport.vue'
 import ArchiveOutline from 'vue-material-design-icons/ArchiveOutline.vue'
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue'
 import ArrowRight from 'vue-material-design-icons/ArrowRight.vue'
@@ -30,6 +31,7 @@ export default {
   name: 'IconMdi',
   components: {
     AlertCircleOutline,
+    ApplicationImport,
     ArchiveOutline,
     ArrowLeft,
     ArrowRight,

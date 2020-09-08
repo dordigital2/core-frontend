@@ -22,9 +22,11 @@
     "min": "The {_field_} field must be at least {length} characters",
     "numeric": "The {_field_} field may only contain numeric characters",
     "oneOf": "The {_field_} field is not a valid value",
+    "over": "The field must have at least {length} option(s)",
     "regex": "The {_field_} field format is invalid",
     "required_if": "The {_field_} field is required",
     "required": "The {_field_} field is required",
-    "size": "The {_field_} field size must be less than {size}KB"
+    "size": "The {_field_} field size must be less than {size}KB",
+    "under": "The field must have less than {length} options"
   }
 }
