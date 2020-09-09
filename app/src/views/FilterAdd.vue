@@ -11,10 +11,14 @@
         >
           <div class="columns is-multiline">
             <div class="column is-6">
-              <VField label="Select a table">
+              <VField
+                label="Select a table"
+                rules="required"
+                :name="`Table #${link_index + 1} name`"
+              >
                 <b-select
-                  v-model="link.idTable"
-                  @input="getTableFields"
+                  v-model="link.table"
+                  @input="getTableFields($event, link_index)"
                   expanded
                 >
                   <option
@@ -30,19 +34,22 @@
             <div class="column is-4">
               <VField
                 label="Link field"
+                rules="required"
+                :name="`Table #${link_index + 1} link `"
                 labelInfo="Field types must match"
-                v-if="table[link.idTable]"
               >
-                <b-select v-model="link.field" expanded>
+                <b-select
+                  v-model="link.join_field"
+                  @input="resetLinkField(link_index)"
+                  expanded
+                >
                   <option
-                    v-for="field in table[link.idTable].fields"
-                    :value="field.name"
-                    :key="field.id"
-                    :disabled="
-                      link_index > 0
-                        ? checkLinkFieldtype(field.field_type)
-                        : false
-                    "
+                    v-for="field in table[link.table]
+                      ? table[link.table].fields
+                      : []"
+                    :value="field.id"
+                    :key="link_index + '-' + field.id"
+                    :disabled="checkLinkFieldtype(field.field_type, link_index)"
                   >
                     {{ field.display_name }}
                   </option>
@@ -50,17 +57,18 @@
               </VField>
             </div>
 
-            <div class="column is-12" v-if="table[link.idTable]">
+            <div class="column is-12" v-if="table[link.table]">
               <VField
+                :name="`Table #${link_index + 1} columns `"
                 label="Select which columns you wish to keep"
                 rules="required|over:2"
               >
                 <div class="checkbox-list">
                   <b-checkbox
-                    v-for="(field, index) in table[link.idTable].fields"
+                    v-for="(field, index) in table[link.table].fields"
                     :key="'check' + index"
-                    v-model="link.selectedColumns"
-                    :native-value="field.name"
+                    v-model="link.fields"
+                    :native-value="field.id"
                   >
                     {{ field.display_name }}
                   </b-checkbox>
@@ -89,8 +97,8 @@ export default {
   data() {
     return {
       links: [
-        { idTable: null, field: null, selectedColumns: [] },
-        { idTable: null, field: null, selectedColumns: [] }
+        { table: null, join_field: null, fields: [] },
+        { table: null, join_field: null, fields: [] }
       ]
     }
   },
@@ -102,24 +110,34 @@ export default {
     this.$store.dispatch('data/getDatabase')
   },
   methods: {
-    getTableFields(value) {
-      this.$store.dispatch('data/getTable', value).then(() => {})
+    getTableFields(value, index) {
+      this.$store.dispatch('data/getTable', value).then(() => {
+        Object.assign(this.links[index], { join_field: null, fields: [] })
+      })
     },
-    checkLinkFieldtype(type) {
-      if (this.links[0].field == null) return false
+    checkLinkFieldtype(type, index) {
+      console.log('checkLinkFieldtype', type, index)
+      if (index == 0 || this.links[0].join_field == null) return false
 
       return (
-        this.table[this.links[0].idTable].fields.find(
-          e => e.name == this.links[0].field
+        this.table[this.links[0].table].fields.find(
+          e => e.id == this.links[0].join_field
         ).field_type != type
       )
+    },
+    resetLinkField(index) {
+      if (index == 0) {
+        this.links.forEach((e, i) => {
+          i && (e.join_field = null)
+        })
+      }
     },
     submit() {
       console.log('submit')
       this.$router.push({
         name: 'filter-table-view',
         params: {
-          idTable: 4
+          table: 4
         }
       })
     }
