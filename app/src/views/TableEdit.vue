@@ -76,7 +76,10 @@
                     :label="`Column format #${index + 1}`"
                     rules="required"
                   >
-                    <b-input v-if="idImport && field.field_type == 'date'" v-model="field.field_format" :value="'%d.%m.%Y'" />
+                    <b-input
+                      v-if="idImport && field.field_type == 'date'"
+                      v-model="field.field_format"
+                    />
                   </VField>
                 </div>
               </div>
@@ -204,12 +207,18 @@ export default {
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {
           ToastService.open('Table was created successfuly.')
-          this.$router.push({ name: 'database-view' })
+          this.$router.push({
+            name: 'table-view',
+            params: { idTable: this.idTable }
+          })
         })
       else
         TableService.putTable(this.idTable, resource).then(() => {
           ToastService.open('Table was updated successfuly.')
-          this.$router.push({ name: 'database-view' })
+          this.$router.push({
+            name: 'table-view',
+            params: { idTable: this.idTable }
+          })
         })
     }
   }

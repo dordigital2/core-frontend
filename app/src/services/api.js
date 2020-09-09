@@ -13,7 +13,7 @@ const ApiService = {
       response => response.data,
       err => {
         // this.$store.commit('loading_stop')
-        console.log('err', JSON.stringify(err))
+        // console.log('err', JSON.stringify(err))
         
         let msg =
           err.response.data.detail ||
