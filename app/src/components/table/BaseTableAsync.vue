@@ -11,6 +11,7 @@
       paginated
       backend-pagination
       backend-sorting
+      scrollable
       @sort="onSort"
     >
       <b-table-column

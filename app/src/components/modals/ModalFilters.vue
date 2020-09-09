@@ -93,7 +93,9 @@ export default {
     }
   },
   computed: mapState({
-    filters: state => state.data.filters || {}
+    filters: function(state) {
+      return state.data.filters[this.table.id] || {}
+    }
   }),
   mounted() {
     if (this.filters != null) this.filterData = { ...this.filters }

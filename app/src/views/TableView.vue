@@ -148,11 +148,11 @@ export default {
             idTable: this.idTable,
             filter: this.table.filters
           })
-          this.updateFilterQuery()
+
+          if (this.table.filters) this.updateFilterQuery()
+          else this.getTableEntries()
         }
       })
-
-    this.getTableEntries()
   },
   methods: {
     getTableEntries() {
