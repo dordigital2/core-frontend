@@ -76,7 +76,7 @@ export default {
   methods: {
     exportPath() {
       return ApiService.getPath(
-        `csv-imports/${this.idImport}/export-errors/`,
+        `/csv-imports/${this.idImport}/export-errors/`,
         true
       )
     }
