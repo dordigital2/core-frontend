@@ -150,9 +150,10 @@ export default {
           })
 
           if (this.table.filters) this.updateFilterQuery()
-          else this.getTableEntries()
         }
       })
+
+    this.getTableEntries()
   },
   methods: {
     getTableEntries() {
