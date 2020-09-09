@@ -24,7 +24,15 @@ const FieldTypes = {
 }
 
 const FilterOptions = {
-  number: {
+  int: {
+    gt: 'Greater than',
+    gte: 'Greater than or equal',
+    lt: 'Lower than',
+    lte: 'Lower than or equal',
+    exact: 'Equal to',
+    interval: 'Interval'
+  },
+  float: {
     gt: 'Greater than',
     gte: 'Greater than or equal',
     lt: 'Lower than',

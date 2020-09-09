@@ -1,7 +1,7 @@
 <template>
   <div>
     <VField label="Choose filter mode">
-      <b-select v-model="innerValue.type">
+      <b-select v-model="innerValue.type" @input="updateValue">
         <option
           v-for="(choice, index) in choices"
           :key="`choice-${choice}`"
@@ -12,13 +12,15 @@
     </VField>
 
     <VField label="Enter date">
-      <VDate v-model="innerValue.values[0]"></VDate>
+      <VDate v-model="innerValue.values[0]" @input="updateValue" />
     </VField>
 
-    <VField label="Enter end date" v-if="innerValue.type == 'interval'">
-      <VDate
-        v-model="innerValue.values[1]"
-      ></VDate>
+    <VField
+      label="Enter end date"
+      @input="updateValue"
+      v-if="innerValue.type == 'interval'"
+    >
+      <VDate v-model="innerValue.values[1]" @input="updateValue" />
     </VField>
   </div>
 </template>
@@ -33,24 +35,19 @@ export default {
   },
   data() {
     return {
-      innerValue: this.value || { type: null, values: [] },
+      innerValue: this.value || { type: null, values: [null, null] },
       choices: FilterOptions.date
     }
   },
-  methods: {},
+  methods: {
+    updateValue() {
+      if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
+      this.$emit('input', this.innerValue)
+    }
+  },
   watch: {
-    innerValue: {
-      deep: true,
-
-      handler(input) {
-        if (input.type != 'interval') input.values.length = 1
-
-        this.$emit('input', input)
-      }
-    },
     value(input) {
-      this.innerValue =
-        input != null ? input : { type: null, values: [] }
+      this.innerValue = input ? input : { type: null, values: [null, null] }
     }
   }
 }

@@ -1,15 +1,17 @@
 <template>
   <div class="filter-display">
-    <template v-for="(filter, index) in filterData">
+    <template v-for="(filter, name) in filterData">
       <b-field
         v-if="filter != null"
-        :label="getFieldDef(index).display_name"
-        :key="`filterkey-${index}`"
+        :label="getFieldDef(name).display_name"
+        :key="`filterkey-${name}`"
       >
         <div class="tags">
           <b-tag
-            v-for="(tag, name) in getValues(filter, index)"
-            :key="`tag-${name}`"
+            v-for="(tag, index) in getValues(filter, name)"
+            :key="`tag-${index}`"
+            @close="$emit('remove', name, index)"
+            closable
             >{{ tag }}</b-tag
           >
         </div>
@@ -31,17 +33,19 @@ export default {
     return {}
   },
   methods: {
-    getFieldDef(field_name) {
-      return this.fields.find(e => e.name == field_name)
+    getFieldDef(name) {
+      return this.fields.find(e => e.name == name)
     },
-    getValues(filter, field_name) {
-      const field_type = this.getFieldDef(field_name).field_type
+    getValues(filter, name) {
+      const field_type = this.getFieldDef(name).field_type
 
       if (Array.isArray(filter)) {
         return filter
       }
 
       if (typeof filter == 'object') {
+        if (filter.values[0] == null) return null
+        
         if (filter.type == 'interval') {
           const values = [
             FieldService.getParsedValue(filter.values[0], field_type),

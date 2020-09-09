@@ -29,23 +29,20 @@
               <div class="tab-content-head">
                 <b-button
                   type="is-dark"
-                  :disabled="
-                    !(
-                      (filterData[field.name] &&
-                        filterData[field.name].length) ||
-                      filterData[field.name] === true
-                    )
-                  "
-                  @click="$delete(filterData, field.name)"
+                  :disabled="checkDisabled(field)"
+                  @click="removeFilter(field.name)"
                   >Clear filter</b-button
                 >
               </div>
 
               <component
                 v-model="filterData[field.name]"
-                :placeholder="field.display_name"
-                :choices="field.choices"
-                :name="field.name"
+                v-bind="{
+                  placeholder: field.display_name,
+                  choices: field.choices,
+                  name: field.name,
+                  field_type: field.field_type
+                }"
                 :is="getComponent(field.field_type)"
               />
             </b-tab-item>
@@ -55,7 +52,12 @@
           <p class="has-text-weight-semibold is-size-6">Selected filters</p>
           <br />
 
-          <FilterDisplay :fields="table.fields" :filterData="filterData" />
+          <FilterDisplay
+            :fields="table.fields"
+            :filterData="filterData"
+            @remove="removeFilter"
+          />
+
         </div>
       </div>
     </section>
@@ -114,6 +116,17 @@ export default {
       }
 
       return label
+    },
+    checkDisabled(field) {
+      if (this.filterData[field.name] != null) return false
+      return true
+    },
+    removeFilter(name, index) {
+      console.log('removeFilter', name, index)
+
+      if (Array.isArray(this.filterData[name]))
+        this.filterData[name].splice(index, 1)
+      else this.$delete(this.filterData, name)
     },
     submit() {
       this.$store.commit('data/setFilters', this.filterData)

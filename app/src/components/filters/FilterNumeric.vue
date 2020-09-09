@@ -27,13 +27,14 @@ import { FilterOptions } from '@/services/field'
 export default {
   props: {
     name: String,
-    value: Object
+    value: Object,
+    field_type: String
   },
   data() {
     return {
       type: null,
       innerValue: this.value || { type: null, values: [] },
-      choices: FilterOptions.number
+      choices: FilterOptions[this.field_type]
     }
   },
   methods: {},
@@ -42,8 +43,9 @@ export default {
       deep: true,
 
       handler(input) {
-        if (input.type != 'interval') input.values.length = 1
+        if (!input.type || !input.values.length) return
 
+        if (input.type != 'interval') input.values.length = 1
         this.$emit('input', input)
       }
     },

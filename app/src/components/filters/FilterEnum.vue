@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     selectAll() {
-      this.innerValue = this.filterChoices
+      this.innerValue = [...this.filterChoices]
     },
     selectNone() {
       if (this.search == null) this.innerValue = []

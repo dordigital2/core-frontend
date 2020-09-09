@@ -1,8 +1,10 @@
 // import router from '@/router/'
 
 const Parser = {
-  date: date => new Date(date).toLocaleDateString('ro-RO').replace(/\./g, '/'),
-  datetime: date => new Date(date).toLocaleString('ro-RO').replace(/\./g, '/')
+  date: date =>
+    date ? new Date(date).toLocaleDateString('ro-RO').replace(/\./g, '/') : '',
+  datetime: date =>
+    date ? new Date(date).toLocaleString('ro-RO').replace(/\./g, '/') : ''
 }
 
 const QueryString = function(params) {
@@ -11,4 +13,4 @@ const QueryString = function(params) {
     .join('&')
 }
 
-export { Parser, QueryString}
+export { Parser, QueryString }
