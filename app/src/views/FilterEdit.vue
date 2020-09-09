@@ -1,6 +1,6 @@
 <template>
   <div v-if="database">
-    <BaseTitle title="Add filtered view" />
+    <BaseTitle :title="title" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <BaseCard title="Configure view and table link">
@@ -111,7 +111,8 @@ export default {
       links: [
         { table: null, join_field: null, fields: [] },
         { table: null, join_field: null, fields: [] }
-      ]
+      ],
+      title: null
     }
   },
   computed: mapState('data', {
@@ -120,6 +121,8 @@ export default {
     tableView: state => state.tableView
   }),
   mounted() {
+    this.title = this.idTable ? 'Edit filtered view' : 'Add filtered view'
+
     this.$store.dispatch('data/getDatabase')
 
     if (this.idTable)
