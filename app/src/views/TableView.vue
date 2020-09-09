@@ -11,6 +11,10 @@
           <b-button class="is-dark" @click="openModalFilters">
             Add filters
           </b-button>
+
+          <template v-if="filterMode">
+            <b-button class="is-primary" @click="saveFilters">Save</b-button>
+          </template>
         </div>
       </template>
 
@@ -19,6 +23,7 @@
           <FilterDisplay
             :fields="table.fields"
             :filterData="filters"
+            :filterMode="filterMode"
             class="is-horizontal"
           />
         </div>
@@ -34,12 +39,16 @@
 
           <router-link
             class="button is-primary"
-            :to="{ name: `table-edit`, params: { idTable } }"
+            :to="{
+              name: filterMode ? `filter-edit` : `table-edit`,
+              params: { idTable }
+            }"
           >
             Edit table
           </router-link>
 
           <router-link
+            v-if="!filterMode"
             class="button is-primary"
             :to="{ name: `entity-edit`, params: { idTable } }"
           >
@@ -51,7 +60,7 @@
           </a>
         </div>
       </template>
-      
+
       <template #default>
         <div class="card-container">
           Last edit: {{ table.last_edit_date | parseDate }}
@@ -65,7 +74,12 @@
           >
         </div>
 
-        <BaseTableAsync :idTable="table.id" updateQueryNav />
+        <BaseTableAsync
+          :table="table"
+          :tableEntries="tableEntries"
+          :filterMode="filterMode"
+          updateQueryNav
+        />
       </template>
     </BaseCard>
   </div>
@@ -77,31 +91,31 @@ import ModalFilters from '@/components/modals/ModalFilters'
 import FilterDisplay from '@/components/filters/FilterDisplay'
 
 import ApiService from '@/services/api'
+import { TableViewService } from '@/services/data'
+import { ToastService } from '@/services/buefy'
 
 import { mapState } from 'vuex'
 
 export default {
   name: 'TableView',
   components: { FilterDisplay },
-  props: { filterViewMode: Boolean },
+  props: { filterMode: Boolean },
   data() {
     return {
-      idTable: Number(this.$route.params.idTable),
-      query: {
-        fields: null,
-        filters: null
-      }
+      idTable: Number(this.$route.params.idTable)
     }
   },
   computed: {
     ...mapState('data', {
       table: function(state) {
-        return state.table[this.idTable]
+        return this.filterMode ? state.tableView : state.table[this.idTable]
       },
       tableEntries: function(state) {
-        return state.tableEntries[this.idTable]
+        return this.filterMode ? state.tableViewEntries : state.tableEntries
       },
-      filters: state => state.filters
+      filters: function(state) {
+        return state.filters[this.idTable]
+      }
     }),
     title() {
       return 'Table – ' + this.table.name
@@ -115,15 +129,42 @@ export default {
       )
     },
     exportPath() {
-      return ApiService.getPath(`tables/${this.idTable}/csv-export/`, true)
+      return ApiService.getPath(
+        `${this.filterMode ? 'filters' : 'tables'}/${this.idTable}/csv-export/`,
+        true,
+        this.$route.query
+      )
     }
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.idTable).then(() => {})
+    this.$store
+      .dispatch(
+        this.filterMode ? 'data/getTableView' : 'data/getTable',
+        this.idTable
+      )
+      .then(() => {
+        if (this.filterMode) {
+          this.$store.commit('data/setFilters', {
+            idTable: this.idTable,
+            filter: this.table.filters
+          })
+          this.updateFilterQuery()
+        }
+      })
 
-    // this.$store.dispatch('data/getTableEntries', { idTable: this.idTable })
+    this.getTableEntries()
   },
   methods: {
+    getTableEntries() {
+      this.$store.dispatch(
+        this.filterMode ? 'data/getTableViewEntries' : 'data/getTableEntries',
+        {
+          idTable: this.idTable,
+          query: Object.assign({}, this.$route.query)
+        }
+      )
+    },
+
     openModalColumns() {
       this.$buefy.modal.open({
         parent: this,
@@ -144,12 +185,28 @@ export default {
         trapFocus: true,
         props: {
           table: this.table
+        },
+        events: {
+          submit: () => {
+            this.updateFilterQuery()
+          }
         }
       })
     },
 
+    saveFilters() {
+      TableViewService.patchTableView(this.idTable, {
+        filters: this.filters
+      }).then(() => {
+        ToastService.open('Filtered view has been saved')
+      })
+    },
+
     resetFilters() {
-      this.$store.commit('data/setFilters', {})
+      this.$store.commit('data/setFilters', {
+        idTable: this.idTable,
+        filter: null
+      })
 
       const __fields = this.$route.query.__fields
 
@@ -158,8 +215,43 @@ export default {
           query: { ...(__fields && { __fields }) }
         })
         .catch(() => {})
+    },
 
-      // console.log(this.$route.query)
+    updateFilterQuery() {
+      const filterData = Object.assign({}, this.filters)
+      let query = {}
+
+      Object.keys(filterData).forEach(key => {
+        let e = filterData[key]
+
+        if (e != null) {
+          if (Array.isArray(e) && e.length) {
+            query[key] = e.join(',')
+          } else if (typeof e == 'object') {
+            if (e.type == 'interval') {
+              query[`${key}__gte`] = e.values[0]
+              query[`${key}__lte`] = e.values[1]
+            } else {
+              query[`${key}__${e.type}`] = e.values[0]
+            }
+            // } else if (typeof e == 'string') query[`${key}__icontains`] = e
+          } else query[`${key}__icontains`] = e.toString()
+        }
+      })
+
+      const __fields = this.$route.query.__fields
+
+      this.$router
+        .push({
+          query: Object.assign({ ...(__fields && { __fields }) }, query)
+        })
+        .catch(() => {})
+        .then(() => {})
+    }
+  },
+  watch: {
+    '$route.query'() {
+      this.getTableEntries()
     }
   }
 }

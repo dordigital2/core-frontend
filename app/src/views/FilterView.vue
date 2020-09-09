@@ -4,12 +4,12 @@
 
     <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
-        <router-link :to="{ name: 'filter-add' }" class="button is-primary">
+        <router-link :to="{ name: 'filter-edit' }" class="button is-primary">
           Add view
         </router-link>
       </template>
 
-      <BaseTable :data="tableViews" :columns="columns" />
+      <BaseTable :data="tableViews.results" :columns="columns" />
     </BaseCard>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
         {
           name: 'actions',
           display_name: ' ',
-          component: 'ActionsDatabaseActive',
+          component: 'ActionsTableView',
           custom_class: 'actions',
           sticky: true
         }

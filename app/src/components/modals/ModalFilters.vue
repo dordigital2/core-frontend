@@ -55,9 +55,9 @@
           <FilterDisplay
             :fields="table.fields"
             :filterData="filterData"
+            isEditable
             @remove="removeFilter"
           />
-
         </div>
       </div>
     </section>
@@ -122,45 +122,18 @@ export default {
       return true
     },
     removeFilter(name, index) {
-      console.log('removeFilter', name, index)
+      // console.log('removeFilter', name, index)
 
       if (Array.isArray(this.filterData[name]))
         this.filterData[name].splice(index, 1)
       else this.$delete(this.filterData, name)
     },
     submit() {
-      this.$store.commit('data/setFilters', this.filterData)
-
-      // console.log(JSON.stringify(this.filterData), JSON.stringify(query))
-      let query = {}
-
-      Object.keys(this.filterData).forEach(key => {
-        let e = this.filterData[key]
-
-        if (e != null) {
-          if (Array.isArray(e) && e.length) {
-            query[key] = e.join(',')
-          } else if (typeof e == 'object') {
-            if (e.type == 'interval') {
-              query[`${key}__gte`] = e.values[0]
-              query[`${key}__lte`] = e.values[1]
-            } else {
-              query[`${key}__${e.type}`] = e.values[0]
-            }
-            // } else if (typeof e == 'string') query[`${key}__icontains`] = e
-          } else query[`${key}__icontains`] = e.toString()
-        }
+      this.$store.commit('data/setFilters', {
+        idTable: this.table.id,
+        filter: this.filterData
       })
-
-      const __fields = this.$route.query.__fields
-
-      this.$router
-        .push({
-          query: Object.assign({ ...(__fields && { __fields }) }, query)
-        })
-        .catch(() => {})
-        .then(() => {})
-
+      this.$emit('submit')
       this.$emit('close')
     }
   }

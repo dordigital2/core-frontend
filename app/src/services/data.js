@@ -8,9 +8,11 @@ const DatabaseService = {
 }
 
 const TableService = {
+  getTables() {
+    return ApiService.get('tables/')
+  },
   getTable(idTable) {
-    const path = 'tables/' + (idTable != null ? `${idTable}/` : '')
-    return ApiService.get(path)
+    return ApiService.get(`tables/${idTable}/`)
   },
   postTable(data) {
     return ApiService.post(`tables/`, data)
@@ -77,6 +79,28 @@ const ImportService = {
 const TableViewService = {
   getTableViews() {
     return ApiService.get('filters/')
+  },
+
+  postTableView(data) {
+    return ApiService.post('filters/', data)
+  },
+
+  getTableView(id) {
+    return ApiService.get(`filters/${id}/`)
+  },
+  putTableView(id, data) {
+    return ApiService.put(`filters/${id}/`, data)
+  },
+  patchTableView(id, data) {
+    return ApiService.patch(`filters/${id}/`, data)
+  },
+  deleteTableView(id) {
+    return ApiService.delete(`filters/${id}/`)
+  },
+
+  getEntries(id, query) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`filters/${id}/entries/${queryString}`)
   }
 }
 

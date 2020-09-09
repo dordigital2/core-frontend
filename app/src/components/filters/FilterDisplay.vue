@@ -11,7 +11,8 @@
             v-for="(tag, index) in getValues(filter, name)"
             :key="`tag-${index}`"
             @close="$emit('remove', name, index)"
-            closable
+            close-icon="close"
+            :closable="isEditable"
             >{{ tag }}</b-tag
           >
         </div>
@@ -27,7 +28,8 @@ import { FilterOptions } from '@/services/field'
 export default {
   props: {
     fields: Array,
-    filterData: Object
+    filterData: Object,
+    isEditable: Boolean
   },
   data() {
     return {}

@@ -44,7 +44,10 @@ export default {
   },
   data() {
     return {
-      selectedColumns: this.table.default_fields
+      selectedColumns: this.table.default_fields,
+      columnMap: this.table.fields.map(e => {
+        return { [e.name]: e.display_name }
+      })
     }
   },
   mounted() {

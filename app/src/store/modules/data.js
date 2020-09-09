@@ -13,11 +13,14 @@ export default {
   state: {
     database: null,
     table: {},
-    tableEntries: {},
+    tableEntries: null,
+    tableViewEntries: null,
     entity: null,
-    filters: null,
     import: null,
-    tableViews: null
+    filters: {},
+    tableView: null,
+    tableViews: null,
+    loading: {}
   },
   mutations: {
     setDatabase(state, data) {
@@ -27,21 +30,31 @@ export default {
       Vue.set(state.table, idTable, data)
       // state.table = data
     },
-    setTableEntries(state, { idTable, data }) {
-      Vue.set(state.tableEntries, idTable, data)
-      // state.tableEntries = data
+    setTableEntries(state, data) {
+      // Vue.set(state.tableEntries, idTable, data)
+      state.tableEntries = data
     },
     setEntity(state, data) {
       state.entity = data
     },
-    setFilters(state, data) {
-      state.filters = data
+    setFilters(state, { idTable, filter }) {
+      // state.filters = data
+      Vue.set(state.filters, idTable, filter)
     },
     setImport(state, data) {
       state.import = data
     },
+    setTableView(state, data) {
+      state.tableView = data
+    },
+    setTableViewEntries(state, data) {
+      state.tableViewEntries = data
+    },
     setTableViews(state, data) {
       state.tableViews = data
+    },
+    setLoading(state, { idTable, status }) {
+      Vue.set(state.loading, idTable, status)
     }
   },
   actions: {
@@ -58,8 +71,11 @@ export default {
     },
 
     getTableEntries({ commit }, { idTable, query }) {
+      commit('setLoading', { idTable, status: true })
+
       return TableService.getEntries(idTable, query).then(response => {
-        commit('setTableEntries', { idTable, data: response })
+        commit('setTableEntries', response)
+        commit('setLoading', { idTable, status: false })
       })
     },
 
@@ -112,6 +128,28 @@ export default {
     getTableViews({ commit }) {
       return TableViewService.getTableViews().then(response => {
         commit('setTableViews', response)
+      })
+    },
+
+    getTableView({ commit }, id) {
+      return TableViewService.getTableView(id).then(response => {
+        commit('setTableView', response)
+      })
+    },
+
+    getTableViewEntries({ commit }, { idTable, query }) {
+      commit('setLoading', { idTable, status: true })
+      return TableViewService.getEntries(idTable, query).then(response => {
+        commit('setTableViewEntries', response)
+        commit('setLoading', { idTable, status: false })
+      })
+    },
+
+    deleteTableViews({ dispatch }) {
+      return TableViewService.deleteTableView().then(() => {
+        dispatch('getTableViews').then(() => {
+          ToastService.open('The view has been deleted')
+        })
       })
     }
   }

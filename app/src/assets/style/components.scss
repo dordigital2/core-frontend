@@ -127,8 +127,19 @@ nav.navbar {
 
 .modal {
   .modal-card {
-    .modal-card-title {
-      font-weight: $weight-bold;
+    .modal-card-head {
+      .modal-card-title {
+        font-weight: $weight-bold;
+      }
+
+      .delete {
+        display: block;
+        
+        height: 30px;
+        width: 30px;
+        max-height: 30px;
+        max-width: 30px;
+      }
     }
 
     .modal-card-body {

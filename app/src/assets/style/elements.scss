@@ -103,13 +103,14 @@
   .label {
     font-size: $size-7;
   }
-  
+
   .tag {
     font-weight: $weight-medium;
     font-size: $size-7;
     white-space: normal;
     min-height: 2em;
     height: auto;
+    max-width: 100%;
   }
 
   &.is-horizontal {
@@ -118,6 +119,23 @@
 
     .field {
       margin-right: 12px;
+    }
+  }
+}
+
+.delete {
+  // border-radius: 0;
+  background-color: transparent;
+  
+  &:before, &:after {
+    background-color: $black-light;
+  }
+}
+
+.is-dark {
+  .delete {
+    &:before, &:after {
+      background-color: $white;
     }
   }
 }

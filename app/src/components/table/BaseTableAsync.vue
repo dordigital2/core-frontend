@@ -35,7 +35,13 @@
           </template>
 
           <template v-else>
-            {{ getValue(props.row.data, column.name, column.field_type) }}
+            {{
+              getValue(
+                filterMode ? props.row : props.row.data,
+                column.name,
+                column.field_type
+              )
+            }}
           </template>
         </template>
       </b-table-column>
@@ -73,7 +79,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      idTable: this.table.id,
       perPage: this.$route.query.perPage || 10,
       perPageModel: this.$route.query.perPage || 10,
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
@@ -81,17 +87,16 @@ export default {
     }
   },
   props: {
-    idTable: Number,
+    table: Object,
+    tableEntries: Object,
     query: String,
-    updateQueryNav: { type: Boolean, default: false }
+    updateQueryNav: { type: Boolean, default: false },
+    filterMode: Boolean
   },
   computed: {
-    ...mapState({
-      table: function(state) {
-        return state.data.table[this.idTable]
-      },
-      tableEntries: function(state) {
-        return state.data.tableEntries[this.idTable]
+    ...mapState('data', {
+      loading: function(state) {
+        return state.loading[this.idTable]
       }
     }),
     columns() {
@@ -110,56 +115,38 @@ export default {
 
       fields = fields.map(e => Object.assign(e, { sortable: true }))
 
-      fields.push({
-        name: 'actions',
-        custom_class: 'actions',
-        component: 'ActionsTable',
-        display_name: ' ',
-        sticky: true,
-        props: {
-          idTable: this.idTable
-        }
-      })
+      if (!this.filterMode)
+        fields.push({
+          name: 'actions',
+          custom_class: 'actions',
+          component: 'ActionsTable',
+          display_name: ' ',
+          sticky: true,
+          props: {
+            idTable: this.idTable
+          }
+        })
 
       return fields
     }
   },
-  mounted() {
-    this.loading = true
-
-    if (!this.table) {
-      this.$store.dispatch('data/getTable', this.idTable)
-    }
-
-    this.getTableEntries()
-  },
+  mounted() {},
   methods: {
-    getTableEntries() {
-      this.loading = true
-
-      this.$store
-        .dispatch('data/getTableEntries', {
-          idTable: this.table.id,
-          query: Object.assign({}, this.$route.query)
-        })
-        .then(() => {
-          this.loading = false
-        })
-    },
     getValue(row, field, type) {
       const value = getNestedObj(row, field)
       if (value != null) return FieldService.getParsedValue(value, type)
 
       return null
     },
-    updateQueryRequest(obj) {
+    updateQueryRequest(query) {
       if (this.updateQueryNav)
         this.$router
           .push({
-            query: Object.assign({}, this.$route.query, obj)
+            query: Object.assign({}, this.$route.query, query)
           })
           .catch(() => {})
-      else this.getTableEntries()
+      // else this.getTableEntries()
+      else this.$emit('update', query)
     },
     onPageChange(page) {
       // console.log('onPageChange', page)
@@ -172,13 +159,8 @@ export default {
       this.updateQueryRequest({ perPage: this.perPage })
     },
     onSort(field, order) {
-      console.log(field, order)
+      // console.log(field, order)
       this.updateQueryRequest({ __order: (order == 'desc' ? '-' : '') + field })
-    }
-  },
-  watch: {
-    '$route.query'() {
-      if (this.updateQueryNav) this.getTableEntries()
     }
   }
 }

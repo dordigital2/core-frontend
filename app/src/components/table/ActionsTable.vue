@@ -26,7 +26,6 @@
 <script>
 import ActionButtonDelete from './ActionButtonDelete'
 import ActionButtonGoto from './ActionButtonGoto'
-// import { TableService } from '@/services/data'
 
 export default {
   components: {

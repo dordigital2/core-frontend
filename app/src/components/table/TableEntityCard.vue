@@ -50,6 +50,7 @@
 
 <script>
 import FieldService from '@/services/field'
+import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -63,9 +64,6 @@ export default {
   computed: mapState({
     table: function(state) {
       return state.data.table[this.idTable]
-    },
-    tableEntries: function(state) {
-      return state.data.tableEntries[this.idTable]
     }
   }),
   props: {
@@ -84,14 +82,10 @@ export default {
 
     if (this.entity) this.entities = [this.entity]
     else
-      this.$store
-        .dispatch('data/getTableEntries', {
-          idTable: this.idTable,
-          query: this.query
-        })
-        .then(() => {
-          this.entities = this.tableEntries.results
-        })
+      TableService.getEntries(this.idTable, this.query).then(response => {
+        this.entities = response.results
+        this.loading = false
+      })
   }
 }
 </script>

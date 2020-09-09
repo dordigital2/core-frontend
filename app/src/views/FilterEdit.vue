@@ -1,9 +1,18 @@
 <template>
   <div v-if="database">
-    <BaseTitle title="Add view" />
+    <BaseTitle title="Add filtered view" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <BaseCard title="Select tables for linking">
+      <BaseCard title="Configure view and table link">
+        <div class="card-container">
+          <div class="columns">
+            <div class="column is-6">
+              <VField label="View name">
+                <b-input v-model="name" />
+              </VField>
+            </div>
+          </div>
+        </div>
         <div
           class="card-container"
           v-for="(link, link_index) in links"
@@ -83,8 +92,6 @@
             >Continue</b-button
           >
         </template>
-
-        <pre>{{ links }}</pre>
       </BaseCard>
     </ValidationObserver>
   </div>
@@ -92,10 +99,15 @@
 
 <script>
 import { mapState } from 'vuex'
+import { TableViewService } from '@/services/data'
+import { ToastService } from '@/services/buefy'
+
 export default {
-  name: 'FilterAdd',
+  name: 'FilterEdit',
   data() {
     return {
+      idTable: this.$route.params.idTable,
+      name: null,
       links: [
         { table: null, join_field: null, fields: [] },
         { table: null, join_field: null, fields: [] }
@@ -104,10 +116,34 @@ export default {
   },
   computed: mapState('data', {
     database: state => state.database,
-    table: state => state.table
+    table: state => state.table,
+    tableView: state => state.tableView
   }),
   mounted() {
     this.$store.dispatch('data/getDatabase')
+
+    if (this.idTable)
+      this.$store.dispatch('data/getTableView', this.idTable).then(() => {
+        this.name = this.tableView.name
+
+        this.$store
+          .dispatch('data/getTable', this.tableView.config.primary_table.table)
+          .then(() => {
+            this.$store
+              .dispatch(
+                'data/getTable',
+                this.tableView.config.join_tables[0].table
+              )
+              .then(() => {
+                this.$set(this.links, 0, {
+                  ...this.tableView.config.primary_table
+                })
+                this.$set(this.links, 1, {
+                  ...this.tableView.config.join_tables[0]
+                })
+              })
+          })
+      })
   },
   methods: {
     getTableFields(value, index) {
@@ -116,7 +152,7 @@ export default {
       })
     },
     checkLinkFieldtype(type, index) {
-      console.log('checkLinkFieldtype', type, index)
+      // console.log('checkLinkFieldtype', type, index)
       if (index == 0 || this.links[0].join_field == null) return false
 
       return (
@@ -133,13 +169,36 @@ export default {
       }
     },
     submit() {
-      console.log('submit')
-      this.$router.push({
-        name: 'filter-table-view',
-        params: {
-          table: 4
-        }
-      })
+      // console.log('submit')
+      const resource = {
+        name: this.name,
+        primary_table: this.links[0],
+        join_tables: [this.links[1]]
+      }
+
+      if (!this.idTable) {
+        TableViewService.postTableView(resource).then(response => {
+          ToastService.open('The view has been created successfully')
+
+          this.$router.push({
+            name: 'filter-table-view',
+            params: {
+              idTable: response.id
+            }
+          })
+        })
+      } else {
+        TableViewService.putTableView(this.idTable, resource).then(() => {
+          ToastService.open('The view has been updated')
+
+          this.$router.push({
+            name: 'filter-table-view',
+            params: {
+              idTable: this.idTable
+            }
+          })
+        })
+      }
     }
   }
 }

@@ -37,6 +37,7 @@
 <script>
 import ActionsDatabaseArchived from './ActionsDatabaseArchived'
 import ActionsDatabaseActive from './ActionsDatabaseActive'
+import ActionsTableView from './ActionsTableView'
 
 import ActionsTable from './ActionsTable'
 import FieldOwnerLink from './FieldOwnerLink'
@@ -49,6 +50,7 @@ export default {
   components: {
     ActionsDatabaseArchived,
     ActionsDatabaseActive,
+    ActionsTableView,
     ActionsTable,
     FieldOwnerLink,
     FieldTagList

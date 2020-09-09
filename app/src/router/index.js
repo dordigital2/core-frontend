@@ -130,19 +130,19 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/FilterView.vue')
       },
       {
-        path: 'filter-table-view',
+        path: 'filter-table-view/:idTable',
         name: 'filter-table-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableView.vue'),
         props: {
-          filterViewMode: true
+          filterMode: true
         }
       },
       {
-        path: 'filter-add',
-        name: 'filter-add',
+        path: 'filter-edit/:idTable?',
+        name: 'filter-edit',
         component: () =>
-          import(/* webpackChunkName: "table" */ '@/views/FilterAdd.vue')
+          import(/* webpackChunkName: "table" */ '@/views/FilterEdit.vue')
       },
       {
         path: 'users',

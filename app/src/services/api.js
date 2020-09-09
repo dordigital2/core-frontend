@@ -2,6 +2,8 @@ import axios from 'axios'
 import TokenService from './storage'
 import { ToastService } from './buefy'
 
+import { QueryString } from '@/utils/helpers'
+
 // import { ToastProgrammatic as Toast } from 'buefy'
 
 const ApiService = {
@@ -33,13 +35,14 @@ const ApiService = {
     )
   },
 
-  getPath(path, appendToken) {
+  getPath(path, appendToken, query) {
     const newPath = axios.defaults.baseURL.slice(-1) == '/' ? path : '/' + path
 
     return (
       axios.defaults.baseURL +
       newPath +
-      (appendToken && `?token=${TokenService.getToken()}`)
+      (appendToken && `?token=${TokenService.getToken()}`) +
+      (query && `${appendToken ? '&' : '?'}${QueryString(query)}`)
     )
   },
 
@@ -63,6 +66,10 @@ const ApiService = {
 
   put(resource, data) {
     return axios.put(resource, data)
+  },
+
+  patch(resource, data) {
+    return axios.patch(resource, data)
   },
 
   delete(resource) {
