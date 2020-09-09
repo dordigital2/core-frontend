@@ -58,6 +58,14 @@ const ImportService = {
     })
   },
 
+  manual(idTable, data) {
+    return ApiService.put(`tables/${idTable}/csv-manual-import/`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+
   run(idTable, idImport) {
     return ApiService.post(`tables/${idTable}/csv-import/${idImport}/`, {
       id: idTable,

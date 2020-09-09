@@ -9,7 +9,7 @@
         <template #actions v-if="importData.imports_count" class="da">
           <router-link
             class="button is-dark"
-            :to="{ name: 'table-view', params: { idTable } }"
+            :to="{ name: 'table-view', params: { idTable: importData.table } }"
             >View table</router-link
           >
         </template>
@@ -63,8 +63,7 @@ export default {
   data() {
     return {
       idImport: this.$route.params.idImport,
-      name: this.$route.query.name || '',
-      idTable: 56
+      name: this.$route.query.name || ''
     }
   },
   computed: mapState('data', {

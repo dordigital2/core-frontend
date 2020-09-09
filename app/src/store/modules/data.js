@@ -91,6 +91,13 @@ export default {
       })
     },
 
+    manualImport({ commit }, { idTable, data }) {
+      return ImportService.manual(idTable, data).then(response => {
+        commit('setImport', response)
+        return response
+      })
+    },
+
     prepareImport({ commit }, data) {
       return ImportService.prepare(data).then(response => {
         commit('setImport', response)
@@ -99,7 +106,7 @@ export default {
     },
 
     // manualImport({commit}, data) {
-      
+
     // },
 
     getTableViews({ commit }) {

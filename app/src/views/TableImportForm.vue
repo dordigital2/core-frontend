@@ -101,13 +101,28 @@ export default {
       formData.append('file', this.file)
       formData.append('delimiter', this.delimiter)
 
-      this.$store.dispatch('data/prepareImport', formData).then(response => {
-        this.$router.push({
-          name: 'table-edit',
-          params: { ...(this.isManualImport && { idTable: this.idTable }) },
-          query: { idImport: response.import_id, ...this.$route.query }
+      // @TODO: we need to go through table-edit before if isManual
+      if (this.isManualImport) {
+        this.$store
+          .dispatch('data/manualImport', {
+            idTable: this.idTable,
+            data: formData
+          })
+          .then(response => {
+            this.$router.push({
+              name: 'table-import-result',
+              params: { idImport: response.import_id }
+            })
+          })
+      } else {
+        this.$store.dispatch('data/prepareImport', formData).then(response => {
+          this.$router.push({
+            name: 'table-edit',
+            params: { ...(this.isManualImport && { idTable: this.idTable }) },
+            query: { idImport: response.import_id, ...this.$route.query }
+          })
         })
-      })
+      }
     }
   },
   watch: {
