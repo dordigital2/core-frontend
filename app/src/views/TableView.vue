@@ -76,7 +76,7 @@
 
         <BaseTableAsync
           :table="table"
-          :tableEntries="tableEntries"
+          :tableEntries="tableEntries || []"
           :filterMode="filterMode"
           updateQueryNav
         />
