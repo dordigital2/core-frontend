@@ -14,11 +14,13 @@ const ApiService = {
       err => {
         // this.$store.commit('loading_stop')
         // console.log('err', JSON.stringify(err))
-        
+
         let msg =
           err.response.data.detail ||
-          (err.response.data.non_field_errors && err.response.data.non_field_errors[0]) ||
-          err.response.status || 'unknown'
+          (err.response.data.non_field_errors &&
+            err.response.data.non_field_errors[0]) ||
+          err.response.status ||
+          'unknown'
 
         if (err.response.status == null) msg = 'Check internet connection'
 
@@ -32,9 +34,11 @@ const ApiService = {
   },
 
   getPath(path, appendToken) {
+    const newPath = axios.defaults.baseURL.slice(-1) == '/' ? path : '/' + path
+
     return (
       axios.defaults.baseURL +
-      path +
+      newPath +
       (appendToken && `?token=${TokenService.getToken()}`)
     )
   },
