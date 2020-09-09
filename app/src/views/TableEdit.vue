@@ -24,7 +24,12 @@
                     <div class="field-container">
                       <b-input v-model="field.display_name" placeholder="" />
                       <b-tag
-                        v-if="importData && importData.fields[index]"
+                        v-if="
+                          false &&
+                            idImport &&
+                            importData &&
+                            importData.fields[index]
+                        "
                         class="csv-field"
                         >{{ importData.fields[index].display_name }}</b-tag
                       >
@@ -64,6 +69,14 @@
                         :bypassDialog="!idTable"
                         @on-confirm="deleteColumn(index)"
                     /></b-button>
+                  </VField>
+
+                  <VField
+                    v-if="idImport && field.field_type == 'date'"
+                    :label="`Column format #${index + 1}`"
+                    rules="required"
+                  >
+                    <b-input v-if="idImport && field.field_type == 'date'" v-model="field.field_format" :value="'%d.%m.%Y'" />
                   </VField>
                 </div>
               </div>
@@ -105,7 +118,7 @@ export default {
       idTable: Number(this.$route.params.idTable),
       idImport: this.$route.query.idImport,
       name: this.$route.query.name,
-      fields: [{ display_name: null, field_type: null }],
+      fields: [{ display_name: null, field_type: null, field_format: null }],
       fieldTypes: FieldService.getFieldTypes(),
       loading: false
     }
@@ -154,7 +167,11 @@ export default {
   },
   methods: {
     addColumn() {
-      this.fields.push({ display_name: null, field_type: null })
+      this.fields.push({
+        display_name: null,
+        field_type: null,
+        field_format: null
+      })
     },
     deleteColumn(index) {
       this.fields.length > 1 && this.fields.splice(index, 1)

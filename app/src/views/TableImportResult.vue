@@ -55,8 +55,6 @@
 </template>
 
 <script>
-// @TODO: use BaseTable to display errors
-
 import ApiService from '@/services/api'
 import { mapState } from 'vuex'
 

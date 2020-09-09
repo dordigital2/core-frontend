@@ -1,7 +1,8 @@
 <template>
   <BaseCard :title="`Table – ${table.name}`" v-if="table && entities">
-    <template #actions v-if="entities.length == 1">
+    <template #actions>
       <router-link
+        v-if="entities.length == 1"
         :to="{
           name: 'entity-edit',
           params: { idTable: idTable, idEntity: entities[0].id }
@@ -9,6 +10,13 @@
         class="button is-primary"
         >Edit entity</router-link
       >
+      <a
+        v-if="closeable"
+        href="#"
+        class="is-size-4 button-close"
+        @click.prevent="$emit('remove')"
+        ><b-icon icon="close"
+      /></a>
     </template>
 
     <template v-if="entities && entities.length">
@@ -63,7 +71,8 @@ export default {
   props: {
     idTable: Number,
     query: Object,
-    entity: Object
+    entity: Object,
+    closeable: Boolean
   },
   methods: {
     getParsedValue(value, type) {
@@ -86,3 +95,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.button-close {
+  height: 40px;
+  color: $black-light;
+  margin-left: 8px;
+
+  .icon {
+    height: 40px;
+  }
+
+  &:hover {
+    color: $primary;
+  }
+}
+</style>

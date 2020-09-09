@@ -13,6 +13,8 @@
       :key="`tableLink${index}`"
       :idTable="link.idLinkTable"
       :query="link.query"
+      closeable
+      @remove="removeLinkTable(index)"
     />
 
     <TableEntityLinkCard :idTable="Number(idTable)" @input="addLinkTable" />
@@ -60,6 +62,9 @@ export default {
       }
 
       this.tableLinks.push({ idLinkTable, query })
+    },
+    removeLinkTable(index) {
+      this.tableLinks.splice(index, 1)
     }
   }
 }
