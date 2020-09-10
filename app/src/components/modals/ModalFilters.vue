@@ -144,7 +144,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal-card {
-  overflow: visible;
+  height: 60vh;
 
   .modal-card-head {
     border-bottom: 1px solid $grey-lighter;
@@ -155,20 +155,19 @@ export default {
   }
 
   .modal-card-body {
-    padding: 15px 24px;
-    overflow: visible;
-    //
+    padding: 15px 24px 0;
+    display: flex;
+    
     .columns {
+      flex: 1;
+      align-items: stretch;
+      margin-bottom: 0 !important;
+      
       .column {
         &:last-child {
           border-left: 1px solid $grey-lighter;
         }
       }
-    }
-
-    .filter-display-container {
-      max-height: 400px;
-      overflow: auto;
     }
   }
 }
