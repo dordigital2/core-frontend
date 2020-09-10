@@ -7,7 +7,7 @@
         <div class="card-container">
           <div class="columns">
             <div class="column is-6">
-              <VField label="View name">
+              <VField label="View name" rules="required">
                 <b-input v-model="name" />
               </VField>
             </div>
@@ -72,7 +72,7 @@
                 label="Select which columns you wish to keep"
                 rules="required|over:2"
               >
-                <div class="checkbox-list">
+                <div class="checkbox-list is-1">
                   <b-checkbox
                     v-for="(field, index) in table[link.table].fields"
                     :key="'check' + index"

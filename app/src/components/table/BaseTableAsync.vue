@@ -15,8 +15,8 @@
       @sort="onSort"
     >
       <b-table-column
-        v-for="(column, index) in columns"
-        :key="`${column.name}-${index}`"
+        v-for="(column) in columns"
+        :key="`${column.name}-${columns.length}`"
         v-bind="{
           label: column.display_name || column.name,
           field: column.name,
@@ -103,18 +103,15 @@ export default {
     columns() {
       if (this.table == null) return
 
-      let fields = []
       let selectedFields = this.$route.query.__fields
+        ? this.$route.query.__fields.split(',')
+        : this.table.default_fields
 
-      if (selectedFields != null) {
-        selectedFields = selectedFields.split(',')
+      let fields = this.table.fields.filter(
+        e => selectedFields.indexOf(e.name) != -1
+      )
 
-        selectedFields.forEach(e => {
-          fields.push(this.table.fields.find(t => t.name == e))
-        })
-      } else fields = this.table.fields.slice()
-
-      fields = fields.map(e => Object.assign(e, { sortable: true }))
+      fields = fields.map(e => Object.assign({}, e, { sortable: true }))
 
       if (!this.filterMode)
         fields.push({

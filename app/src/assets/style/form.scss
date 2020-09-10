@@ -43,11 +43,35 @@
 
 .checkbox-list {
   font-size: $size-6;
-  
+
   .checkbox {
     &:not(:last-child) {
-      margin-right: 32px;
-      // margin-bottom: 8px;
+      padding-right: 32px;
+      margin-right: 0;
+    }
+  }
+
+  &.is-4 {
+    .checkbox {
+      width: 33.33%;
+    }
+  }
+
+  &.is-3 {
+    .checkbox {
+      width: 25%;
+    }
+  }
+  
+  &.is-2 {
+    .checkbox {
+      width: 20%;
+    }
+  }
+
+  &.is-1 {
+    .checkbox {
+      width: 12.5%;
     }
   }
 }
@@ -65,7 +89,7 @@
         &:not(:last-child) {
           margin-bottom: 24px;
         }
-        
+
         input[type='radio']:checked + .check + .control-label {
           color: $primary;
         }

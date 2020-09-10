@@ -12,7 +12,7 @@
         </VField>
 
         <VField label="Column list" rules="required|over:2|under:7">
-          <div class="checkbox-list">
+          <div class="checkbox-list is-2">
             <b-checkbox
               v-for="(field, index) in table.fields"
               :key="'check' + index"

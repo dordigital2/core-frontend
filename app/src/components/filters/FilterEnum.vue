@@ -13,7 +13,7 @@
     </div>
     <br />
 
-    <div class="checkbox-list">
+    <div class="checkbox-list is-3">
       <b-checkbox
         v-for="(choice, index) in filterChoices"
         :key="index"
