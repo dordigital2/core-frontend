@@ -42,12 +42,15 @@ export default {
       const field_type = this.getFieldDef(name).field_type
 
       if (Array.isArray(filter)) {
-        return filter
+        let filterLtd = filter.slice(0, 5)
+        if (filter.length > 5) filterLtd.push(`+ ${filter.length - 5} more`)
+
+        return filterLtd
       }
 
       if (typeof filter == 'object') {
         if (filter.values[0] == null) return null
-        
+
         if (filter.type == 'interval') {
           const values = [
             FieldService.getParsedValue(filter.values[0], field_type),
