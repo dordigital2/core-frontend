@@ -48,7 +48,7 @@
             </b-tab-item>
           </b-tabs>
         </div>
-        <div class="column is-3 filter-display">
+        <div class="column is-3 filter-display-container">
           <p class="has-text-weight-semibold is-size-6">Selected filters</p>
           <br />
 
@@ -166,7 +166,7 @@ export default {
       }
     }
 
-    .filter-display {
+    .filter-display-container {
       max-height: 400px;
       overflow: auto;
     }

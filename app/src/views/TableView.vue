@@ -76,7 +76,7 @@
 
         <BaseTableAsync
           :table="table"
-          :tableEntries="tableEntries || []"
+          :tableEntries="tableEntries || {}"
           :filterMode="filterMode"
           updateQueryNav
         />
@@ -150,7 +150,7 @@ export default {
           })
 
           if (this.table.filters) this.updateFilterQuery()
-            else this.getTableEntries()
+          else this.getTableEntries()
         } else this.getTableEntries()
       })
 
