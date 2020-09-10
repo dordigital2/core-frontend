@@ -48,7 +48,7 @@
             </b-tab-item>
           </b-tabs>
         </div>
-        <div class="column is-3">
+        <div class="column is-3 filter-display">
           <p class="has-text-weight-semibold is-size-6">Selected filters</p>
           <br />
 
@@ -164,6 +164,11 @@ export default {
           border-left: 1px solid $grey-lighter;
         }
       }
+    }
+
+    .filter-display {
+      max-height: 400px;
+      overflow: auto;
     }
   }
 }
