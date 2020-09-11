@@ -7,7 +7,7 @@
       :path="'table-edit/' + props.id"
     />
 
-    <ActionButtonArchive />
+    <ActionButtonArchive :idTable="props.id" />
     <ActionButtonDelete
       dialogTitle="Do you wish to delete this table?"
       dialogMessage="This operation permanently removes all the entries of this table. Please check the data before proceeding."

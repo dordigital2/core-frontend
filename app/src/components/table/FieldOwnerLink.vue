@@ -1,8 +1,6 @@
 <template>
   <div>
-    <router-link :to="'/user/' + props.row.owner.username">{{
-      props.row.owner.username
-    }}</router-link>
+    {{ props.owner.username }}
   </div>
 </template>
 

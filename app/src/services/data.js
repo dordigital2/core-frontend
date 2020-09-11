@@ -20,6 +20,9 @@ const TableService = {
   putTable(idTable, data) {
     return ApiService.put(`tables/${idTable}/`, data)
   },
+  patchTable(idTable, data) {
+    return ApiService.patch(`tables/${idTable}/`, data)
+  },
   deleteTable(idTable) {
     return ApiService.delete(`tables/${idTable}/`)
   },

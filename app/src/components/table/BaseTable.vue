@@ -64,6 +64,7 @@ export default {
   },
   methods: {
     getValue(row, field, type) {
+      // console.log(row, field, type)
       const value = getNestedObj(row, field)
       if (value != null) return FieldService.getParsedValue(value, type)
 
