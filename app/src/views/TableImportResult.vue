@@ -4,7 +4,7 @@
 
     <template v-if="importData">
       <BaseCard
-        :title="`Table ${name && JSON.stringify(name)} has been created`"
+        :title="`Table ${name && JSON.stringify(name)} has been ${name ? 'created' : 'updated'}`"
       >
         <template #actions v-if="importData.imports_count" class="da">
           <router-link
