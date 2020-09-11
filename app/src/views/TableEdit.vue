@@ -109,8 +109,6 @@
 <script>
 import ActionButtonDelete from '@/components/table/ActionButtonDelete'
 import FieldService from '@/services/field'
-import { ToastService } from '@/services/buefy'
-import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -188,13 +186,15 @@ export default {
       }
 
       if (this.idImport) {
+        // create new table & import
+        //
         this.loading = true
-        TableService.postTable({
-          import_id: this.importData.import_id,
-          ...resource
-        })
+        this.$store
+          .dispatch('data/postTable', {
+            import_id: this.importData.import_id,
+            ...resource
+          })
           .then(() => {
-            ToastService.open('Table was imported successfuly.')
             this.$router.push({
               name: 'table-import-result',
               params: { idImport: this.importData.import_id },
@@ -204,22 +204,27 @@ export default {
           .catch(() => {
             this.loading = false
           })
-      } else if (!this.idTable)
-        TableService.postTable(resource).then(() => {
-          ToastService.open('Table was created successfuly.')
+      } else if (!this.idTable) {
+        // create new table
+        //
+        this.$store.dispatch('data/postTable', resource).then(() => {
           this.$router.push({
             name: 'table-view',
             params: { idTable: this.idTable }
           })
         })
-      else
-        TableService.putTable(this.idTable, resource).then(() => {
-          ToastService.open('Table was updated successfuly.')
-          this.$router.push({
-            name: 'table-view',
-            params: { idTable: this.idTable }
+      } else {
+        // update table
+        //
+        this.$store
+          .dispatch('data/putTable', { idTable: this.idTable, data: resource })
+          .then(() => {
+            this.$router.push({
+              name: 'table-view',
+              params: { idTable: this.idTable }
+            })
           })
-        })
+      }
     }
   }
 }

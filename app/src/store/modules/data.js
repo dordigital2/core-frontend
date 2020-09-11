@@ -89,11 +89,27 @@ export default {
       })
     },
 
+    putTable({ dispatch }, { idTable, data }) {
+      return TableService.putTable(idTable, data).then(() => {
+        dispatch('getDatabase').then(
+          ToastService.open('The table has been updated')
+        )
+      })
+    },
+
     patchTable({ dispatch }, { idTable, data }) {
       return TableService.patchTable(idTable, data).then(() => {
         dispatch('getDatabase').then(
           ToastService.open('The table has been updated')
         )
+      })
+    },
+
+    postTable({ dispatch }, data) {
+      return TableService.postTable(data).then(() => {
+        dispatch('getDatabase').then(() => {
+          ToastService.open('Table was created successfuly.')
+        })
       })
     },
 
