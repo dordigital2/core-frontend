@@ -236,7 +236,8 @@ export default {
             } else {
               query[`${key}__${e.type}`] = e.values[0]
             }
-            // } else if (typeof e == 'string') query[`${key}__icontains`] = e
+          } else if (typeof e == 'boolean') {
+            query[`${key}`] = e
           } else query[`${key}__icontains`] = e.toString()
         }
       })
