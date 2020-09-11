@@ -7,7 +7,7 @@
         <div class="card-container">
           <div class="columns">
             <div class="column is-5" v-if="isManualImport && database">
-              <VField label="Import to table">
+              <VField label="Import to table" rules="required">
                 <b-select
                   placeholder="Select a table"
                   v-model="idTable"

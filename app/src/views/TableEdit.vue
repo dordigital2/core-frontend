@@ -192,18 +192,18 @@ export default {
         TableService.postTable({
           import_id: this.importData.import_id,
           ...resource
-        }).then(() => {
-          ToastService.open('Table was imported successfuly.')
-          this.$router
-            .push({
+        })
+          .then(() => {
+            ToastService.open('Table was imported successfuly.')
+            this.$router.push({
               name: 'table-import-result',
               params: { idImport: this.importData.import_id },
               query: { name: this.$route.query.name }
             })
-            .catch(() => {
-              this.loading = false
-            })
-        })
+          })
+          .catch(() => {
+            this.loading = false
+          })
       } else if (!this.idTable)
         TableService.postTable(resource).then(() => {
           ToastService.open('Table was created successfuly.')

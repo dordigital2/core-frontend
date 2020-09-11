@@ -12,7 +12,11 @@
             :key="`tag-${index}`"
             @close="$emit('remove', name, index)"
             close-icon="close"
-            :closable="isEditable"
+            :closable="
+              isEditable &&
+                ((filter.length > maxtags && index < maxtags) ||
+                  filter.length <= maxtags)
+            "
             >{{ tag }}</b-tag
           >
         </div>
@@ -32,7 +36,9 @@ export default {
     isEditable: Boolean
   },
   data() {
-    return {}
+    return {
+      maxtags: 5
+    }
   },
   methods: {
     getFieldDef(name) {
@@ -42,8 +48,9 @@ export default {
       const field_type = this.getFieldDef(name).field_type
 
       if (Array.isArray(filter)) {
-        let filterLtd = filter.slice(0, 5)
-        if (filter.length > 5) filterLtd.push(`+ ${filter.length - 5} more`)
+        let filterLtd = filter.slice(0, this.maxtags)
+        if (filter.length > this.maxtags)
+          filterLtd.push(`+ ${filter.length - this.maxtags} more`)
 
         return filterLtd
       }

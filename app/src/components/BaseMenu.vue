@@ -18,7 +18,7 @@
       ></b-menu-item>
 
       <b-menu-item icon="application-import" :active="isActive" expanded>
-        <template slot="label" slot-scope="props">
+        <template #label="props">
           <span>Import data</span>
           <b-icon
             class="menu-tick"

@@ -26,18 +26,18 @@
         <template #default>
           <b-table :data="importData.errors">
             <b-table-column
-              v-for="(field, index) in Object.keys(importData.errors[0].row)"
+              v-for="(field, index) in importData.csv_field_mapping"
               :key="`column-${index}`"
               v-bind="{
-                label: field
+                label: field.field_name
               }"
             >
               <template v-slot="props"
                 ><span
                   :class="{
-                    'has-text-danger is-bold': props.row.errors[field]
+                    'has-text-danger is-bold': props.row.errors[field.field_name]
                   }"
-                  >{{ props.row.row[field] }}</span
+                  >{{ props.row.row[field.field_name] }}</span
                 ></template
               >
             </b-table-column>

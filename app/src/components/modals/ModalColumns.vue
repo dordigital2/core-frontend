@@ -8,10 +8,14 @@
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <section class="modal-card-body">
         <VField label="Selected columns" rules="">
-          <b-taginput v-model="selectedColumns" type="is-dark" :maxtags="0" />
+          <b-taginput v-model="selectedColumns" type="is-dark" :maxtags="0"
+            ><template #tag="{tag}">{{
+              getColumnName(tag)
+            }}</template></b-taginput
+          >
         </VField>
 
-        <VField label="Column list" rules="required|over:2|under:7">
+        <VField label="Column list" rules="required">
           <div class="checkbox-list is-2">
             <b-checkbox
               v-for="(field, index) in table.fields"
@@ -45,9 +49,7 @@ export default {
   data() {
     return {
       selectedColumns: this.table.default_fields,
-      columnMap: this.table.fields.map(e => {
-        return { [e.name]: e.display_name }
-      })
+      columnMap: {}
     }
   },
   mounted() {
@@ -55,11 +57,8 @@ export default {
       this.selectedColumns = this.$route.query.__fields.split(',')
   },
   methods: {
-    columnTags() {
-      // return this.selectedColumns.map(e => this.columns.find(c => c.name == e))
-    },
-    compareArrays(a, b) {
-      return JSON.stringify(a) == JSON.stringify(b)
+    getColumnName(name) {
+      return this.table.fields.find(c => c.name == name).display_name
     },
     submit() {
       this.$router

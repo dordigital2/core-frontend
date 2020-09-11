@@ -15,8 +15,8 @@
       @sort="onSort"
     >
       <b-table-column
-        v-for="column in columns"
-        :key="`${column.name}-${columns.length}`"
+        v-for="(column, index) in columns"
+        :key="`${index}-${column.name}-${columns.length}`"
         v-bind="{
           label: column.display_name || column.name,
           field: column.name,
@@ -113,10 +113,6 @@ export default {
         const field = this.table.fields.find(f => f.name == e)
         field && fields.push({ ...field, sortable: true })
       })
-
-      // let fields = this.table.fields.filter(
-      //   e => selectedFields.indexOf(e.name) != -1
-      // )
 
       if (!this.filterMode)
         fields.push({
