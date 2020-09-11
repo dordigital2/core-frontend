@@ -11,21 +11,27 @@ const TableService = {
   getTables() {
     return ApiService.get('tables/')
   },
+
   getTable(idTable) {
     return ApiService.get(`tables/${idTable}/`)
   },
+
   postTable(data) {
     return ApiService.post(`tables/`, data)
   },
+
   putTable(idTable, data) {
     return ApiService.put(`tables/${idTable}/`, data)
   },
+
   patchTable(idTable, data) {
     return ApiService.patch(`tables/${idTable}/`, data)
   },
+
   deleteTable(idTable) {
     return ApiService.delete(`tables/${idTable}/`)
   },
+
   exportTable(idTable) {
     return ApiService.get(`tables/${idTable}/csv-export/`)
   },
@@ -38,13 +44,16 @@ const TableService = {
   getEntity(idTable, idEntity) {
     return ApiService.get(`tables/${idTable}/entries/${idEntity}/`)
   },
+
   postEntity(idTable, data) {
     // console.log(JSON.stringify(data))
     return ApiService.post(`tables/${idTable}/entries/`, data)
   },
+
   putEntity(idTable, idEntity, data) {
     return ApiService.put(`tables/${idTable}/entries/${idEntity}/`, data)
   },
+
   deleteEntity(idTable, idEntity) {
     return ApiService.delete(`tables/${idTable}/entries/${idEntity}/`)
   }
@@ -91,12 +100,15 @@ const TableViewService = {
   getTableView(id) {
     return ApiService.get(`filters/${id}/`)
   },
+
   putTableView(id, data) {
     return ApiService.put(`filters/${id}/`, data)
   },
+
   patchTableView(id, data) {
     return ApiService.patch(`filters/${id}/`, data)
   },
+
   deleteTableView(id) {
     return ApiService.delete(`filters/${id}/`)
   },

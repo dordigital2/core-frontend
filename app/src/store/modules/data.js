@@ -58,12 +58,16 @@ export default {
     }
   },
   actions: {
+    // DATABASE
+    //
     getDatabase({ commit }) {
       return DatabaseService.getDatabase().then(response => {
         commit('setDatabase', response)
       })
     },
 
+    // TABLE
+    //
     getTable({ commit }, idTable) {
       return TableService.getTable(idTable).then(response => {
         commit('setTable', { idTable, data: response })
@@ -109,6 +113,8 @@ export default {
       })
     },
 
+    // IMPORT
+    //
     getImportData({ commit }, idImport) {
       return ImportService.getData(idImport).then(response => {
         commit('setImport', response)
@@ -129,10 +135,8 @@ export default {
       })
     },
 
-    // manualImport({commit}, data) {
-
-    // },
-
+    // TABLE VIEWS
+    //
     getTableViews({ commit }) {
       return TableViewService.getTableViews().then(response => {
         commit('setTableViews', response)
@@ -153,8 +157,8 @@ export default {
       })
     },
 
-    deleteTableViews({ dispatch }) {
-      return TableViewService.deleteTableView().then(() => {
+    deleteTableView({ dispatch }, idTable) {
+      return TableViewService.deleteTableView(idTable).then(() => {
         dispatch('getTableViews').then(() => {
           ToastService.open('The view has been deleted')
         })
