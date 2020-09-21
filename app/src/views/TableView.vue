@@ -30,7 +30,10 @@
       </template>
     </BaseCard>
 
-    <BaseCard :title="titleWithCount">
+    <BaseCard :title="title">
+      <template #title v-if="tableEntries">
+        <span class="entries">{{ tableEntries.count }} entries</span>
+      </template>
       <template #actions>
         <div class="buttons">
           <b-button class="is-dark" @click="openModalColumns">
@@ -122,14 +125,6 @@ export default {
     title() {
       return 'Table – ' + this.table.name
     },
-    titleWithCount() {
-      return (
-        this.title +
-        (this.tableEntries
-          ? ` <span class='entries'>${this.tableEntries.count} entries</span>`
-          : '')
-      )
-    },
     exportPath() {
       return ApiService.getPath(
         `${this.filterMode ? 'filters' : 'tables'}/${this.idTable}/csv-export/`,
@@ -139,6 +134,8 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit('data/setTableLinks', null)
+    
     this.$store
       .dispatch(
         this.filterMode ? 'data/getTableView' : 'data/getTable',

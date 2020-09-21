@@ -23,8 +23,6 @@
         </div>
       </b-field>
     </template>
-
-    <pre>{{ filterData }}</pre>
   </div>
 </template>
 

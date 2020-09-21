@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table v-if="data && columns" :data="data">
+    <b-table v-if="data && columns" :data="data" scrollable>
       <b-table-column
         v-for="(column, index) in columns"
         :key="`${column.name}-${index}`"

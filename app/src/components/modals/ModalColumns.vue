@@ -39,8 +39,6 @@
 </template>
 
 <script>
-// @TODO: disable checkboxes? :disabled="selectedColumns.length == 7 && selectedColumns.indexOf(field) == -1"
-
 export default {
   name: 'ModalColumns',
   props: {

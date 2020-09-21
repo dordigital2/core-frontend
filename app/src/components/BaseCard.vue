@@ -1,7 +1,10 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <div class="card-header-title" v-html="title"></div>
+      <div class="card-header-title">
+        {{ title }}
+        <slot name="title"></slot>
+      </div>
 
       <div class="card-header-actions" v-if="!!$slots.actions">
         <slot name="actions"></slot>

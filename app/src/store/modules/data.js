@@ -14,6 +14,7 @@ export default {
     database: null,
     table: {},
     tableEntries: null,
+    tableLinks: null,
     tableViewEntries: null,
     entity: null,
     import: null,
@@ -36,6 +37,9 @@ export default {
     },
     setEntity(state, data) {
       state.entity = data
+    },
+    setTableLinks(state, data) {
+      state.tableLinks = data
     },
     setFilters(state, { idTable, filter }) {
       // state.filters = data

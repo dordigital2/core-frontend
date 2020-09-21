@@ -26,8 +26,6 @@
         >
       </VField>
     </div>
-
-    <pre>{{innerValue}}</pre>
   </div>
 </template>
 

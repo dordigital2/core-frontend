@@ -32,8 +32,6 @@
             Save changes
           </b-button>
         </template>
-
-        <pre>{{ entity }}</pre>
       </BaseCard>
     </ValidationObserver>
   </div>
@@ -65,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('data/getTable', this.idTable)
+    if (!this.table) this.$store.dispatch('data/getTable', this.idTable)
 
     if (this.$route.params.idEntity)
       TableService.getEntity(this.idTable, this.$route.params.idEntity).then(

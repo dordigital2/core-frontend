@@ -144,7 +144,9 @@ export default {
         this.filterData[name].splice(index, 1)
         
         if (!this.filterData[name].length) this.$delete(this.filterData, name)
-      } else this.$delete(this.filterData, name)
+      } else {
+        this.$delete(this.filterData, name)
+      }
     },
     submit() {
       this.$store.commit('data/setFilters', {

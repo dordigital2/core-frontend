@@ -8,7 +8,7 @@
       :current-page="page"
       :total="tableEntries.count"
       @page-change="onPageChange"
-      paginated
+      :paginated="tableEntries.count > perPage"
       backend-pagination
       backend-sorting
       scrollable
@@ -32,6 +32,7 @@
             <component
               :is="column.component"
               v-bind="{ props: props.row, ...column.props }"
+              @update="$emit('update', query)"
             ></component>
           </template>
 
@@ -47,10 +48,14 @@
         </template>
       </b-table-column>
 
-      <template slot="bottom-left"
+      <template slot="bottom-left" v-if="presetPerPage"
         ><div class="pagination-per-page">
           Show
-          <b-input v-model.number="perPageModel" @blur="onPerPageChange" />
+          <b-input
+            type="number"
+            v-model.number="perPageModel"
+            @blur="onPerPageChange"
+          />
           results per page
         </div></template
       >
@@ -66,6 +71,7 @@
 
 <script>
 import ActionsTable from './ActionsTable'
+import ActionsTableEntity from './ActionsTableEntity'
 import FieldOwnerLink from './FieldOwnerLink'
 
 import FieldService from '@/services/field'
@@ -76,6 +82,7 @@ import { mapState } from 'vuex'
 export default {
   components: {
     ActionsTable,
+    ActionsTableEntity,
     FieldOwnerLink
   },
   data() {
@@ -90,9 +97,10 @@ export default {
   props: {
     table: Object,
     tableEntries: Object,
-    query: String,
+    filterMode: Boolean,
+    presetPerPage: Boolean,
     updateQueryNav: { type: Boolean, default: false },
-    filterMode: Boolean
+    tableActionsComponent: { type: String, default: 'ActionsTable' }
   },
   computed: {
     ...mapState('data', {
@@ -118,7 +126,7 @@ export default {
         fields.push({
           name: 'actions',
           custom_class: 'actions',
-          component: 'ActionsTable',
+          component: this.tableActionsComponent,
           display_name: ' ',
           sticky: true,
           props: {
@@ -138,14 +146,15 @@ export default {
       return null
     },
     updateQueryRequest(query) {
-      if (this.updateQueryNav)
+      if (this.updateQueryNav) {
         this.$router
           .push({
             query: Object.assign({}, this.$route.query, query)
           })
           .catch(() => {})
-      // else this.getTableEntries()
-      else this.$emit('update', query)
+      } else {
+        this.$emit('update', query)
+      }
     },
     onPageChange(page) {
       // console.log('onPageChange', page)

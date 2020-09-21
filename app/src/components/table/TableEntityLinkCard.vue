@@ -4,7 +4,7 @@
       <div class="card-container" v-if="database">
         <div class="columns">
           <div class="column">
-            <VField label="Source field">
+            <VField label="Source field" rules="required">
               <b-select
                 v-if="table"
                 placeholder="Select a field"
@@ -23,10 +23,10 @@
             </VField>
           </div>
           <div class="column">
-            <VField label="Table">
+            <VField label="Table" rules="required">
               <b-select
                 placeholder="Select a table"
-                v-model="idLinkTable"
+                v-model="idTable"
                 @input="getTableFields"
                 expanded
               >
@@ -42,10 +42,10 @@
           </div>
 
           <div class="column">
-            <VField label="Linked field" labelInfo="Field types must match">
+            <VField label="Linked field" labelInfo="Field types must match" rules="required">
               <b-select
                 placeholder="Select a field"
-                v-model="field"
+                v-model="linkField"
                 :loading="loading"
                 expanded
               >
@@ -73,6 +73,7 @@
 </template>
 
 <script>
+import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -80,39 +81,35 @@ export default {
   components: {},
   data() {
     return {
-      field: null,
+      linkField: null,
       source: null,
-      idLinkTable: null,
+      idTable: null,
       loading: false,
-      fields: []
+      fields: [],
+      linkTable: { fields: [] }
     }
   },
   props: {
-    idTable: Number
+    table: Object
   },
   computed: mapState({
-    database: state => state.data.database,
-    table: function(state) {
-      return state.data.table[this.idTable]
-    },
-    linkTable: function(state) {
-      return state.data.table[this.idLinkTable] || { fields: [] }
-    }
+    database: state => state.data.database
   }),
   methods: {
     getTableFields() {
       this.loading = true
-      this.field = null
+      this.linkField = null
 
-      this.$store.dispatch('data/getTable', this.idLinkTable).then(() => {
+      TableService.getTable(this.idTable).then(response => {
+        this.linkTable = response
         this.loading = false
       })
     },
     addTableView() {
       this.$emit('input', {
         sourceField: this.table.fields[this.source].name,
-        idLinkTable: this.idLinkTable,
-        linkField: this.field
+        table: this.linkTable,
+        linkField: this.linkField
       })
     },
     checkLinkFieldtype(type) {
