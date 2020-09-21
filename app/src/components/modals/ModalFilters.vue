@@ -26,25 +26,34 @@
                   filterData[field.name].length
               }"
             >
-              <div class="tab-content-head">
-                <b-button
-                  type="is-dark"
-                  :disabled="checkDisabled(field)"
-                  @click="removeFilter(field.name)"
-                  >Clear filter</b-button
+              <ValidationObserver v-slot="{ passes }" slim>
+                <component
+                  v-model="filterData[field.name]"
+                  v-bind="{
+                    placeholder: field.display_name,
+                    choices: field.choices,
+                    name: field.name,
+                    field_type: field.field_type
+                  }"
+                  :is="getComponent(field.field_type)"
                 >
-              </div>
-
-              <component
-                v-model="filterData[field.name]"
-                v-bind="{
-                  placeholder: field.display_name,
-                  choices: field.choices,
-                  name: field.name,
-                  field_type: field.field_type
-                }"
-                :is="getComponent(field.field_type)"
-              />
+                  <template #default="props">
+                    <div class="tab-content-head">
+                      <div class="buttons">
+                        <b-button type="is-dark" @click="passes(props.update)"
+                          >Set filter</b-button
+                        >
+                        <b-button
+                          type="is-dark is-outlined"
+                          :disabled="checkDisabled(field)"
+                          @click="removeFilter(field.name)"
+                          >Clear filter</b-button
+                        >
+                      </div>
+                    </div>
+                  </template>
+                </component>
+              </ValidationObserver>
             </b-tab-item>
           </b-tabs>
         </div>
@@ -73,6 +82,7 @@
 <script>
 import FieldService from '@/services/field'
 
+import FilterText from '@/components/filters/FilterText'
 import FilterEnum from '@/components/filters/FilterEnum'
 import FilterNumeric from '@/components/filters/FilterNumeric'
 import FilterDate from '@/components/filters/FilterDate'
@@ -82,7 +92,13 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'ModalFilters',
-  components: { FilterEnum, FilterNumeric, FilterDisplay, FilterDate },
+  components: {
+    FilterText,
+    FilterEnum,
+    FilterNumeric,
+    FilterDisplay,
+    FilterDate
+  },
   props: {
     table: Object
   },
@@ -98,10 +114,8 @@ export default {
     }
   }),
   mounted() {
-    if (this.filters != null) this.filterData = { ...this.filters }
-    // this.table.fields.forEach(e => {
-    //   this.$set(this.filters, e.name, null)
-    // })
+    if (this.filters != null)
+      this.filterData = JSON.parse(JSON.stringify(this.filters))
   },
   methods: {
     getComponent(type) {
@@ -126,9 +140,11 @@ export default {
     removeFilter(name, index) {
       // console.log('removeFilter', name, index)
 
-      if (Array.isArray(this.filterData[name]))
+      if (Array.isArray(this.filterData[name]) && index != null) {
         this.filterData[name].splice(index, 1)
-      else this.$delete(this.filterData, name)
+        
+        if (!this.filterData[name].length) this.$delete(this.filterData, name)
+      } else this.$delete(this.filterData, name)
     },
     submit() {
       this.$store.commit('data/setFilters', {
@@ -157,12 +173,12 @@ export default {
   .modal-card-body {
     padding: 15px 24px 0;
     display: flex;
-    
+
     .columns {
       flex: 1;
       align-items: stretch;
       margin-bottom: 0 !important;
-      
+
       .column {
         &:last-child {
           border-left: 1px solid $grey-lighter;

@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       selectedColumns: this.table.default_fields,
+      // selectedColumns: [],
       columnMap: {}
     }
   },

@@ -99,7 +99,9 @@ import { mapState } from 'vuex'
 export default {
   name: 'TableView',
   components: { FilterDisplay },
-  props: { filterMode: Boolean },
+  props: {
+    filterMode: Boolean
+  },
   data() {
     return {
       idTable: Number(this.$route.params.idTable)
@@ -220,7 +222,7 @@ export default {
     },
 
     updateFilterQuery() {
-      const filterData = Object.assign({}, this.filters)
+      const filterData = this.filters
       let query = {}
 
       Object.keys(filterData).forEach(key => {

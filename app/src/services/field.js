@@ -65,7 +65,7 @@ const FieldService = {
   getFilterComponent(type) {
     return FieldFilterComponentMap[type]
       ? FieldFilterComponentMap[type]
-      : 'b-input'
+      : 'FilterText'
   }
 }
 

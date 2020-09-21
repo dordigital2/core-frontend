@@ -3,17 +3,13 @@ import { extend, setInteractionMode, localize } from 'vee-validate'
 import {
   required,
   email,
-  max,
-  min,
   length,
-  size,
-  confirmed,
-  image
+  confirmed
 } from 'vee-validate/dist/rules'
 
 import en from './locale/en.json'
 
-const rules = { required, max, min, length, email, size, confirmed, image }
+const rules = { required, email, length, confirmed }
 
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule])
@@ -28,6 +24,7 @@ extend('under', {
 
 extend('over', {
   validate(value, args) {
+    console.log(value, args)
     return value.length >= args.length
   },
   params: ['length']

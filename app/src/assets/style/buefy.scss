@@ -73,7 +73,7 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
   }
 
   .control {
-    > .icon {
+    > .icon:not(.has-text-danger) {
       background-color: $blue;
       border-radius: $radius-small 0 0 $radius-small;
       color: $white;
@@ -84,6 +84,11 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
       padding-left: 48px;
 
       &:focus ~ .icon {
+        color: $white;
+      }
+
+      &.is-danger + .icon {
+        background-color: $red;
         color: $white;
       }
     }
@@ -159,8 +164,12 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
       padding: 0 0 0 64px;
 
       .tab-content-head {
-        text-align: right;
-        padding: 0 0 15px 0;
+        padding-bottom: 15px;
+        // margin: -15px -15px 0 -15px;
+
+        .buttons {
+          justify-content: flex-end;
+        }
       }
     }
 

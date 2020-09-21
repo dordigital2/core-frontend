@@ -1,7 +1,9 @@
 <template>
   <div>
-    <VField label="Choose filter mode">
-      <b-select v-model="innerValue.type" @input="updateValue">
+    <slot v-bind="{ update }"></slot>
+
+    <VField label="Choose filter mode" rules="required">
+      <b-select v-model="innerValue.type">
         <option
           v-for="(choice, index) in choices"
           :key="`choice-${choice}`"
@@ -11,16 +13,12 @@
       </b-select>
     </VField>
 
-    <VField label="Enter date">
-      <VDate v-model="innerValue.values[0]" @input="updateValue" />
+    <VField label="Enter date" rules="required">
+      <VDate v-model="innerValue.values[0]" />
     </VField>
 
-    <VField
-      label="Enter end date"
-      @input="updateValue"
-      v-if="innerValue.type == 'interval'"
-    >
-      <VDate v-model="innerValue.values[1]" @input="updateValue" />
+    <VField label="Enter end date" v-if="innerValue.type == 'interval'" rules="required">
+      <VDate v-model="innerValue.values[1]" />
     </VField>
   </div>
 </template>
@@ -35,19 +33,22 @@ export default {
   },
   data() {
     return {
-      innerValue: this.value || { type: null, values: [null, null] },
+      innerValue: { type: null, values: [null, null] },
       choices: FilterOptions.date
     }
   },
   methods: {
-    updateValue() {
+    update() {
       if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
-      this.$emit('input', this.innerValue)
+
+      this.$emit('input', JSON.parse(JSON.stringify(this.innerValue)))
     }
   },
   watch: {
     value(input) {
-      this.innerValue = input ? input : { type: null, values: [null, null] }
+      this.innerValue = input
+        ? JSON.parse(JSON.stringify(input))
+        : { type: null, values: [null, null] }
     }
   }
 }

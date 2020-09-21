@@ -14,7 +14,8 @@
             close-icon="close"
             :closable="
               isEditable &&
-                ((filter.length > maxtags && index < maxtags) ||
+                (!filter.length ||
+                  (filter.length > maxtags && index < maxtags) ||
                   filter.length <= maxtags)
             "
             >{{ tag }}</b-tag
@@ -22,6 +23,8 @@
         </div>
       </b-field>
     </template>
+
+    <pre>{{ filterData }}</pre>
   </div>
 </template>
 

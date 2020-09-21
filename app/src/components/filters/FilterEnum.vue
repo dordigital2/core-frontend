@@ -1,5 +1,7 @@
 <template>
   <div>
+    <slot v-bind="{ update }"></slot>
+
     <div class="is-size-6">
       <b-input
         v-model="search"
@@ -14,14 +16,18 @@
     <br />
 
     <div class="checkbox-list is-3">
-      <b-checkbox
-        v-for="(choice, index) in filterChoices"
-        :key="index"
-        :native-value="choice"
-        v-model="innerValue"
-        >{{ choice }}</b-checkbox
-      >
+      <VField rules="required">
+        <b-checkbox
+          v-for="(choice, index) in filterChoices"
+          :key="index"
+          :native-value="choice"
+          v-model="innerValue"
+          >{{ choice }}</b-checkbox
+        >
+      </VField>
     </div>
+
+    <pre>{{innerValue}}</pre>
   </div>
 </template>
 
@@ -34,30 +40,31 @@ export default {
   data() {
     return {
       search: null,
-      filterChoices: this.choices,
-      innerValue: this.value != null ? this.value : []
+      filterChoices: this.choices.slice(),
+      innerValue: []
     }
   },
   methods: {
+    update() {
+      // this.$emit('input', this.innerValue)
+      this.$emit('input', this.innerValue.length ? this.innerValue : undefined)
+    },
     selectAll() {
-      this.innerValue = [...this.filterChoices]
+      this.innerValue = this.filterChoices.slice()
     },
     selectNone() {
       if (this.search == null) this.innerValue = []
       else {
-        let elem = this.innerValue.slice()
-        elem = elem.filter(e => this.filterChoices.indexOf(e) == -1)
-        this.innerValue = elem
+        this.innerValue = this.innerValue.filter(e => {
+          // console.log(this.filterChoices.indexOf(e), e)
+          return this.filterChoices.indexOf(e) == -1
+        })
       }
     }
   },
   watch: {
-    innerValue(input) {
-      this.$emit('input', input.length ? input : undefined)
-    },
-
     value(input) {
-      this.innerValue = input != null ? input : []
+      this.innerValue = input != null ? input.slice() : []
     },
 
     search(value) {
@@ -65,7 +72,7 @@ export default {
         this.filterChoices = this.choices.filter(
           e => e.toLowerCase().indexOf(value.toLowerCase()) != -1
         )
-      else this.filterChoices = this.choices
+      else this.filterChoices = this.choices.slice()
     }
   }
 }
