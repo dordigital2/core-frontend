@@ -1,7 +1,7 @@
 const ChartTypes = {
-  bar: 'Bar',
-  line: 'Line',
-  pie: 'Pie'
+  Bar: 'Bar',
+  Line: 'Line',
+  Pie: 'Pie'
 }
 
 const ChartConfig = {

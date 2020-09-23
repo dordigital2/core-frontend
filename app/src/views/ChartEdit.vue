@@ -12,11 +12,17 @@
         <div class="card-container card-form">
           <div class="columns is-multiline">
             <div class="column is-6">
+              <VField label="Name">
+                <b-input v-model="chartModel.name" />
+              </VField>
               <VField label="Select chart type">
-                <b-select v-model="chartModel.type">
-                  <option v-for="(type, key) in getChartTypes()" :key="key">{{
-                    type
-                  }}</option>
+                <b-select expanded v-model="chartModel.config.chart_type">
+                  <option
+                    v-for="(type, key) in getChartTypes()"
+                    :key="key"
+                    :value="key"
+                    >{{ type }}</option
+                  >
                 </b-select>
               </VField>
 
@@ -24,9 +30,10 @@
                 label="Choose one of the sources of data you already have imported or configured in your account"
                 v-if="database"
               >
-                <b-select v-model="chartModel.table">
+                <b-select expanded v-model="chartModel.config.table">
                   <option
                     v-for="(table, key) in database.active_tables"
+                    :value="table.id"
                     :key="key"
                     >{{ table.data.name }}</option
                   >
@@ -58,7 +65,7 @@ export default {
   data() {
     return {
       idChart: Number(this.$route.params.idChart),
-      chartModel: this.chart ? JSON.parse(JSON.stringify(this.chart)) : {}
+      chartModel: null
     }
   },
   computed: {
@@ -73,7 +80,10 @@ export default {
     if (!this.database) this.$store.dispatch('data/getDatabase')
 
     if (this.idChart && !this.chart)
-      this.$store.dispatch('data/getChart', this.idChart)
+      this.$store.dispatch('data/getChart', this.idChart).then(() => {
+        this.chartModel = JSON.parse(JSON.stringify(this.chart))
+      })
+    else this.chartModel = JSON.parse(JSON.stringify(this.chart))
   },
   methods: {
     getChartTypes() {

@@ -5,6 +5,17 @@
     <FilterHead :table="table" />
 
     <BaseCard title="Chart preview">
+      <template #actions>
+        <router-link
+          class="button is-primary"
+          :to="{
+            name: 'chart-edit',
+            params: { idChart }
+          }"
+        >
+          Edit chart
+        </router-link>
+      </template>
       <BaseChart
         v-bind="{ chartData, idChart: this.idChart }"
         v-if="chartData"
