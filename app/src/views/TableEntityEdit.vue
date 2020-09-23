@@ -81,19 +81,24 @@ export default {
       return FieldService.getComponent(type)
     },
     save() {
+      // @TODO: update entries for TableEntityView after edit/delete
+      // 1 - have a one-time consumable edit_id in vuex
+      // 2 - query param
+      // 3 - global EventBus?
+      
       if (this.$route.params.idEntity)
         TableService.putEntity(
           this.idTable,
           this.$route.params.idEntity,
           this.entity
         ).then(() => {
-          this.$router.go(-1)
           ToastService.open('Update successful')
+          this.$router.go(-1)
         })
       else
         TableService.postEntity(this.idTable, this.entity).then(() => {
-          this.$router.go(-1)
           ToastService.open('Add successful')
+          this.$router.go(-1)
         })
     }
   }

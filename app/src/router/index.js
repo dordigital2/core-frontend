@@ -68,7 +68,7 @@ const routes = [
           import(/* webpackChunkName: "dashboard" */ '@/views/Dashboard.vue')
       },
       {
-        path: 'database-view',
+        path: 'database',
         name: 'database-view',
         component: () =>
           import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue')
@@ -124,7 +124,7 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableEntityEdit.vue')
       },
       {
-        path: 'filter-view',
+        path: 'filter-views',
         name: 'filter-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/FilterView.vue')
@@ -145,11 +145,29 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/FilterEdit.vue')
       },
       {
+        path: 'charts/',
+        name: 'charts-view',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/ChartsView.vue')
+      },
+      {
+        path: 'chart-view/:idChart',
+        name: 'chart-view',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/ChartView.vue')
+      },
+      {
+        path: 'chart-edit/:idChart?',
+        name: 'chart-edit',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/ChartEdit.vue')
+      },
+      {
         path: 'users',
         name: 'users',
         component: () =>
           import(/* webpackChunkName: "user" */ '@/views/Users.vue')
-      }
+      },
       // {
       //   path: 'users/profile/:username',
       //   name: 'user-profile',
@@ -168,6 +186,7 @@ const routes = [
       //   component: () =>
       //     import(/* webpackChunkName: "user" */ '@/views/UsersProfileEdit.vue')
       // }
+      { path: '*', component: Page404 }
     ]
   },
   { path: '*', component: Page404 }

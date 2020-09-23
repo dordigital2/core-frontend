@@ -2,33 +2,7 @@
   <div v-if="table">
     <BaseTitle :title="title" />
 
-    <BaseCard title="Filtering">
-      <template #actions>
-        <div class="buttons">
-          <b-button class="is-light" @click="resetFilters">
-            Reset filters
-          </b-button>
-          <b-button class="is-dark" @click="openModalFilters">
-            Add filters
-          </b-button>
-
-          <template v-if="filterMode">
-            <b-button class="is-primary" @click="saveFilters">Save</b-button>
-          </template>
-        </div>
-      </template>
-
-      <template #default v-if="filters">
-        <div class="card-container">
-          <FilterDisplay
-            :fields="table.fields"
-            :filterData="filters"
-            :filterMode="filterMode"
-            class="is-horizontal"
-          />
-        </div>
-      </template>
-    </BaseCard>
+    <FilterHead v-bind="{ table, filterMode }" />
 
     <BaseCard :title="title">
       <template #title v-if="tableEntries">
@@ -90,18 +64,14 @@
 
 <script>
 import ModalColumns from '@/components/modals/ModalColumns'
-import ModalFilters from '@/components/modals/ModalFilters'
-import FilterDisplay from '@/components/filters/FilterDisplay'
+import FilterHead from '@/components/filters/FilterHead'
 
 import ApiService from '@/services/api'
-import { TableViewService } from '@/services/data'
-import { ToastService } from '@/services/buefy'
-
 import { mapState } from 'vuex'
 
 export default {
   name: 'TableView',
-  components: { FilterDisplay },
+  components: { FilterHead },
   props: {
     filterMode: Boolean
   },
@@ -111,6 +81,8 @@ export default {
     }
   },
   computed: {
+    // @TODO: parameter for filter/table api + simplify `tableViewEntries`, `tableView``
+    
     ...mapState('data', {
       table: function(state) {
         return this.filterMode ? state.tableView : state.table[this.idTable]
@@ -135,25 +107,15 @@ export default {
   },
   mounted() {
     this.$store.commit('data/setTableLinks', null)
-    
+
     this.$store
       .dispatch(
         this.filterMode ? 'data/getTableView' : 'data/getTable',
         this.idTable
       )
       .then(() => {
-        if (this.filterMode) {
-          this.$store.commit('data/setFilters', {
-            idTable: this.idTable,
-            filter: this.table.filters
-          })
-
-          if (this.table.filters) this.updateFilterQuery()
-          else this.getTableEntries()
-        } else this.getTableEntries()
+        if (!this.table.filters) this.getTableEntries()
       })
-
-    // this.getTableEntries()
   },
   methods: {
     getTableEntries() {
@@ -176,79 +138,6 @@ export default {
           table: this.table
         }
       })
-    },
-
-    openModalFilters() {
-      this.$buefy.modal.open({
-        parent: this,
-        component: ModalFilters,
-        hasModalCard: true,
-        trapFocus: true,
-        props: {
-          table: this.table
-        },
-        events: {
-          submit: () => {
-            this.updateFilterQuery()
-          }
-        }
-      })
-    },
-
-    saveFilters() {
-      TableViewService.patchTableView(this.idTable, {
-        filters: this.filters
-      }).then(() => {
-        ToastService.open('Filtered view has been saved')
-      })
-    },
-
-    resetFilters() {
-      this.$store.commit('data/setFilters', {
-        idTable: this.idTable,
-        filter: null
-      })
-
-      const __fields = this.$route.query.__fields
-
-      this.$router
-        .push({
-          query: { ...(__fields && { __fields }) }
-        })
-        .catch(() => {})
-    },
-
-    updateFilterQuery() {
-      const filterData = this.filters
-      let query = {}
-
-      Object.keys(filterData).forEach(key => {
-        let e = filterData[key]
-
-        if (e != null) {
-          if (Array.isArray(e) && e.length) {
-            query[key] = e.join(',')
-          } else if (typeof e == 'object') {
-            if (e.type == 'interval') {
-              query[`${key}__gte`] = e.values[0]
-              query[`${key}__lte`] = e.values[1]
-            } else {
-              query[`${key}__${e.type}`] = e.values[0]
-            }
-          } else if (typeof e == 'boolean') {
-            query[`${key}`] = e
-          } else query[`${key}__icontains`] = e.toString()
-        }
-      })
-
-      const __fields = this.$route.query.__fields
-
-      this.$router
-        .push({
-          query: Object.assign({ ...(__fields && { __fields }) }, query)
-        })
-        .catch(() => {})
-        .then(() => {})
     }
   },
   watch: {

@@ -2,7 +2,7 @@
   <b-menu class="is-size-6">
     <b-menu-list>
       <b-menu-item
-        icon="chart-box-outline"
+        icon="monitor-screenshot"
         label="Dashboard"
         @click="goto('dashboard')"
       ></b-menu-item>
@@ -15,6 +15,11 @@
         icon="tune"
         label="Filtered views"
         @click="goto('filter-view')"
+      ></b-menu-item>
+      <b-menu-item
+        icon="chart-box-outline"
+        label="Charts"
+        @click="goto('charts-view')"
       ></b-menu-item>
 
       <b-menu-item icon="application-import" :active="isActive" expanded>

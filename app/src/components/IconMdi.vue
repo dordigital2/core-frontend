@@ -26,6 +26,7 @@ import HelpCircleOutline from 'vue-material-design-icons/HelpCircleOutline.vue'
 import SquareEditOutline from 'vue-material-design-icons/SquareEditOutline.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 import Tune from 'vue-material-design-icons/Tune.vue'
+import MonitorScreenshot from 'vue-material-design-icons/MonitorScreenshot.vue'
 
 export default {
   name: 'IconMdi',
@@ -52,7 +53,8 @@ export default {
     HelpCircleOutline,
     SquareEditOutline,
     TrashCanOutline,
-    Tune
+    Tune,
+    MonitorScreenshot
   },
   props: {
     icon: Array,

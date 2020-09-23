@@ -1,6 +1,7 @@
 // import router from '@/router'
 import Vue from 'vue'
 import {
+  ChartService,
   DatabaseService,
   TableService,
   ImportService,
@@ -15,12 +16,14 @@ export default {
     table: {},
     tableEntries: null,
     tableLinks: null,
-    tableViewEntries: null,
     entity: null,
     import: null,
     filters: {},
     tableView: null,
     tableViews: null,
+    tableViewEntries: null,
+    chart: null,
+    charts: null,
     loading: {}
   },
   mutations: {
@@ -56,6 +59,12 @@ export default {
     },
     setTableViews(state, data) {
       state.tableViews = data
+    },
+    setCharts(state, data) {
+      state.charts = data
+    },
+    setChart(state, data) {
+      state.chart = data
     },
     setLoading(state, { idTable, status }) {
       Vue.set(state.loading, idTable, status)
@@ -181,6 +190,45 @@ export default {
       return TableViewService.deleteTableView(idTable).then(() => {
         dispatch('getTableViews').then(() => {
           ToastService.open('The view has been deleted')
+        })
+      })
+    },
+
+    // CHARTS
+    //
+
+    getCharts({ commit }) {
+      return ChartService.getCharts().then(response => {
+        commit('setCharts', response)
+      })
+    },
+
+    getChart({ commit }, id) {
+      return ChartService.getChart(id).then(response => {
+        commit('setChart', response)
+      })
+    },
+
+    createChart({ dispatch }, id) {
+      return ChartService.createChart(id).then(() => {
+        dispatch('getCharts').then(() => {
+          ToastService.open('The chart has been created')
+        })
+      })
+    },
+
+    patchChart({ dispatch }, { id, data }) {
+      return ChartService.patchChart(id, data).then(() => {
+        dispatch('getCharts').then(() => {
+          ToastService.open('The chart property has been changed')
+        })
+      })
+    },
+
+    updateChart({ dispatch }, { id, data }) {
+      return ChartService.updateChart(id, data).then(() => {
+        dispatch('getCharts').then(() => {
+          ToastService.open('The chart has been updated')
         })
       })
     }

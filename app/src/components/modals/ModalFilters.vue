@@ -110,7 +110,7 @@ export default {
   },
   computed: mapState({
     filters: function(state) {
-      return state.data.filters[this.table.id] || {}
+      return state.data.filters[this.table.id]
     }
   }),
   mounted() {

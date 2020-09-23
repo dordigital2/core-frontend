@@ -48,7 +48,7 @@
         </template>
       </b-table-column>
 
-      <template slot="bottom-left" v-if="presetPerPage"
+      <template slot="bottom-left" v-if="!presetPerPage"
         ><div class="pagination-per-page">
           Show
           <b-input

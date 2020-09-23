@@ -35,25 +35,29 @@
 </template>
 
 <script>
+import ActionsCharts from './ActionsCharts'
 import ActionsDatabaseArchived from './ActionsDatabaseArchived'
 import ActionsDatabaseActive from './ActionsDatabaseActive'
 import ActionsTableView from './ActionsTableView'
-
 import ActionsTable from './ActionsTable'
+
 import FieldOwnerLink from './FieldOwnerLink'
 import FieldTagList from './FieldTagList'
+import FieldCheckbox from './FieldCheckbox'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
 
 export default {
   components: {
+    ActionsCharts,
     ActionsDatabaseArchived,
     ActionsDatabaseActive,
     ActionsTableView,
     ActionsTable,
     FieldOwnerLink,
-    FieldTagList
+    FieldTagList,
+    FieldCheckbox
   },
   data() {
     return {}

@@ -7,6 +7,8 @@ const DatabaseService = {
   }
 }
 
+//
+//
 const TableService = {
   getTables() {
     return ApiService.get('tables/')
@@ -59,6 +61,8 @@ const TableService = {
   }
 }
 
+//
+//
 const ImportService = {
   getData(idImport) {
     return ApiService.get(`csv-imports/${idImport}/`)
@@ -88,6 +92,8 @@ const ImportService = {
   }
 }
 
+//
+//
 const TableViewService = {
   getTableViews() {
     return ApiService.get('filters/')
@@ -119,4 +125,41 @@ const TableViewService = {
   }
 }
 
-export { DatabaseService, TableService, ImportService, TableViewService }
+const ChartService = {
+  getCharts() {
+    return ApiService.get('charts/')
+  },
+
+  createChart(data) {
+    return ApiService.post('charts/', data)
+  },
+
+  getChart(id) {
+    return ApiService.get(`charts/${id}/`)
+  },
+
+  getChartData(id, query) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`charts/${id}/data/${queryString}`)
+  },
+
+  updateChart(id, data) {
+    return ApiService.put(`charts/${id}/`, data)
+  },
+
+  patchChart(id, data) {
+    return ApiService.patch(`charts/${id}/`, data)
+  },
+
+  deleteChart(id) {
+    return ApiService.delete(`charts/${id}/`)
+  }
+}
+
+export {
+  DatabaseService,
+  TableService,
+  ImportService,
+  TableViewService,
+  ChartService
+}
