@@ -5,6 +5,7 @@
     <FilterHead
       v-if="table"
       v-bind="{ table, filterMode: true, filterData: chart.filters }"
+      @update="getChartData"
     />
 
     <BaseCard :title="`Chart — ${chart.name}`">
@@ -69,11 +70,6 @@ export default {
       ).then(response => {
         this.chartData = response
       })
-    }
-  },
-  watch: {
-    '$route.query'() {
-      this.getChartData()
     }
   }
 }

@@ -103,12 +103,10 @@ export default {
       })
 
       const __fields = this.$route.query.__fields
+      const query = { ...(__fields && { __fields }) }
 
-      this.$router
-        .push({
-          query: { ...(__fields && { __fields }) }
-        })
-        .catch(() => {})
+      this.$router.push({ query }).catch(() => {})
+      this.$emit('update', query)
     },
 
     updateFilterQuery() {
@@ -137,13 +135,16 @@ export default {
       })
 
       const __fields = this.$route.query.__fields
+      const newQuery = Object.assign({ ...(__fields && { __fields }) }, query)
 
       this.$router
         .push({
-          query: Object.assign({ ...(__fields && { __fields }) }, query)
+          query: newQuery
         })
         .catch(() => {})
         .then(() => {})
+
+      this.$emit('update', newQuery)
     }
   }
 }

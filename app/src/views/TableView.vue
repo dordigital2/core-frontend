@@ -2,7 +2,10 @@
   <div v-if="table">
     <BaseTitle :title="title" />
 
-    <FilterHead v-bind="{ table, filterMode, filterData: table.filters }" />
+    <FilterHead
+      v-bind="{ table, filterMode, filterData: table.filters }"
+      @update="getTableEntries"
+    />
 
     <BaseCard :title="title">
       <template #title v-if="tableEntries">
@@ -82,7 +85,7 @@ export default {
   },
   computed: {
     // @TODO: parameter for filter/table/chart api + simplify `tableViewEntries`, `tableView``
-    
+
     ...mapState('data', {
       table: function(state) {
         return this.filterMode ? state.tableView : state.table[this.idTable]
@@ -120,7 +123,7 @@ export default {
         this.filterMode ? 'data/getTableViewEntries' : 'data/getTableEntries',
         {
           idTable: this.idTable,
-          query: Object.assign({}, this.$route.query)
+          query: this.$route.query
         }
       )
     },
@@ -135,11 +138,6 @@ export default {
           table: this.table
         }
       })
-    }
-  },
-  watch: {
-    '$route.query'() {
-      this.getTableEntries()
     }
   }
 }

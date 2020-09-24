@@ -6,17 +6,17 @@
       v-slot="{ passes }"
       @submit.prevent
       slim
-      v-if="chartModel"
+      v-if="chartConfig"
     >
       <BaseCard title="Configuration">
         <div class="card-container card-form">
           <div class="columns is-multiline">
             <div class="column is-6">
               <VField label="Name">
-                <b-input v-model="chartModel.name" />
+                <b-input v-model="chartConfig.name" />
               </VField>
               <VField label="Select chart type">
-                <b-select expanded v-model="chartModel.config.chart_type">
+                <b-select expanded v-model="chartConfig.chart_type">
                   <option
                     v-for="(type, key) in getChartTypes()"
                     :key="key"
@@ -30,7 +30,7 @@
                 label="Choose one of the sources of data you already have imported or configured in your account"
                 v-if="database"
               >
-                <b-select expanded v-model="chartModel.config.table">
+                <b-select expanded v-model="chartConfig.table">
                   <option
                     v-for="(table, key) in database.active_tables"
                     :value="table.id"
@@ -65,25 +65,23 @@ export default {
   data() {
     return {
       idChart: Number(this.$route.params.idChart),
-      chartModel: {}
+      chartConfig: {}
     }
   },
   computed: {
     ...mapState({
       database: state => state.data.database,
-      chart: function(state) {
-        return state.data.chart
-      }
+      chart: state => state.data.chart
     })
   },
   mounted() {
     if (!this.database) this.$store.dispatch('data/getDatabase')
 
-    if (this.idChart && !this.chart)
+    if (this.idChart) {
       this.$store.dispatch('data/getChart', this.idChart).then(() => {
-        this.chartModel = JSON.parse(JSON.stringify(this.chart))
+        this.chartConfig = { ...this.chart.config }
       })
-    else this.chartModel = { config: {}}
+    }
   },
   methods: {
     getChartTypes() {

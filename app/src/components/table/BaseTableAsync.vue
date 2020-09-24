@@ -146,15 +146,17 @@ export default {
       return null
     },
     updateQueryRequest(query) {
+      const newQuery = Object.assign({}, this.$route.query, query)
+
       if (this.updateQueryNav) {
         this.$router
           .push({
-            query: Object.assign({}, this.$route.query, query)
+            query: newQuery
           })
           .catch(() => {})
-      } else {
-        this.$emit('update', query)
       }
+
+      this.$emit('update', newQuery)
     },
     onPageChange(page) {
       // console.log('onPageChange', page)
