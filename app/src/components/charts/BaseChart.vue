@@ -22,15 +22,9 @@ export default {
   },
   data() {
     return {
-      chart_type: 'ChartBar',
+      chart_type: 'ChartLine',
       data: null,
-      dataOptions: {
-        borderColor: '#333',
-        borderWidth: 1
-      },
-      options: {
-        maintainAspectRatio: false
-      }
+      options: {}
     }
   },
   computed: {
@@ -46,11 +40,11 @@ export default {
   methods: {
     prepareData() {
       this.data = {
-        datasets: this.chartData.datasets.map(e => {
-          return { ...e, ...this.dataOptions }
-        }),
+        datasets: this.chartData.datasets,
         labels: this.chartData.labels
       }
+      this.options = this.chartData.options
+      // this.chart_type = this.chartData.type
     }
   },
   watch: {
