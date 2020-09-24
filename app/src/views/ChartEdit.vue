@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       idChart: Number(this.$route.params.idChart),
-      chartModel: null
+      chartModel: {}
     }
   },
   computed: {
@@ -83,7 +83,7 @@ export default {
       this.$store.dispatch('data/getChart', this.idChart).then(() => {
         this.chartModel = JSON.parse(JSON.stringify(this.chart))
       })
-    else this.chartModel = JSON.parse(JSON.stringify(this.chart))
+    else this.chartModel = { config: {}}
   },
   methods: {
     getChartTypes() {

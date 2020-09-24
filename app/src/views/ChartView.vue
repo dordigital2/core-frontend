@@ -61,8 +61,7 @@ export default {
         filter: this.chart.filters
       })
 
-      if (this.chart.filters) this.updateFilterQuery()
-      else this.getChartData()
+      if (!this.chart.filters) this.getChartData()
     })
   },
   methods: {
