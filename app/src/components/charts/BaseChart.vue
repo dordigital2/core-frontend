@@ -11,17 +11,18 @@
 
 <script>
 import ChartBar from './ChartBar'
+import ChartLine from './ChartLine'
 import { mapState } from 'vuex'
 
 export default {
-  components: { ChartBar },
+  components: { ChartBar, ChartLine },
   props: {
     idChart: Number,
     chartData: Object
   },
   data() {
     return {
-      chart_type: 'ChartBar',
+      chart_type: 'ChartLine',
       data: null,
       options: {}
     }
@@ -43,6 +44,7 @@ export default {
         labels: this.chartData.labels
       }
       this.options = this.chartData.options
+      // this.chart_type = this.chartData.type
     }
   },
   watch: {
