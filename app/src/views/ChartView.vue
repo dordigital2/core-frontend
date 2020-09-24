@@ -16,8 +16,9 @@
           Edit chart
         </router-link>
       </template>
+
       <BaseChart
-        v-bind="{ chartData, idChart: this.idChart }"
+        v-bind="{ idChart, chartData, chartConfig: chart.config }"
         v-if="chartData"
       />
     </BaseCard>
