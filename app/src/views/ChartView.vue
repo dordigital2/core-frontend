@@ -2,7 +2,10 @@
   <div v-if="chart">
     <BaseTitle title="Chart view" />
 
-    <FilterHead :table="table" />
+    <FilterHead
+      v-if="table"
+      v-bind="{ table, filterMode: true, filterData: chart.filters }"
+    />
 
     <BaseCard :title="`Chart — ${chart.name}`">
       <template #actions>
@@ -55,12 +58,6 @@ export default {
   mounted() {
     this.$store.dispatch('data/getChart', this.idChart).then(() => {
       this.$store.dispatch('data/getTable', this.chart.config.table)
-
-      this.$store.commit('data/setFilters', {
-        idChart: this.idChart,
-        filter: this.chart.filters
-      })
-
       if (!this.chart.filters) this.getChartData()
     })
   },

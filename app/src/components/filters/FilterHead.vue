@@ -44,7 +44,8 @@ export default {
   components: { FilterDisplay },
   props: {
     table: Object,
-    filterMode: Boolean
+    filterMode: Boolean,
+    filterData: Object
   },
   data() {
     return {}
@@ -63,10 +64,10 @@ export default {
     if (this.filterMode) {
       this.$store.commit('data/setFilters', {
         idTable: this.table.id,
-        filter: this.table.filters
+        filter: this.filterData
       })
 
-      if (this.table.filters) this.updateFilterQuery()
+      if (this.filterData) this.updateFilterQuery()
     }
   },
   methods: {
