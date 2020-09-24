@@ -23,18 +23,7 @@ export default {
     return {
       chart_type: 'ChartBar',
       data: null,
-      dataOptions: {
-        backgroundColor: function(context) {
-          var index = context.datasetIndex
-
-          return index % 2 ? '#303C6C' : '#c4c4c4'
-        },
-        borderColor: '#333',
-        borderWidth: 1
-      },
-      options: {
-        maintainAspectRatio: false
-      }
+      options: {}
     }
   },
   computed: {
@@ -50,11 +39,10 @@ export default {
   methods: {
     prepareData() {
       this.data = {
-        datasets: this.chartData.datasets.map(e => {
-          return { ...e, ...this.dataOptions }
-        }),
+        datasets: this.chartData.datasets,
         labels: this.chartData.labels
       }
+      this.options = this.chartData.options
     }
   },
   watch: {
