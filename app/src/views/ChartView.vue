@@ -4,7 +4,7 @@
 
     <FilterHead :table="table" />
 
-    <BaseCard title="Chart preview">
+    <BaseCard :title="`Chart — ${chart.name}`">
       <template #actions>
         <router-link
           class="button is-primary"

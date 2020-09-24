@@ -5,7 +5,7 @@
     <BaseCard title="Active tables"
       ><template #actions>
         <router-link :to="{ name: 'table-add' }" class="button is-primary">
-          Add a new table
+          Add new table
         </router-link>
       </template>
 

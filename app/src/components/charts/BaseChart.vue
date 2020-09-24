@@ -10,11 +10,12 @@
 </template>
 
 <script>
-import ChartBar from './ChartBar'
+import * as Charts from '.'
+// import { ChartService } from '@/services/chart'
 import { mapState } from 'vuex'
 
 export default {
-  components: { ChartBar },
+  components: { ...Charts },
   props: {
     idChart: Number,
     chartData: Object
@@ -24,11 +25,6 @@ export default {
       chart_type: 'ChartBar',
       data: null,
       dataOptions: {
-        backgroundColor: function(context) {
-          var index = context.datasetIndex
-
-          return index % 2 ? '#303C6C' : '#c4c4c4'
-        },
         borderColor: '#333',
         borderWidth: 1
       },

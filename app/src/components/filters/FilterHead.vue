@@ -7,7 +7,7 @@
             Reset filters
           </b-button>
           <b-button class="is-dark" @click="openModalFilters">
-            Add filters
+            {{ filtersNotEmpty ? 'Edit filters' : 'Add filters' }}
           </b-button>
 
           <template v-if="filterMode">
@@ -16,7 +16,7 @@
         </div>
       </template>
 
-      <template #default v-if="filters">
+      <template #default v-if="filtersNotEmpty">
         <div class="card-container">
           <FilterDisplay
             :fields="table.fields"
@@ -54,7 +54,10 @@ export default {
       filters: function(state) {
         return state.filters[this.table.id]
       }
-    })
+    }),
+    filtersNotEmpty() {
+      return this.filters && Object.keys(this.filters).length
+    }
   },
   mounted() {
     if (this.filterMode) {

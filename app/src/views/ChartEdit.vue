@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseTitle title="Chart editor" />
+    <BaseTitle title="Chart edit" />
 
     <ValidationObserver
       v-slot="{ passes }"
@@ -56,7 +56,7 @@
 <script>
 import ChartConfig from '@/services/chart'
 // import { ChartService } from '@/services/data'
-import { ToastService } from '@/services/buefy'
+// import { ToastService } from '@/services/buefy'
 import { mapState } from 'vuex'
 
 export default {
@@ -90,7 +90,8 @@ export default {
       return ChartConfig.getChartTypes()
     },
     save() {
-      ToastService.open('not implemented yet')
+      // this.
+      // ToastService.open('not implemented yet')
     }
   }
 }

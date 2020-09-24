@@ -5,7 +5,7 @@
     <BaseCard title="Views" v-if="tableViews"
       ><template #actions>
         <router-link :to="{ name: 'filter-edit' }" class="button is-primary">
-          Add view
+          Add new view
         </router-link>
       </template>
 
