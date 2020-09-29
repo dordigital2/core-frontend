@@ -22,10 +22,24 @@
         </router-link>
       </template>
 
-      <BaseChart
-        v-bind="{ idChart, chartData, chartConfig: chart.config }"
-        v-if="chartData"
-      />
+      <template #default>
+        <div class="card-container" v-if="table">
+          Last edit: {{ table.last_edit_date | parseDate }}
+          <span v-if="table.last_edit_user"
+            >by
+            {{
+              table.last_edit_user.first_name +
+                ' ' +
+                table.last_edit_user.last_name
+            }}
+          </span>
+        </div>
+
+        <BaseChart
+          v-bind="{ idChart, chartData, chartConfig: chart.config }"
+          v-if="chartData"
+        />
+      </template>
     </BaseCard>
   </div>
 </template>

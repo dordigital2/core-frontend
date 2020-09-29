@@ -10,7 +10,7 @@
       <BaseCard
         :title="`Table – ${link.table.name}`"
         v-for="(link, index) in tableLinks"
-        :key="`tableLink${index}`"
+        :key="`tableLink${link.table.id}`"
       >
         <template #actions>
           <a class="is-size-4 button-close" @click.prevent="removeLink(index)"
@@ -65,7 +65,8 @@ export default {
   },
   mounted() {
     if (!this.table) this.$store.dispatch('data/getTable', this.idTable)
-    this.tableLinks = this.links != null ? JSON.parse(JSON.stringify(this.links)) : []
+    this.tableLinks =
+      this.links != null ? JSON.parse(JSON.stringify(this.links)) : []
 
     this.getEntity()
   },
@@ -79,7 +80,6 @@ export default {
     },
     addLinkTable({ sourceField, table, linkField }) {
       const query = {
-        __fields: 'ALL',
         [linkField]: this.entity.data[sourceField]
       }
 

@@ -34,7 +34,6 @@
 import ModalFilters from '@/components/modals/ModalFilters'
 import FilterDisplay from '@/components/filters/FilterDisplay'
 import ApiService from '@/services/api'
-// import { TableViewService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 import { mapState } from 'vuex'
