@@ -1,22 +1,27 @@
 <template>
   <div class="has-text-centered">
-    <b-checkbox @input="onChange" />
+    <b-checkbox :value="props.data.show_in_dashboard" @input="onChange" />
   </div>
 </template>
 
 <script>
+import ApiService from '@/services/api'
+import { ToastService } from '@/services/buefy'
+
 export default {
   props: {
     name: String,
     action: String,
+    type: String,
     props: Object
   },
   methods: {
-    onChange(value) {
-      this.$store.dispatch(`data/${this.action}`, {
-        id: this.props.id,
-        data: { [this.name]: value }
-      })
+    onChange() {
+      ApiService.get(`${this.type}/${this.props.id}/${this.action}/`).then(
+        () => {
+          ToastService.open('Property updated')
+        }
+      )
     }
   }
 }

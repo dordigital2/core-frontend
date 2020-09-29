@@ -50,8 +50,8 @@ export default {
           display_name: 'Show in dashboard',
           component: 'FieldCheckbox',
           props: {
-            name: 'show_in_dashboard',
-            action: 'patchChart'
+            type: 'charts',
+            action: 'add-to-dashboard'
           }
         },
         {

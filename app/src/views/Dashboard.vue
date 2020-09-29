@@ -1,8 +1,7 @@
 <template>
   <div>
     <BaseTitle
-      title="
-        @TODO: Dashboard"
+      title="Dashboard"
       :hasBackButton="false"
     />
   </div>
@@ -13,6 +12,9 @@ export default {
   name: 'Dashboard',
   data() {
     return {}
+  },
+  mounted() {
+    
   }
 }
 </script>
