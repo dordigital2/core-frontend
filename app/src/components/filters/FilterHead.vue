@@ -33,8 +33,8 @@
 <script>
 import ModalFilters from '@/components/modals/ModalFilters'
 import FilterDisplay from '@/components/filters/FilterDisplay'
-
-import { TableViewService } from '@/services/data'
+import ApiService from '@/services/api'
+// import { TableViewService } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
 import { mapState } from 'vuex'
@@ -45,7 +45,8 @@ export default {
   props: {
     table: Object,
     filterMode: Boolean,
-    filterData: Object
+    filterData: Object,
+    viewType: String
   },
   data() {
     return {}
@@ -89,10 +90,13 @@ export default {
     },
 
     saveFilters() {
-      TableViewService.patchTableView(this.table.id, {
+      const id =
+        this.viewType == 'charts' ? this.$route.params.idChart : this.table.id
+
+      ApiService.patch(`${this.viewType}/${id}/`, {
         filters: this.filters
       }).then(() => {
-        ToastService.open('Filtered view has been saved')
+        ToastService.open('Filters have been saved')
       })
     },
 

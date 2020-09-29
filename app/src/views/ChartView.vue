@@ -6,6 +6,7 @@
       v-if="table"
       v-bind="{ table, filterMode: true, filterData: chart.filters }"
       @update="getChartData"
+      viewType="charts"
     />
 
     <BaseCard :title="`Chart — ${chart.name}`">

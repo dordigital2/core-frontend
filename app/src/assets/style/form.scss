@@ -44,6 +44,10 @@
 .checkbox-list {
   font-size: $size-6;
 
+  .field.has-addons {
+    flex-wrap: wrap;
+  }
+
   .checkbox {
     &:not(:last-child) {
       padding-right: 32px;

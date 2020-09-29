@@ -24,7 +24,11 @@ export default {
   data() {
     return {
       data: null,
-      options: {}
+      options: {
+        tooltips: {
+          mode: 'index'
+        }
+      }
     }
   },
   computed: {
@@ -46,7 +50,7 @@ export default {
         datasets: this.chartData.datasets,
         labels: this.chartData.labels
       }
-      this.options = this.chartData.options
+      this.options = Object.assign({}, this.chartData.options, this.options)
     }
   },
   watch: {

@@ -3,7 +3,12 @@
     <BaseTitle :title="title" />
 
     <FilterHead
-      v-bind="{ table, filterMode, filterData: table.filters }"
+      v-bind="{
+        table,
+        filterMode,
+        filterData: table.filters,
+        viewType: filterMode ? 'filters' : null
+      }"
       @update="getTableEntries"
     />
 
