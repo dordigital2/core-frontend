@@ -210,9 +210,10 @@ export default {
     },
 
     createChart({ dispatch }, id) {
-      return ChartService.createChart(id).then(() => {
-        dispatch('getCharts').then(() => {
+      return ChartService.createChart(id).then(response => {
+        return dispatch('getCharts').then(() => {
           ToastService.open('The chart has been created')
+          return response
         })
       })
     },
@@ -226,9 +227,10 @@ export default {
     },
 
     updateChart({ dispatch }, { id, data }) {
-      return ChartService.updateChart(id, data).then(() => {
-        dispatch('getCharts').then(() => {
+      return ChartService.updateChart(id, data).then(response => {
+        return dispatch('getCharts').then(() => {
           ToastService.open('The chart has been updated')
+          return response
         })
       })
     }

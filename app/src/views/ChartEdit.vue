@@ -15,14 +15,15 @@
               <VField label="Name">
                 <b-input v-model="chartConfig.name" />
               </VField>
+
               <VField label="Select chart type">
                 <b-select expanded v-model="chartConfig.chart_type">
                   <option
-                    v-for="(type, key) in getChartTypes()"
+                    v-for="(type, key) in chartTypes"
                     :key="key"
                     :value="key"
-                    >{{ type }}</option
-                  >
+                    v-text="type"
+                  />
                 </b-select>
               </VField>
 
@@ -30,13 +31,80 @@
                 label="Choose one of the sources of data you already have imported or configured in your account"
                 v-if="database"
               >
-                <b-select expanded v-model="chartConfig.table">
+                <b-select
+                  expanded
+                  v-model="chartConfig.table"
+                  @input="getTable"
+                >
                   <option
                     v-for="(table, key) in database.active_tables"
                     :value="table.id"
                     :key="key"
-                    >{{ table.data.name }}</option
-                  >
+                    v-text="table.data.name"
+                  />
+                </b-select>
+              </VField>
+
+              <VField
+                label="Choose which data column you wish to display on the horizontal axis"
+                v-if="table"
+              >
+                <b-select expanded v-model="chartConfig.x_axis_field">
+                  <option
+                    v-for="(field, key) in table.fields"
+                    :value="field.id"
+                    :key="key"
+                    v-text="field.display_name"
+                  />
+                </b-select>
+              </VField>
+
+              <VField
+                label="Choose which data column you wish to display on the vertical axis"
+                v-if="table"
+              >
+                <b-select expanded v-model="chartConfig.y_axis_field">
+                  <option
+                    v-for="(field, key) in table.fields"
+                    :value="field.id"
+                    :key="key"
+                    v-text="field.display_name"
+                  />
+                </b-select>
+              </VField>
+
+              <VField label="Vertical axis function" v-if="table">
+                <b-select expanded v-model="chartConfig.y_axis_function">
+                  <option
+                    v-for="(func, key) in chartFunctions"
+                    :value="key"
+                    :key="key"
+                    v-text="func"
+                  />
+                </b-select>
+              </VField>
+
+              <VField label="Timeline field" v-if="table">
+                <b-select expanded v-model="chartConfig.timeline_field">
+                  <option
+                    v-for="(field, key) in table.fields.filter(
+                      e => e.field_type == 'date'
+                    )"
+                    :value="field.id"
+                    :key="key"
+                    v-text="field.display_name"
+                  />
+                </b-select>
+              </VField>
+
+              <VField label="Timeline group type" v-if="chartConfig.timeline_field">
+                <b-select expanded v-model="chartConfig.timeline_period">
+                  <option
+                    v-for="(func, key) in chartTimelineGroups"
+                    :value="key"
+                    :key="key"
+                    v-text="func"
+                  />
                 </b-select>
               </VField>
             </div>
@@ -55,8 +123,7 @@
 
 <script>
 import ChartConfig from '@/services/chart'
-// import { ChartService } from '@/services/data'
-// import { ToastService } from '@/services/buefy'
+import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
 export default {
@@ -65,7 +132,11 @@ export default {
   data() {
     return {
       idChart: Number(this.$route.params.idChart),
-      chartConfig: {}
+      table: null,
+      chartConfig: {},
+      chartFunctions: ChartConfig.getFunctions(),
+      chartTypes: ChartConfig.getChartTypes(),
+      chartTimelineGroups: ChartConfig.getTimelineGroups()
     }
   },
   computed: {
@@ -80,16 +151,37 @@ export default {
     if (this.idChart) {
       this.$store.dispatch('data/getChart', this.idChart).then(() => {
         this.chartConfig = { ...this.chart.config }
+
+        this.getTable(this.chartConfig.table)
       })
     }
   },
   methods: {
-    getChartTypes() {
-      return ChartConfig.getChartTypes()
+    getTable(id) {
+      TableService.getTable(id).then(response => {
+        this.table = response
+      })
     },
     save() {
-      // this.
-      // ToastService.open('not implemented yet')
+      if (this.idChart)
+        this.$store
+          .dispatch('data/updateChart', {
+            id: this.idChart,
+            data: this.chartConfig
+          })
+          .then(this.redirect)
+      else
+        this.$store
+          .dispatch('data/createChart', this.chartConfig)
+          .then(this.redirect)
+    },
+    redirect(response) {
+      this.$router.push({
+        name: 'chart-view',
+        params: {
+          ...(response.id && { idChart: response.id })
+        }
+      })
     }
   }
 }
