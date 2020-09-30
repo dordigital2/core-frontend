@@ -60,6 +60,20 @@
               </VField>
 
               <VField
+                label="Choose which data column you wish to group by on the horizontal axis"
+                v-if="table"
+              >
+                <b-select expanded v-model="chartConfig.x_axis_field_2">
+                  <option
+                    v-for="(field, key) in table.fields"
+                    :value="field.id"
+                    :key="key"
+                    v-text="field.display_name"
+                  />
+                </b-select>
+              </VField>
+
+              <VField
                 label="Choose which data column you wish to display on the vertical axis"
                 v-if="table"
               >
@@ -109,6 +123,13 @@
                     v-text="func"
                   />
                 </b-select>
+              </VField>
+              <VField
+                v-if="chartConfig.timeline_field"
+              >
+                <b-checkbox v-model="chartConfig.timeline_include_nulls">
+                  Include periods with no data
+                </b-checkbox>
               </VField>
             </div>
           </div>
