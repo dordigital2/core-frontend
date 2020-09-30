@@ -46,6 +46,16 @@ export default {
           display_name: 'Created by'
         },
         {
+          name: 'show_dashboard',
+          display_name: 'Show in dashboard',
+          component: 'FieldCheckbox',
+          centered: true,
+          props: {
+            type: 'filters',
+            action: 'add-to-dashboard'
+          }
+        },
+        {
           name: 'actions',
           display_name: ' ',
           component: 'ActionsTableView',

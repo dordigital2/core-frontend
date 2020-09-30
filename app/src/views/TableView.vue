@@ -101,7 +101,9 @@ export default {
       }
     }),
     title() {
-      return (this.filterMode ? 'Filtered view' : 'Table') + ' – ' + this.table.name
+      return (
+        (this.filterMode ? 'Filtered view' : 'Table') + ' – ' + this.table.name
+      )
     },
     exportPath() {
       return ApiService.getPath(
