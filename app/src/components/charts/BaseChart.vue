@@ -25,8 +25,22 @@ export default {
     return {
       data: null,
       options: {
-        tooltips: {
-          mode: 'index'
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                callback: function(value) {
+                  const maxlen = 20
+                  
+                  if (typeof value == 'string')
+                    return (
+                      value.substr(0, maxlen) + (value.length > maxlen ? '...' : '')
+                    )
+                  else return value
+                }
+              }
+            }
+          ]
         }
       }
     }

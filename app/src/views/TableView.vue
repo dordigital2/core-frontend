@@ -63,6 +63,7 @@
           :table="table"
           :tableEntries="tableEntries || {}"
           :filterMode="filterMode"
+          @update="getTableEntries"
           updateQueryNav
         />
       </template>
@@ -100,7 +101,7 @@ export default {
       }
     }),
     title() {
-      return 'Table – ' + this.table.name
+      return (this.filterMode ? 'Filtered view' : 'Table') + ' – ' + this.table.name
     },
     exportPath() {
       return ApiService.getPath(

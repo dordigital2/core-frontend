@@ -97,7 +97,10 @@
                 </b-select>
               </VField>
 
-              <VField label="Timeline group type" v-if="chartConfig.timeline_field">
+              <VField
+                label="Timeline group type"
+                v-if="chartConfig.timeline_field"
+              >
                 <b-select expanded v-model="chartConfig.timeline_period">
                   <option
                     v-for="(func, key) in chartTimelineGroups"

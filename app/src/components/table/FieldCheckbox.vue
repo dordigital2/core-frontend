@@ -1,5 +1,5 @@
 <template>
-  <div class="has-text-centered">
+  <div>
     <b-checkbox :value="props.data.show_in_dashboard" @input="onChange" />
   </div>
 </template>

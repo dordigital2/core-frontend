@@ -34,8 +34,8 @@ export default {
           display_name: 'Creation date'
         },
         {
-          name: 'config.table',
-          display_name: 'Tables',
+          name: 'table_list',
+          display_name: 'Table',
           component: 'FieldTagList',
           props: {
             name: 'table'
@@ -46,9 +46,10 @@ export default {
           display_name: 'Created by'
         },
         {
-          name: 'config.table',
+          name: 'show_dashboard',
           display_name: 'Show in dashboard',
           component: 'FieldCheckbox',
+          centered: true,
           props: {
             type: 'charts',
             action: 'add-to-dashboard'

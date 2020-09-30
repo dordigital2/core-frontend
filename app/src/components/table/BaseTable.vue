@@ -8,7 +8,8 @@
           label: column.display_name || column.name,
           cellClass: column.custom_class,
           headerClass: column.custom_class,
-          sticky: column.sticky
+          sticky: column.sticky,
+          centered: column.centered
         }"
       >
         <template v-slot="props">
