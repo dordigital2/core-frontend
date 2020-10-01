@@ -119,10 +119,12 @@ export default {
     },
 
     postTable({ dispatch }, data) {
-      return TableService.postTable(data).then(() => {
+      return TableService.postTable(data).then(response => {
         dispatch('getDatabase').then(() => {
           ToastService.open('Table was created successfuly.')
         })
+
+        return response
       })
     },
 
@@ -241,6 +243,6 @@ export default {
           ToastService.open('The chart has been deleted')
         )
       })
-    },
+    }
   }
 }

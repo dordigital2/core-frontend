@@ -207,10 +207,10 @@ export default {
       } else if (!this.idTable) {
         // create new table
         //
-        this.$store.dispatch('data/postTable', resource).then(() => {
+        this.$store.dispatch('data/postTable', resource).then(response => {
           this.$router.push({
             name: 'table-view',
-            params: { idTable: this.idTable }
+            params: { idTable: response.id }
           })
         })
       } else {

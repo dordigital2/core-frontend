@@ -4,9 +4,10 @@
 
     <FilterHead
       v-if="table"
-      v-bind="{ table, filterMode: true, filterData: chart.filters }"
+      v-bind="{ table, filterData: chart.filters }"
       @update="getChartData"
       viewType="charts"
+      filterMode
     />
 
     <BaseCard :title="`Chart — ${chart.name}`">
