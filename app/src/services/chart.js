@@ -6,6 +6,7 @@ const ChartTypes = {
 }
 
 const ChartFunctions = {
+  Count: 'Count',
   Sum: 'Sum',
   Avg: 'Average',
   Max: 'Maximum',

@@ -233,6 +233,14 @@ export default {
           return response
         })
       })
-    }
+    },
+
+    deleteChart({ dispatch }, id) {
+      return ChartService.deleteChart(id).then(() => {
+        dispatch('getCharts').then(
+          ToastService.open('The chart has been deleted')
+        )
+      })
+    },
   }
 }

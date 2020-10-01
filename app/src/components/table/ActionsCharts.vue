@@ -8,8 +8,8 @@
     />
 
     <ActionButtonDelete
-      dialogTitle="Do you wish to delete this table?"
-      dialogMessage="This operation permanently removes all the entries of this table. Please check the data before proceeding."
+      dialogTitle="Do you wish to delete this chart?"
+      dialogMessage="This operation permanently removes this chart. Please check the data before proceeding."
       @on-confirm="$store.dispatch('data/deleteChart', props.id)"
     />
   </div>

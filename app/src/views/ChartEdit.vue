@@ -50,6 +50,7 @@
                 v-if="table"
               >
                 <b-select expanded v-model="chartConfig.x_axis_field">
+                  <option></option>
                   <option
                     v-for="(field, key) in table.fields"
                     :value="field.id"
@@ -64,6 +65,7 @@
                 v-if="table"
               >
                 <b-select expanded v-model="chartConfig.x_axis_field_2">
+                  <option></option>
                   <option
                     v-for="(field, key) in table.fields"
                     :value="field.id"
@@ -78,6 +80,7 @@
                 v-if="table"
               >
                 <b-select expanded v-model="chartConfig.y_axis_field">
+                  <option></option>
                   <option
                     v-for="(field, key) in table.fields"
                     :value="field.id"
@@ -100,6 +103,7 @@
 
               <VField label="Timeline field" v-if="table">
                 <b-select expanded v-model="chartConfig.timeline_field">
+                  <option></option>
                   <option
                     v-for="(field, key) in table.fields.filter(
                       e => e.field_type == 'date'
@@ -124,9 +128,7 @@
                   />
                 </b-select>
               </VField>
-              <VField
-                v-if="chartConfig.timeline_field"
-              >
+              <VField v-if="chartConfig.timeline_field">
                 <b-checkbox v-model="chartConfig.timeline_include_nulls">
                   Include periods with no data
                 </b-checkbox>
@@ -157,7 +159,9 @@ export default {
     return {
       idChart: Number(this.$route.params.idChart),
       table: null,
-      chartConfig: {},
+      chartConfig: {
+        y_axis_function: 'Count'
+      },
       chartFunctions: ChartConfig.getFunctions(),
       chartTypes: ChartConfig.getChartTypes(),
       chartTimelineGroups: ChartConfig.getTimelineGroups()
