@@ -9,7 +9,12 @@
 
       <div class="navbar-menu">
         <div class="navbar-end">
-          <router-link to="/" class="navbar-item">Username</router-link>
+          <router-link
+            v-if="user"
+            to="/"
+            class="navbar-item"
+            v-text="user.username"
+          />
 
           <a href="#" @click="logout()" class="navbar-item"
             ><b-icon icon="power" class="is-size-3" /> <span>Log out</span></a
@@ -28,6 +33,7 @@
 
 <script>
 import BaseMenu from '@/components/BaseMenu.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Base',
@@ -36,6 +42,12 @@ export default {
   },
   data() {
     return {}
+  },
+  computed: mapState({
+    user: state => state.user
+  }),
+  mounted() {
+    this.$store.dispatch('getUser')
   },
   methods: {
     logout() {

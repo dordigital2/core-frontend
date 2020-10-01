@@ -157,9 +157,9 @@ const ChartService = {
 }
 
 export {
+  ChartService,
   DatabaseService,
-  TableService,
   ImportService,
-  TableViewService,
-  ChartService
+  TableService,
+  TableViewService
 }

@@ -27,6 +27,9 @@ export default {
     loading: {}
   },
   mutations: {
+    setUser(state, data) {
+      state.user = data
+    },
     setDatabase(state, data) {
       state.database = data[0]
     },

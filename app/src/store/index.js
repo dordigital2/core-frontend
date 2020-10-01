@@ -11,7 +11,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    token: TokenService.getToken()
+    token: TokenService.getToken(),
+    user: null,
+    users: null
   },
   mutations: {
     login(state, token) {
@@ -19,6 +21,12 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.token = null
+    },
+    setUsers(state, data) {
+      state.users = data
+    },
+    setUser(state, data) {
+      state.user = data
     }
   },
   actions: {
@@ -39,6 +47,18 @@ export default new Vuex.Store({
       commit('logout')
 
       router.push('/')
+    },
+
+    getUser({ commit }) {
+      return UserService.getInfo().then(response => {
+        commit('setUser', response)
+      })
+    },
+
+    getUsers({ commit }, query) {
+      return UserService.getUsers(query).then(response => {
+        commit('setUsers', response)
+      })
     }
   },
   modules: {

@@ -2,37 +2,35 @@
   <div>
     <BaseTitle title="Dashboard" :hasBackButton="false" />
 
-    <BaseCard title="Selected charts"
+    <BaseCard title="Selected charts" v-if="user"
       ><template #actions>
         <router-link :to="{ name: 'charts-view' }" class="button is-primary">
           See all
         </router-link>
       </template>
 
-      <BaseTable :data="charts" :columns="columns.charts" />
+      <BaseTable :data="user.dashboard.charts" :columns="columns.charts" />
     </BaseCard>
 
-    <BaseCard title="Selected views"
+    <BaseCard title="Selected views" v-if="user"
       ><template #actions>
         <router-link :to="{ name: 'filter-view' }" class="button is-primary">
           See all
         </router-link>
       </template>
 
-      <BaseTable :data="tableViews" :columns="columns.tableViews" />
+      <BaseTable :data="user.dashboard.filters" :columns="columns.tableViews" />
     </BaseCard>
   </div>
 </template>
 
 <script>
-import ApiService from '@/services/api'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Dashboard',
   data() {
     return {
-      charts: null,
-      tableViews: null,
       columns: {
         charts: [
           {
@@ -99,11 +97,9 @@ export default {
       }
     }
   },
-  mounted() {
-    ApiService.get('user/').then(response => {
-      this.charts = response.dashboard.charts
-      this.tableViews = response.dashboard.filters
-    })
-  }
+  computed: mapState({
+    user: state => state.user
+  }),
+  mounted() {}
 }
 </script>

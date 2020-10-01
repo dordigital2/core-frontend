@@ -21,6 +21,11 @@
         label="Charts"
         @click="goto('charts-view')"
       ></b-menu-item>
+      <b-menu-item
+        icon="account-details-outline"
+        label="User management"
+        @click="goto('users-view')"
+      ></b-menu-item>
 
       <b-menu-item icon="application-import" :active="isActive" expanded>
         <template #label="props">

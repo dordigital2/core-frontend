@@ -61,16 +61,11 @@ export default {
     }
   },
   mounted() {
-    console.log('[filterHead] filterMode', this.filterMode)
     if (this.filterMode) {
-      console.log(this.table.id, JSON.stringify(this.filterData))
-      
       this.$store.commit('data/setFilters', {
         idTable: this.table.id,
         filter: this.filterData
       })
-
-      console.log('[vuex filter]', JSON.stringify(this.filters))
 
       if (this.filterData) this.updateFilterQuery()
     }

@@ -72,6 +72,7 @@
 <script>
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
+import ActionsUser from './ActionsUser'
 import FieldOwnerLink from './FieldOwnerLink'
 
 import FieldService from '@/services/field'
@@ -83,6 +84,7 @@ export default {
   components: {
     ActionsTable,
     ActionsTableEntity,
+    ActionsUser,
     FieldOwnerLink
   },
   data() {

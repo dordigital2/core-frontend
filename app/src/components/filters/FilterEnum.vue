@@ -22,8 +22,9 @@
           :key="index"
           :native-value="choice"
           v-model="innerValue"
-          >{{ choice }}</b-checkbox
         >
+          {{ choice }}
+        </b-checkbox>
       </VField>
     </div>
   </div>
@@ -33,7 +34,8 @@
 export default {
   props: {
     choices: Array,
-    value: Array
+    value: Array,
+    autoupdate: Boolean
   },
   data() {
     return {
@@ -42,10 +44,19 @@ export default {
       innerValue: []
     }
   },
+  mounted() {
+    if (this.autoupdate) {
+      this.$watch('innerValue', function() {
+        this.update()
+      })
+    }
+  },
   methods: {
     update() {
-      // this.$emit('input', this.innerValue)
-      this.$emit('input', this.innerValue.length ? this.innerValue : undefined)
+      this.$emit(
+        'input',
+        this.innerValue.length ? this.innerValue.slice() : undefined
+      )
     },
     selectAll() {
       this.innerValue = this.filterChoices.slice()
@@ -54,7 +65,6 @@ export default {
       if (this.search == null) this.innerValue = []
       else {
         this.innerValue = this.innerValue.filter(e => {
-          // console.log(this.filterChoices.indexOf(e), e)
           return this.filterChoices.indexOf(e) == -1
         })
       }
@@ -62,6 +72,7 @@ export default {
   },
   watch: {
     value(input) {
+      console.log('value changed')
       this.innerValue = input != null ? input.slice() : []
     },
 

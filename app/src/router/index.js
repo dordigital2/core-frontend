@@ -164,16 +164,16 @@ const routes = [
       },
       {
         path: 'users',
-        name: 'users',
+        name: 'users-view',
         component: () =>
           import(/* webpackChunkName: "user" */ '@/views/Users.vue')
       },
-      // {
-      //   path: 'users/profile/:username',
-      //   name: 'user-profile',
-      //   component: () =>
-      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfile.vue')
-      // },
+      {
+        path: 'users/:idUser',
+        name: 'user-profile',
+        component: () =>
+          import(/* webpackChunkName: "user" */ '@/views/UserProfile.vue')
+      },
       // {
       //   path: 'edit/:username',
       //   name: 'user-edit',

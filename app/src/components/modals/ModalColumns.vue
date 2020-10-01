@@ -27,6 +27,14 @@
             </b-checkbox>
           </div>
         </VField>
+
+        <VField label="Column list" rules="required" v-if="false">
+          <FilterEnum
+            v-model="selectedColumns"
+            :choices="table.fields.map(e => e.display_name)"
+            autoupdate
+          />
+        </VField>
       </section>
       <footer class="modal-card-foot">
         <b-button class="is-dark is-outlined" @click="$emit('close')">

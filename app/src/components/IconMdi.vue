@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import AccountDetailsOutline from 'vue-material-design-icons/AccountDetailsOutline.vue'
 import AlertCircleOutline from 'vue-material-design-icons/AlertCircleOutline.vue'
 import ApplicationImport from 'vue-material-design-icons/ApplicationImport.vue'
 import ArchiveOutline from 'vue-material-design-icons/ArchiveOutline.vue'
@@ -31,6 +32,7 @@ import MonitorScreenshot from 'vue-material-design-icons/MonitorScreenshot.vue'
 export default {
   name: 'IconMdi',
   components: {
+    AccountDetailsOutline,
     AlertCircleOutline,
     ApplicationImport,
     ArchiveOutline,
