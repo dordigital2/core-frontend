@@ -16,7 +16,12 @@
     >
       <template slot="label" v-if="label">
         {{ label }}
-        <b-tooltip v-if="labelInfo" type="is-dark" :label="labelInfo">
+        <b-tooltip
+          v-if="labelInfo"
+          type="is-dark"
+          :label="labelInfo"
+          multilined
+        >
           <b-icon icon="help-circle-outline" class="is-size-5"></b-icon>
         </b-tooltip>
       </template>

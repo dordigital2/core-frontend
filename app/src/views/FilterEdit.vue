@@ -45,7 +45,7 @@
                 label="Link field"
                 rules="required"
                 :name="`Table #${link_index + 1} link `"
-                labelInfo="Field types must match"
+                labelInfo="Please select the column that links the two tables. In order to join information about the same entries in both tables you need to set an identifier present in both. Ex. E-mail. The two link fields must match."
               >
                 <b-select
                   v-model="link.join_field"
@@ -69,7 +69,7 @@
             <div class="column is-12" v-if="table[link.table]">
               <VField
                 :name="`Table #${link_index + 1} columns `"
-                label="Select which columns you wish to keep"
+                label="Select which columns you want to keep in the table you are currently building:"
                 rules="required|over:2"
               >
                 <div class="checkbox-list is-1">

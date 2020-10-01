@@ -15,11 +15,11 @@ const FieldFilterComponentMap = {
 }
 
 const FieldTypes = {
-  enum: 'Enum',
+  enum: 'Enumeration (Set of predefined values)',
   date: 'Date',
-  int: 'Integer',
-  float: 'Float',
-  bool: 'Boolean',
+  int: 'Integer (whole number)',
+  float: 'Float (decimal number)',
+  bool: 'Yes/No',
   text: 'Text'
 }
 

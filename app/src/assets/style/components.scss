@@ -130,6 +130,12 @@ nav.navbar {
     .modal-card-head {
       .modal-card-title {
         font-weight: $weight-bold;
+
+        .info {
+          font-size: 14px;
+          font-weight: normal;
+          display: block;
+        }
       }
 
       .delete {

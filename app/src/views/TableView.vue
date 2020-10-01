@@ -1,6 +1,9 @@
 <template>
   <div v-if="table">
-    <BaseTitle :title="title" />
+    <BaseTitle
+      :title="title"
+      :backTo="filterMode ? 'filter-view' : 'database-view'"
+    />
 
     <FilterHead
       v-bind="{

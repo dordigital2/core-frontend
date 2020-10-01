@@ -1,12 +1,11 @@
 <template>
   <div v-if="chart">
-    <BaseTitle title="Chart view" />
+    <BaseTitle title="Chart view" backTo="charts-view" />
 
     <FilterHead
       v-if="table"
-      v-bind="{ table, filterData: chart.filters }"
+      v-bind="{ table, filterData: chart.filters, viewType: 'charts' }"
       @update="getChartData"
-      viewType="charts"
       filterMode
     />
 
@@ -67,25 +66,25 @@ export default {
       table: function(state) {
         return state.table[this.chart.config.table]
       },
-      chart: function(state) {
-        return state.chart
-      }
+      chart: state => state.chart
     })
   },
   mounted() {
     this.$store.dispatch('data/getChart', this.idChart).then(() => {
-      this.$store.dispatch('data/getTable', this.chart.config.table)
-      if (!this.chart.filters) this.getChartData()
+      this.$store
+        .dispatch('data/getTable', this.chart.config.table)
+        .then(() => {
+          if (!this.chart.filters) this.getChartData()
+        })
     })
   },
   methods: {
     getChartData() {
-      ChartService.getChartData(
-        this.idChart,
-        Object.assign({}, this.$route.query)
-      ).then(response => {
-        this.chartData = response
-      })
+      ChartService.getChartData(this.idChart, this.$route.query).then(
+        response => {
+          this.chartData = response
+        }
+      )
     }
   }
 }

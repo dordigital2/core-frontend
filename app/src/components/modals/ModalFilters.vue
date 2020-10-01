@@ -1,7 +1,12 @@
 <template>
   <div class="modal-card" style="width: 960px">
     <header class="modal-card-head">
-      <p class="modal-card-title">Filter options</p>
+      <p class="modal-card-title">
+        Filter options
+        <span class="info"
+          >Always click on <b>Set filters</b> after you made your selection.</span
+        >
+      </p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
 
@@ -142,7 +147,7 @@ export default {
 
       if (Array.isArray(this.filterData[name]) && index != null) {
         this.filterData[name].splice(index, 1)
-        
+
         if (!this.filterData[name].length) this.$delete(this.filterData, name)
       } else {
         this.$delete(this.filterData, name)

@@ -69,6 +69,7 @@ export default {
     tableViews: state => state.data.tableViews
   }),
   mounted() {
+    this.$store.commit('data/setTableView', null)
     this.$store.dispatch('data/getTableViews')
   }
 }
