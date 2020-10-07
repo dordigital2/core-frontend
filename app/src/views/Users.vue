@@ -3,14 +3,6 @@
     <BaseTitle title="User management" />
 
     <BaseCard title="Users on the platform" v-if="users">
-      <template #actions>
-        <div class="buttons">
-          <router-link class="button is-primary" :to="{ name: 'user-add' }">
-            Add new user
-          </router-link>
-        </div>
-      </template>
-
       <template #default>
         <BaseTableAsync
           :table="userTable"

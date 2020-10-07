@@ -203,3 +203,11 @@ $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
     }
   }
 }
+
+fieldset[disabled] .file {
+  .file-cta, .file-name {
+    background-color: $grey !important;
+    color: $grey-darker !important;
+    border-color: $grey;
+  }
+}

@@ -30,7 +30,19 @@ const UserService = {
     return ApiService.get(`users/${id}/`)
   },
 
-  getInfo() {
+  putUser(id, data) {
+    return ApiService.put(`users/${id}/`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+
+  patchUser(id, data) {
+    return ApiService.patch(`users/${id}/`, data)
+  },
+
+  getActiveUser() {
     return ApiService.get('user/')
   },
 

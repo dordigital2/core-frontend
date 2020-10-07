@@ -24,6 +24,7 @@
       <b-menu-item
         icon="account-details-outline"
         label="User management"
+        v-if="isAdmin"
         @click="goto('users-view')"
       ></b-menu-item>
 
@@ -47,7 +48,9 @@
 <script>
 export default {
   name: 'BaseMenu',
-  components: {},
+  props: {
+    isAdmin: Boolean
+  },
   data() {
     return {
       isActive: false

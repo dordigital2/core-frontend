@@ -11,7 +11,7 @@
         <div class="navbar-end">
           <router-link
             v-if="user"
-            to="/"
+            :to="{ name: 'user-profile', params: { idUser: user.id } }"
             class="navbar-item"
             v-text="user.username"
           />
@@ -23,7 +23,7 @@
       </div>
     </nav>
 
-    <BaseMenu />
+    <BaseMenu :isAdmin="user && user.is_admin" />
 
     <div class="main-view">
       <router-view />
@@ -47,7 +47,7 @@ export default {
     user: state => state.user
   }),
   mounted() {
-    this.$store.dispatch('getUser')
+    this.$store.dispatch('getActiveUser')
   },
   methods: {
     logout() {

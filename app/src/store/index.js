@@ -49,8 +49,8 @@ export default new Vuex.Store({
       router.push('/')
     },
 
-    getUser({ commit }) {
-      return UserService.getInfo().then(response => {
+    getActiveUser({ commit }) {
+      return UserService.getActiveUser().then(response => {
         commit('setUser', response)
       })
     },
@@ -59,7 +59,7 @@ export default new Vuex.Store({
       return UserService.getUsers(query).then(response => {
         commit('setUsers', response)
       })
-    }
+    },
   },
   modules: {
     data
