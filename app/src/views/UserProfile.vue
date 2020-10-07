@@ -87,7 +87,7 @@
               v-for="(table, index) in user.tables_permissions"
               :key="`table-${table.id}`"
             >
-              <div class="columns">
+              <div class="columns is-vcentered">
                 <div class="column is-6" v-text="table.name"></div>
                 <div class="column is-6">
                   <b-select

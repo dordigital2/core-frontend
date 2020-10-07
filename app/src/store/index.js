@@ -60,6 +60,12 @@ export default new Vuex.Store({
         commit('setUsers', response)
       })
     },
+
+    registerUser({commit}, query) {
+      return UserService.register(query).then(response => {
+        commit('setUser', response)
+      })
+    }
   },
   modules: {
     data

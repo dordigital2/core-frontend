@@ -15,18 +15,29 @@ const ApiService = {
       response => response.data,
       err => {
         // this.$store.commit('loading_stop')
-        // console.log('err', JSON.stringify(err))
 
-        let msg =
-          err.response.data.detail ||
-          (err.response.data.non_field_errors &&
-            err.response.data.non_field_errors[0]) ||
-          err.response.status ||
-          'unknown'
+        let msg = ''
 
-        if (err.response.status == null) msg = 'Check internet connection'
+        switch (err.response.status) {
+          case 500:
+          case 404:
+            msg = 'Something went wrong'
+            break
+          case null:
+            msg = 'Please check your internet connection'
+            break
+          default:
+            for (let e in err.response.data) {
+              const o = err.response.data[e]
+              msg += (Array.isArray(o) && o[0]) || o + '<br/>'
+              break
+            }
+            break
+        }
 
-        ToastService.open(`Server error<br> ${msg}`, {
+        msg = 'Error<br> ' + msg
+
+        ToastService.open(`${msg}`, {
           type: 'is-danger'
         })
 

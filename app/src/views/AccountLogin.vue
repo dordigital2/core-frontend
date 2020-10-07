@@ -15,14 +15,23 @@
         <VField label="Password" rules="required">
           <b-input v-model="password" type="password" />
         </VField>
+        
+        <div class="field">
+          <b-button
+            native-type="submit"
+            class="button-submit is-primary"
+            @click="passes(submit)"
+          >
+            Log In
+          </b-button>
+        </div>
 
-        <b-button
-          native-type="submit"
-          class="button-submit is-primary"
-          @click="passes(submit)"
-        >
-          Log In
-        </b-button>
+        <div class="field">
+          Not registered yet?
+          <router-link :to="{ name: 'register' }"
+            >Create an account</router-link
+          >
+        </div>
       </ValidationObserver>
     </div>
   </div>

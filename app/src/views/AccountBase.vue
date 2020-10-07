@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/style/views/AccountBase';
+  @import '../assets/style/views/AccountBase';
 </style>

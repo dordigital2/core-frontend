@@ -31,6 +31,30 @@ const routes = [
         }
       },
       {
+        path: 'register',
+        name: 'register',
+        component: () =>
+          import(
+            /* webpackChunkName: "account" */ '@/views/AccountRegister.vue'
+          ),
+        meta: {
+          public: true,
+          anonymousOnly: true
+        }
+      },
+      {
+        path: 'activate/:uid/:token',
+        name: 'activate',
+        component: () =>
+          import(
+            /* webpackChunkName: "account" */ '@/views/AccountActivate.vue'
+          ),
+        meta: {
+          public: true,
+          anonymousOnly: true
+        }
+      },
+      {
         path: 'forgot-password',
         name: 'forgot-password',
         component: () =>
@@ -43,7 +67,7 @@ const routes = [
         }
       },
       {
-        path: 'reset-password',
+        path: 'reset-password/:uid/:token',
         name: 'reset-password',
         component: () =>
           import(
@@ -174,18 +198,12 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "user" */ '@/views/UserProfile.vue')
       },
-      // {
-      //   path: 'edit/:username',
-      //   name: 'user-edit',
-      //   component: () =>
-      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfileEdit.vue')
-      // },
-      // {
-      //   path: 'add',
-      //   name: 'user-add',
-      //   component: () =>
-      //     import(/* webpackChunkName: "user" */ '@/views/UsersProfileEdit.vue')
-      // }
+      {
+        path: 'users/:idUser/change-password',
+        name: 'change-password',
+        component: () =>
+          import(/* webpackChunkName: "user" */ '@/views/UserChangePass.vue')
+      },
       { path: '*', component: Page404 }
     ]
   },

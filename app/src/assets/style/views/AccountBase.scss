@@ -3,7 +3,7 @@ $danger: #f4976c;
 
 body.account-view {
   background-color: $blue;
-  color: $white;
+  color: $grey-darker;
 
   .navbar {
     .navbar-item {
@@ -59,4 +59,14 @@ body.account-view {
       color: $danger !important;
     }
   }
+
+  a:not(.button) {
+    color: $white;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .navbar-brand a { text-decoration: none; }
 }

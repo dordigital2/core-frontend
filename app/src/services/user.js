@@ -21,6 +21,39 @@ const UserService = {
     ApiService.removeHeader()
   },
 
+  register(query) {
+    return ApiService.post('auth/users/', query)
+  },
+
+  resend(email) {
+    return ApiService.post('auth/users/resend_activation/', { email })
+  },
+
+  activate(uid, token) {
+    return ApiService.post('auth/users/activation/', { uid, token })
+  },
+
+  resetPassword(email) {
+    return ApiService.post('auth/users/reset_password/', { email })
+  },
+
+  resetPasswordConfirm(uid, token, new_password, re_new_password) {
+    return ApiService.post('auth/users/reset_password_confirm/', {
+      uid,
+      token,
+      new_password,
+      re_new_password
+    })
+  },
+
+  changePassword(new_password, re_new_password, current_password) {
+    return ApiService.post('auth/users/set_password/', {
+      new_password,
+      re_new_password,
+      current_password
+    })
+  },
+
   getUsers(query) {
     const queryString = query != null ? '?' + QueryString(query) : ''
     return ApiService.get(`users/${queryString}`)

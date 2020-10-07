@@ -8,12 +8,15 @@
 
     <div class="form">
       <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-        <VField label="Password" rules="required">
-          <b-input v-model="password" name="password" />
+        <VField label="Password" rules="required" name="new_password">
+          <b-input type="password" v-model="new_password" />
         </VField>
 
-        <VField rules="required|confirmed:password" label="Confirm password">
-          <b-input v-model="password_confirm"
+        <VField
+          rules="required|confirmed:new_password"
+          label="Confirm password"
+        >
+          <b-input type="password" v-model="re_new_password"
         /></VField>
 
         <b-button
@@ -29,19 +32,29 @@
 </template>
 
 <script>
-// import UserService from '@/services/user'
+import UserService from '@/services/user'
+import { ToastService } from '@/services/buefy'
 
 export default {
   name: 'AccountResetPass',
   data() {
     return {
-      password: '',
-      password_confirm: ''
+      new_password: '',
+      re_new_password: ''
     }
   },
+  mounted() {},
   methods: {
     submit() {
-      console.log('submit')
+      UserService.resetPasswordConfirm(
+        this.$route.params.uid,
+        this.$route.params.token,
+        this.new_password,
+        this.re_new_password
+      ).then(() => {
+        ToastService.open('Your password has been changed')
+        this.$router.push({ name: 'login' })
+      })
     }
   }
 }
