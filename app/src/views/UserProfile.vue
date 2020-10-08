@@ -15,6 +15,16 @@
           >
             Change password
           </router-link>
+
+          <b-button
+            v-if="activeUser.is_admin"
+            type="is-dark"
+            @click="toggleUserActive"
+          >
+            <span v-if="user.is_active">Deactivate</span>
+            <span v-else>Activate</span>
+            user
+          </b-button>
         </div>
       </template>
 
@@ -146,6 +156,28 @@ export default {
       UserService.getUser(this.idUser).then(response => {
         this.user = response
         this.userModel = { ...this.user, file: null }
+      })
+    },
+
+    toggleUserActive() {
+      this.$buefy.dialog.confirm({
+        title: 'User account status',
+        message: 'Are you sure?',
+        type: this.user.is_active ? 'is-danger' : 'is-success',
+        onConfirm: () => {
+          this.loading.profile = true
+          
+          UserService.toggleActivate(this.user.id).then(response => {
+            this.user = response
+            this.loading.profile = false
+
+            ToastService.open(
+              'User account has been ' +
+                (this.user.is_active ? 'activated' : 'deactivated')
+            )
+          })
+        },
+        confirmText: this.user.is_active ? 'Deactivate' : 'Activate'
       })
     },
 

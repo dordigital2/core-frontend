@@ -33,6 +33,10 @@ const UserService = {
     return ApiService.post('auth/users/activation/', { uid, token })
   },
 
+  toggleActivate(id) {
+    return ApiService.get(`users/${id}/toggle-activation/`)
+  },
+
   resetPassword(email) {
     return ApiService.post('auth/users/reset_password/', { email })
   },

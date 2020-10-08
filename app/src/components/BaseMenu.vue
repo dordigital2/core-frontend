@@ -52,7 +52,11 @@
         </template>
         <b-menu-item
           label="Mailchimp"
-          @click="goto('plugin-view', { query: { type: 'mailchimp' } })"
+          @click="goto('plugin-view', { params: { plugin: 'mailchimp' } })"
+        ></b-menu-item>
+        <b-menu-item
+          label="Woocommerce"
+          @click="goto('plugin-view', { params: { plugin: 'woocommerce' } })"
         ></b-menu-item>
       </b-menu-item>
     </b-menu-list>

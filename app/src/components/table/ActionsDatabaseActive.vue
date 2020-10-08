@@ -14,6 +14,7 @@
     />
 
     <ActionButtonArchive :idTable="props.id" />
+    
     <ActionButtonDelete
       v-if="props.user_permissions.indexOf('delete_table') != -1"
       dialogTitle="Do you wish to delete this table?"

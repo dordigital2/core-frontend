@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 import PluginService from '@/services/plugins'
 
 export default {
@@ -35,10 +35,15 @@ export default {
   data() {
     return {
       tasks: null,
-      type: this.$route.query.type,
       taskTable: {
         id: 'tasks',
-        default_fields: ['name', 'task_type', 'last_run_date', 'last_edit_date', 'last_edit_user.username'],
+        default_fields: [
+          'name',
+          'task_type',
+          'last_run_date',
+          'last_edit_date',
+          'last_edit_user.username'
+        ],
         fields: [
           {
             name: 'name',
@@ -60,25 +65,34 @@ export default {
           },
           {
             name: 'last_edit_user.username',
-            display_name: 'Last edit made by',
-
+            display_name: 'Last edit made by'
           }
         ]
       }
     }
   },
-  computed: mapState({
-    // tasks: state => state.data.tasks
-  }),
+  computed: {
+    type: function() {
+      return this.$route.params.plugin
+    }
+  },
   mounted() {
-    this.PluginService = new PluginService(this.type)
-    this.getTasks()
+    this.init()
   },
   methods: {
+    init() {
+      this.PluginService = new PluginService(this.type)
+      this.getTasks()
+    },
     getTasks() {
       this.PluginService.getTasks().then(response => {
         this.tasks = response
       })
+    }
+  },
+  watch: {
+    type() {
+      this.init()
     }
   }
 }

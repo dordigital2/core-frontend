@@ -205,19 +205,19 @@ const routes = [
           import(/* webpackChunkName: "user" */ '@/views/UserChangePass.vue')
       },
       {
-        path: 'plugin',
+        path: 'plugin/:plugin',
         name: 'plugin-view',
         component: () =>
           import(/* webpackChunkName: "plugin" */ '@/views/PluginView.vue')
       },
       {
-        path: 'plugin-task/:idTask',
+        path: 'plugin/:plugin/task/:idTask',
         name: 'plugin-task-view',
         component: () =>
           import(/* webpackChunkName: "plugin" */ '@/views/PluginTaskView.vue')
       },
       {
-        path: 'plugin-task/:idTask?',
+        path: 'plugin/:plugin/task-edit/:idTask?',
         name: 'plugin-task-edit',
         component: () =>
           import(/* webpackChunkName: "plugin" */ '@/views/PluginTaskEdit.vue')
