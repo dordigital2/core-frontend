@@ -24,7 +24,7 @@ export default {
     return {
       users: null,
       userTable: {
-        id: 0,
+        id: 'users',
         default_fields: ['username', 'first_name', 'last_name', 'email'],
         fields: [
           {

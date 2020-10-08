@@ -39,7 +39,7 @@
           <template v-else>
             {{
               getValue(
-                filterMode ? props.row : props.row.data,
+                props.row.data ? props.row.data : props.row,
                 column.name,
                 column.field_type
               )
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import ActionsPlugin from './ActionsPlugin'
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
 import ActionsUser from './ActionsUser'
@@ -82,6 +83,7 @@ import { mapState } from 'vuex'
 
 export default {
   components: {
+    ActionsPlugin,
     ActionsTable,
     ActionsTableEntity,
     ActionsUser,

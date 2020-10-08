@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ActionButtonGoto icon="eye-outline" :path="'filter-table-view/' + props.id" />
+    <ActionButtonGoto
+      icon="eye-outline"
+      :path="{ name: 'filter-table-view', params: { idTable: props.id } }"
+    />
 
     <ActionButtonGoto
       icon="square-edit-outline"

@@ -28,7 +28,7 @@
         @click="goto('users-view')"
       ></b-menu-item>
 
-      <b-menu-item icon="application-import" :active="isActive" expanded>
+      <b-menu-item icon="application-import" :active="isActive.import">
         <template #label="props">
           <span>Import data</span>
           <b-icon
@@ -39,6 +39,20 @@
         <b-menu-item
           label="Manual"
           @click="goto('table-import', { query: { manual: true } })"
+        ></b-menu-item>
+      </b-menu-item>
+
+      <b-menu-item icon="cog" :active="isActive.plugins">
+        <template #label="props">
+          <span>Plugins</span>
+          <b-icon
+            class="menu-tick"
+            :icon="props.expanded ? 'menu-up' : 'menu-down'"
+          ></b-icon>
+        </template>
+        <b-menu-item
+          label="Mailchimp"
+          @click="goto('plugin-view', { query: { type: 'mailchimp' } })"
         ></b-menu-item>
       </b-menu-item>
     </b-menu-list>
@@ -53,7 +67,10 @@ export default {
   },
   data() {
     return {
-      isActive: false
+      isActive: {
+        plugins: false,
+        import: false
+      }
     }
   },
   methods: {

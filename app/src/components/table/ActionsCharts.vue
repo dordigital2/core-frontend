@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ActionButtonGoto icon="eye-outline" :path="'chart-view/' + props.id" />
+    <ActionButtonGoto
+      icon="eye-outline"
+      :path="{ name: 'chart-view/', params: { idChart: props.id } }"
+    />
 
     <ActionButtonGoto
       icon="square-edit-outline"

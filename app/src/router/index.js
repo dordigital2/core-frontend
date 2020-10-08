@@ -104,7 +104,7 @@ const routes = [
           import(/* webpackChunkName: "database" */ '@/views/DatabaseView.vue')
       },
       {
-        path: 'table-view/:idTable',
+        path: 'table/:idTable',
         name: 'table-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableView.vue')
@@ -122,7 +122,7 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableEdit.vue')
       },
       {
-        path: 'table-view/:idTable/entity-view/:idEntity',
+        path: 'table/:idTable/entity/:idEntity',
         name: 'entity-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableEntityView.vue')
@@ -142,7 +142,7 @@ const routes = [
           )
       },
       {
-        path: 'table-view/:idTable/entity-edit/:idEntity?',
+        path: 'table/:idTable/entity-edit/:idEntity?',
         name: 'entity-edit',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableEntityEdit.vue')
@@ -154,7 +154,7 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/FilterView.vue')
       },
       {
-        path: 'filter-table-view/:idTable',
+        path: 'filter-table/:idTable',
         name: 'filter-table-view',
         component: () =>
           import(/* webpackChunkName: "table" */ '@/views/TableView.vue'),
@@ -175,7 +175,7 @@ const routes = [
           import(/* webpackChunkName: "chart" */ '@/views/ChartsView.vue')
       },
       {
-        path: 'chart-view/:idChart',
+        path: 'chart/:idChart',
         name: 'chart-view',
         component: () =>
           import(/* webpackChunkName: "chart" */ '@/views/ChartView.vue')
@@ -203,6 +203,24 @@ const routes = [
         name: 'change-password',
         component: () =>
           import(/* webpackChunkName: "user" */ '@/views/UserChangePass.vue')
+      },
+      {
+        path: 'plugin',
+        name: 'plugin-view',
+        component: () =>
+          import(/* webpackChunkName: "plugin" */ '@/views/PluginView.vue')
+      },
+      {
+        path: 'plugin-task/:idTask',
+        name: 'plugin-task-view',
+        component: () =>
+          import(/* webpackChunkName: "plugin" */ '@/views/PluginTaskView.vue')
+      },
+      {
+        path: 'plugin-task/:idTask?',
+        name: 'plugin-task-edit',
+        component: () =>
+          import(/* webpackChunkName: "plugin" */ '@/views/PluginTaskEdit.vue')
       },
       { path: '*', component: Page404 }
     ]

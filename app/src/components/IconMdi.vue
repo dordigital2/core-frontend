@@ -16,6 +16,7 @@ import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue'
 import Close from 'vue-material-design-icons/Close.vue'
 import CloseCircleOutline from 'vue-material-design-icons/CloseCircleOutline.vue'
+import Cog from 'vue-material-design-icons/Cog.vue'
 import DnsOutline from 'vue-material-design-icons/DnsOutline.vue'
 import Download from 'vue-material-design-icons/Download.vue'
 import EyeOutline from 'vue-material-design-icons/EyeOutline.vue'
@@ -45,6 +46,7 @@ export default {
     ChevronRight,
     Close,
     CloseCircleOutline,
+    Cog,
     DnsOutline,
     Download,
     EyeOutline,
