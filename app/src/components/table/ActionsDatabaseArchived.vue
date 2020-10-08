@@ -1,10 +1,15 @@
 <template>
   <div>
-    <ActionButtonGoto icon="eye-outline" :path="'table-view/' + props.id" />
+    <ActionButtonGoto
+      icon="eye-outline"
+      :path="{ name: 'table-view', params: { idTable: props.id } }"
+    />
+    
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="'table-edit/' + props.id"
+      :path="{ name: 'table-edit', params: { idTable: props.id } }"
     />
+    
     <ActionButtonDelete
       dialogTitle="Do you wish to delete this table?"
       dialogMessage="This operation permanently removes all the entries of this table. Please check the data before proceeding."

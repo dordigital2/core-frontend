@@ -2,12 +2,12 @@
   <div>
     <ActionButtonGoto
       icon="eye-outline"
-      :path="{ name: 'chart-view/', params: { idChart: props.id } }"
+      :path="{ name: 'chart-view', params: { idChart: props.id } }"
     />
 
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="'chart-edit/' + props.id"
+      :path="{ name: 'chart-edit', params: { idChar: props.id } }"
     />
 
     <ActionButtonDelete

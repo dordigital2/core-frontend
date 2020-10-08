@@ -7,7 +7,7 @@
 
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="'filter-edit/' + props.id"
+      :path="{ name: 'filter-edit', params: { idTable: props.id } }"
     />
 
     <ActionButtonDelete

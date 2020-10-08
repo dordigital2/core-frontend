@@ -1,12 +1,16 @@
 <template>
   <div>
     <!-- <pre>{{props.user_permissions}}</pre> -->
-    <ActionButtonGoto v-if="props.user_permissions.indexOf('view_table') != -1" icon="eye-outline" :path="'table-view/' + props.id" />
+    <ActionButtonGoto
+      v-if="props.user_permissions.indexOf('view_table') != -1"
+      icon="eye-outline"
+      :path="{ name: 'table-view', params: { idTable: props.id } }"
+    />
 
     <ActionButtonGoto
       v-if="props.user_permissions.indexOf('change_table') != -1"
       icon="square-edit-outline"
-      :path="'table-edit/' + props.id"
+      :path="{ name: 'table-edit', params: { idTable: props.id } }"
     />
 
     <ActionButtonArchive :idTable="props.id" />

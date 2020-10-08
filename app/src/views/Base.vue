@@ -2,7 +2,7 @@
   <div class="container is-fluid">
     <nav class="navbar">
       <div class="navbar-brand">
-        <router-link to="/app/dashboard" class="navbar-item">
+        <router-link :to="{ name: 'dashboard' }" class="navbar-item">
           <h2>PAUL</h2>
         </router-link>
       </div>

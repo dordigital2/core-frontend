@@ -9,12 +9,12 @@
 
       <div class="navbar-menu">
         <div class="navbar-end">
-          <router-link to="/account/forgot-password" class="navbar-item"
+          <router-link :to="{ name: 'forgot-password' }" class="navbar-item"
             >Forgot password?</router-link
           >
 
           <div class="navbar-item">
-            <router-link to="/account/login" class="button is-primary"
+            <router-link :to="{ name: 'login' }" class="button is-primary"
               >Log in</router-link
             >
           </div>
@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '../assets/style/views/AccountBase';
+@import '../assets/style/views/AccountBase';
 </style>
