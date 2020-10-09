@@ -42,7 +42,7 @@ export default {
           {
             name: 'last_edit_date',
             sortable: true,
-            field_type: 'date',
+            field_type: 'datetime',
             display_name: 'Last edit'
           },
           {
@@ -72,7 +72,7 @@ export default {
           {
             name: 'last_edit_date',
             sortable: true,
-            field_type: 'date',
+            field_type: 'datetime',
             display_name: 'Archiving date'
           },
           {
