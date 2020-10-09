@@ -46,7 +46,7 @@ export default {
       loading: false,
       taskTable: {
         id: 'tasks',
-        default_fields: ['details', 'date', 'user.username', 'success'],
+        default_fields: ['details', 'date', 'user.username', 'status', 'success'],
         fields: [
           {
             name: 'details',
@@ -66,10 +66,15 @@ export default {
             display_name: 'User'
           },
           {
+            name: 'status',
+            display_name: 'Status'
+          },
+          {
             name: 'success',
-            display_name: 'Status',
+            display_name: 'Result',
             component: 'FieldStatusTag'
           }
+          
         ]
       }
     }
