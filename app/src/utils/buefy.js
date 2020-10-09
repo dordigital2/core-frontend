@@ -12,6 +12,7 @@ import {
   Icon,
   Loading,
   Menu,
+  Message,
   Modal,
   Pagination,
   Radio,
@@ -100,6 +101,7 @@ const MyBuefy = {
     Vue.use(Input)
     Vue.use(Loading)
     Vue.use(Menu)
+    Vue.use(Message)
     Vue.use(Modal)
     Vue.use(Pagination)
     Vue.use(Radio)

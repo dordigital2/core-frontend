@@ -1,79 +1,115 @@
 <template>
-  <div>
-    <BaseTitle
-      :title="`Manage Plug-in ${$route.query.type}`"
-      :hasBackButton="false"
-    />
+  <div v-if="taskOptions">
+    <BaseTitle :title="`Task edit`" />
 
-    <BaseCard title="Charts" v-if="charts"
-      ><template #actions>
-        <router-link :to="{ name: 'chart-edit' }" class="button is-primary">
-          Add new chart
-        </router-link>
-      </template>
+    <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
+      <BaseCard title="Task settings"
+        ><template #footer>
+          <b-button class="is-primary" @click="passes(save)">
+            Save changes
+          </b-button>
+        </template>
 
-      <BaseTable :data="charts.results" :columns="columns" />
-    </BaseCard>
+        <template #default>
+          <div class="card-container card-form">
+            <div class="columns">
+              <div class="column is-6">
+                <VField label="Name">
+                  <b-input v-model="model.name" />
+                </VField>
+
+                <VField label="Task type">
+                  <b-select v-model="model.task_type" expanded>
+                    <option
+                      v-for="(option, key) in taskOptions.task_type.choices"
+                      :key="key"
+                      :value="option.value"
+                      v-text="option.display_name"
+                    />
+                  </b-select>
+                </VField>
+
+                <template v-if="model.task_type == 'segmentation'">
+                  <VField label="Filtered view">
+                    <b-select v-model="model.segmentation_task.filtered_view" expanded>
+                      <option
+                        v-for="(view, key) in views"
+                        :key="key"
+                        :value="view.id"
+                        v-text="view.data.name"
+                      />
+                    </b-select>
+                  </VField>
+
+                  <VField label="Tag">
+                    <b-input v-model="model.segmentation_task.tag" />
+                  </VField>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </BaseCard>
+    </ValidationObserver>
   </div>
 </template>
 
 <script>
+import PluginService from '@/services/plugins'
+import { ToastService } from '@/services/buefy'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'PluginTask',
+  name: 'PluginTaskEdit',
   components: {},
   data() {
     return {
-      columns: [
-        {
-          name: 'name',
-          sortable: true,
-          display_name: 'Chart name'
-        },
-        {
-          name: 'creation_date',
-          field_type: 'date',
-          display_name: 'Creation date'
-        },
-        {
-          name: 'table_list',
-          display_name: 'Table',
-          component: 'FieldTagList',
-          props: {
-            name: 'table'
-          }
-        },
-        {
-          name: 'owner.username',
-          display_name: 'Created by'
-        },
-        {
-          name: 'show_dashboard',
-          display_name: 'Show in dashboard',
-          component: 'FieldCheckbox',
-          centered: true,
-          props: {
-            type: 'charts',
-            action: 'add-to-dashboard'
-          }
-        },
-        {
-          name: 'actions',
-          display_name: ' ',
-          component: 'ActionsCharts',
-          custom_class: 'actions',
-          sticky: true
+      model: {
+        name: '',
+        task_type: null,
+        segmentation_task: {
+          filtered_view: null,
+          tag: ''
         }
-      ]
+      },
+      idTask: this.$route.params.idTask
     }
   },
-  computed: mapState({
-    charts: state => state.data.charts
-  }),
+  computed: {
+    ...mapState('plugin', {
+      plugin: state => state.plugin,
+      task: state => state.task,
+      taskOptions: state => state.taskOptions
+    }),
+    ...mapState('data', {
+      views: state => state.tableViews
+    })
+  },
   mounted() {
-    if (!this.charts) this.$store.dispatch('data/getCharts')
-    this.$store.commit('data/setChart', null)
+    this.$store.commit('plugin/setPlugin', this.$route.params.plugin)
+    this.PluginService = new PluginService(this.$route.params.plugin)
+
+    if (this.idTask)
+      this.$store.dispatch('plugin/getTask', this.idTask).then(() => {
+        this.model = { ...this.task }
+      })
+
+    this.$store.dispatch('plugin/getTaskOptions')
+    this.$store.dispatch('data/getTableViews', true)
+  },
+  methods: {
+    save() {
+      if (this.idTask)
+        this.PluginService.putTask(this.idTask, this.model).then(() => {
+          ToastService.open('Task updated')
+          this.$router.go(-1)
+        })
+      else
+        this.PluginService.postTask(this.model).then(() => {
+          ToastService.open('Task created')
+          this.$router.go(-1)
+        })
+    }
   }
 }
 </script>

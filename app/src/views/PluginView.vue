@@ -1,18 +1,35 @@
 <template>
   <div>
     <BaseTitle
-      :title="`Manage plug-in ${$route.query.type}`"
+      :title="`Manage ${$route.params.plugin} plug-in`"
       :hasBackButton="false"
+    />
+
+    <BaseForm
+      v-if="active.settings && options && settings"
+      title="Settings"
+      :options="options"
+      v-bind:entity.sync="settings"
+      @save="saveSettings"
     />
 
     <BaseCard title="Tasks" v-if="tasks"
       ><template #actions>
-        <router-link
-          :to="{ name: 'plugin-task-edit' }"
-          class="button is-primary"
-        >
-          Add new task
-        </router-link>
+        <div class="buttons">
+          <router-link
+            :to="{ name: 'plugin-task-edit' }"
+            class="button is-primary"
+          >
+            Add new task
+          </router-link>
+
+          <b-button
+            class="is-size-4"
+            v-if="activeUser && activeUser.is_admin"
+            @click="active.settings = !active.settings"
+            ><b-icon icon="cog"></b-icon
+          ></b-button>
+        </div>
       </template>
 
       <BaseTableAsync
@@ -26,14 +43,20 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 import PluginService from '@/services/plugins'
+import BaseForm from '@/components/form/BaseForm'
 
 export default {
   name: 'PluginView',
-  components: {},
+  components: { BaseForm },
   data() {
     return {
+      active: {
+        settings: false
+      },
+      settings: null,
+      options: null,
       tasks: null,
       taskTable: {
         id: 'tasks',
@@ -56,12 +79,12 @@ export default {
           {
             name: 'last_run_date',
             display_name: 'Last run date',
-            field_type: 'date'
+            field_type: 'datetime'
           },
           {
             name: 'last_edit_date',
             display_name: 'Last edit date',
-            field_type: 'date'
+            field_type: 'datetime'
           },
           {
             name: 'last_edit_user.username',
@@ -72,6 +95,9 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      activeUser: state => state.user
+    }),
     type: function() {
       return this.$route.params.plugin
     }
@@ -81,8 +107,26 @@ export default {
   },
   methods: {
     init() {
+      this.$store.commit('plugin/setPlugin', this.type)
+      
       this.PluginService = new PluginService(this.type)
       this.getTasks()
+
+      this.getSettings()
+    },
+    getSettings() {
+      this.PluginService.getSettingsOptions().then(response => {
+        this.options = response
+      })
+
+      this.PluginService.getSettings().then(response => {
+        this.settings = response
+      })
+    },
+    saveSettings() {
+      this.PluginService.saveSettings(this.settings).then(() => {
+        this.active.settings = false
+      })
     },
     getTasks() {
       this.PluginService.getTasks().then(response => {

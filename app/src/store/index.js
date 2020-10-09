@@ -6,6 +6,7 @@ import UserService from '@/services/user'
 import TokenService from '@/services/storage'
 
 import data from './modules/data'
+import plugin from './modules/plugin'
 
 Vue.use(Vuex)
 
@@ -68,6 +69,7 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    data
+    data,
+    plugin
   }
 })

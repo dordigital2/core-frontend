@@ -75,6 +75,8 @@ import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
 import ActionsUser from './ActionsUser'
 import FieldOwnerLink from './FieldOwnerLink'
+import FieldStatusTag from './FieldStatusTag'
+import FieldDetail from './FieldDetail'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -87,7 +89,9 @@ export default {
     ActionsTable,
     ActionsTableEntity,
     ActionsUser,
-    FieldOwnerLink
+    FieldDetail,
+    FieldOwnerLink,
+    FieldStatusTag
   },
   data() {
     return {

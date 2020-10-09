@@ -95,8 +95,8 @@ const ImportService = {
 //
 //
 const TableViewService = {
-  getTableViews() {
-    return ApiService.get('filters/')
+  getTableViews(getAll) {
+    return ApiService.get('filters/' + (getAll ? 'all' : ''))
   },
 
   postTableView(data) {

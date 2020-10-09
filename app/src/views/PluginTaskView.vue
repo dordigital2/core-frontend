@@ -1,79 +1,104 @@
 <template>
   <div>
     <BaseTitle
-      :title="`Manage Plug-in ${$route.query.type}`"
+      :title="`Plug-in task ${$route.params.plugin}`"
       :hasBackButton="false"
     />
 
-    <BaseCard title="Charts" v-if="charts"
-      ><template #actions>
-        <router-link :to="{ name: 'chart-edit' }" class="button is-primary">
-          Add new chart
-        </router-link>
+    <BaseCard :title="`Task: ${task.name}`" v-if="task">
+      <b-loading :is-full-page="false" v-model="loading" />
+
+      <template #actions>
+        <div class="buttons">
+          <router-link
+            :to="{ name: 'plugin-task-edit', params: { idTask: task.id } }"
+            class="button is-dark"
+          >
+            Edit
+          </router-link>
+
+          <b-button type="is-success" @click="runTask">Run</b-button>
+        </div>
       </template>
 
-      <BaseTable :data="charts.results" :columns="columns" />
+      <BaseTableAsync
+        :table="taskTable"
+        :tableEntries="log"
+        tableActionsComponent="ActionsPlugin"
+        @update="getLog"
+        filterMode
+      />
     </BaseCard>
   </div>
 </template>
 
 <script>
+import PluginService from '@/services/plugins'
 import { mapState } from 'vuex'
 
 export default {
-  name: 'PluginTask',
+  name: 'PluginTaskView',
   components: {},
   data() {
     return {
-      columns: [
-        {
-          name: 'name',
-          sortable: true,
-          display_name: 'Chart name'
-        },
-        {
-          name: 'creation_date',
-          field_type: 'date',
-          display_name: 'Creation date'
-        },
-        {
-          name: 'table_list',
-          display_name: 'Table',
-          component: 'FieldTagList',
-          props: {
-            name: 'table'
+      idTask: this.$route.params.idTask,
+      log: null,
+      loading: false,
+      taskTable: {
+        id: 'tasks',
+        default_fields: ['details', 'date', 'user.username', 'success'],
+        fields: [
+          {
+            name: 'details',
+            display_name: 'Details',
+            component: 'FieldDetail',
+            props: {
+              idTask: this.idTask
+            }
+          },
+          {
+            name: 'date',
+            display_name: 'Run date',
+            field_type: 'datetime'
+          },
+          {
+            name: 'user.username',
+            display_name: 'User'
+          },
+          {
+            name: 'success',
+            display_name: 'Status',
+            component: 'FieldStatusTag'
           }
-        },
-        {
-          name: 'owner.username',
-          display_name: 'Created by'
-        },
-        {
-          name: 'show_dashboard',
-          display_name: 'Show in dashboard',
-          component: 'FieldCheckbox',
-          centered: true,
-          props: {
-            type: 'charts',
-            action: 'add-to-dashboard'
-          }
-        },
-        {
-          name: 'actions',
-          display_name: ' ',
-          component: 'ActionsCharts',
-          custom_class: 'actions',
-          sticky: true
-        }
-      ]
+        ]
+      }
     }
   },
-  computed: mapState({
-    charts: state => state.data.charts
+  computed: mapState('plugin', {
+    plugin: state => state.plugin,
+    task: state => state.task
   }),
   mounted() {
-    if (!this.charts) this.$store.dispatch('data/getCharts')
-    this.$store.commit('data/setChart', null)
+    this.$store.commit('plugin/setPlugin', this.$route.params.plugin)
+    this.$store.dispatch('plugin/getTask', this.idTask)
+
+    this.PluginService = new PluginService(this.$route.params.plugin)
+    this.getLog()
+  },
+  methods: {
+    getLog(query) {
+      this.PluginService.getTaskResults(this.idTask, query).then(response => {
+        this.log = response
+      })
+    },
+    runTask() {
+      this.loading = true
+
+      this.PluginService.runTask(this.idTask).then(() => {
+        this.getLog()
+        this.loading = false
+      })
+    }
   }
 }
 </script>
