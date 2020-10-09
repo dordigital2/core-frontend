@@ -1,7 +1,10 @@
 <template>
   <div>
-    <b-button @click="showDetail" class="is-size-3 button-detail"
-      ><b-icon icon="menu-down"></b-icon
+    <b-button
+      @click="showDetail"
+      class="is-size-3 button-detail"
+      :loading="loading"
+      ><b-icon :icon="!active ? 'menu-down' : 'menu-up'"></b-icon
     ></b-button>
 
     <b-message
@@ -29,7 +32,8 @@ export default {
     return {
       active: false,
       detail: null,
-      idTask: this.$route.params.idTask
+      idTask: this.$route.params.idTask,
+      loading: false
     }
   },
   mounted() {
@@ -38,15 +42,19 @@ export default {
   methods: {
     showDetail() {
       this.active = !this.active
-
+      
       !this.detail && this.getDetail()
     },
     getDetail() {
-      this.PluginService.getTaskDetail(this.idTask, this.props.id).then(
-        response => {
+      this.loading = true
+      this.PluginService.getTaskDetail(this.idTask, this.props.id)
+        .then(response => {
           this.detail = response.stats.details
-        }
-      )
+          this.loading = false
+        })
+        .catch(() => {
+          this.loading = true
+        })
     }
   }
 }
@@ -57,7 +65,6 @@ export default {
   position: absolute;
   background-color: transparent;
   border: 0;
-  box-shadow: none;
-  outline: none;
+  box-shadow: none !important;
 }
 </style>
