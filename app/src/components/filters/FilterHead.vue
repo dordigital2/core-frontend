@@ -108,7 +108,7 @@ export default {
       const __fields = this.$route.query.__fields
       const query = { ...(__fields && { __fields }) }
 
-      this.$router.push({ query }).catch(() => {})
+      this.$router.replace({ query }).catch(() => {})
       this.$emit('update', query)
     },
 
@@ -141,7 +141,7 @@ export default {
       const newQuery = Object.assign({ ...(__fields && { __fields }) }, query)
 
       this.$router
-        .push({
+        .replace({
           query: newQuery
         })
         .catch(() => {})

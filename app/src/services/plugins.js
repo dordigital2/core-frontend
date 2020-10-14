@@ -6,8 +6,9 @@ class PluginService {
     this.plugin = plugin ? plugin + '/' : ''
   }
 
-  getTasks() {
-    return ApiService.get(`${this.plugin}tasks/`)
+  getTasks(query) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`${this.plugin}tasks/${queryString}`)
   }
 
   createTask(data) {
@@ -19,7 +20,9 @@ class PluginService {
   }
 
   getTaskDetail(idTask, idLog) {
-    return ApiService.get(`${this.plugin}tasks/${idTask}/task-results/${idLog}/`)
+    return ApiService.get(
+      `${this.plugin}tasks/${idTask}/task-results/${idLog}/`
+    )
   }
 
   getTaskOptions() {

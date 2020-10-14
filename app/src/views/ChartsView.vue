@@ -9,7 +9,7 @@
         </router-link>
       </template>
 
-      <BaseTable :data="charts.results" :columns="columns" />
+      <BaseTable :data="charts.results" :fields="fields" />
     </BaseCard>
   </div>
 </template>
@@ -22,10 +22,11 @@ export default {
   components: {},
   data() {
     return {
-      columns: [
+      fields: [
         {
           name: 'name',
-          sortable: true,
+          component: 'FieldRouterLink',
+          props: { route: 'chart-view', param: 'idChart' },
           display_name: 'Chart name'
         },
         {
@@ -34,12 +35,9 @@ export default {
           display_name: 'Creation date'
         },
         {
-          name: 'table_list',
+          name: 'table',
           display_name: 'Table',
-          component: 'FieldTagList',
-          props: {
-            name: 'table'
-          }
+          component: 'FieldTagList'
         },
         {
           name: 'owner.username',

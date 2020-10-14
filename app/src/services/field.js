@@ -1,4 +1,5 @@
 import { Parser } from '@/utils/helpers'
+import getNestedObj from 'lodash.get'
 
 const FieldComponentMap = {
   enum: 'VSelect',
@@ -66,6 +67,18 @@ const FieldService = {
     return FieldFilterComponentMap[type]
       ? FieldFilterComponentMap[type]
       : 'FilterText'
+  },
+
+  getSortFunction(field) {
+    return (a, b, isAsc) => {
+      let x = getNestedObj(a.data, field)
+      let y = getNestedObj(b.data, field)
+
+      const order = isAsc ? 1 : -1
+
+      if (x === y) return 0
+      else return x > y ? order : -order
+    }
   }
 }
 

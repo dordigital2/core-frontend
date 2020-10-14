@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseTitle title="User management" />
+    <BaseTitle title="User management" :hasBackButton="false" />
 
     <BaseCard title="Users on the platform" v-if="users">
       <template #default>
@@ -29,6 +29,8 @@ export default {
         fields: [
           {
             name: 'username',
+            component: 'FieldRouterLink',
+            props: { route: 'user-profile', param: 'idUser' },
             display_name: 'Username'
           },
           {

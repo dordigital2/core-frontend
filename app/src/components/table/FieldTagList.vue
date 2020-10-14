@@ -1,6 +1,10 @@
 <template>
   <div class="tags">
-    <b-tag v-for="(item, index) in tags" :key="index">{{ item }}</b-tag>
+    <b-tag
+      v-for="(item, index) in Array.isArray(value) ? value : [value]"
+      :key="index"
+      >{{ item }}</b-tag
+    >
   </div>
 </template>
 
@@ -8,15 +12,8 @@
 export default {
   components: {},
   props: {
-    name: String,
-    props: Object
-  },
-  data() {
-    return {
-      tags: Array.isArray(this.props.data[this.name])
-        ? this.props.data[this.name]
-        : [this.props.data[this.name]]
-    }
+    props: Object,
+    value: null
   }
 }
 </script>

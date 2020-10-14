@@ -1,9 +1,6 @@
 <template>
   <div>
-    <BaseTitle
-      :title="`Plug-in task ${$route.params.plugin}`"
-      :hasBackButton="false"
-    />
+    <BaseTitle :title="`Plug-in task ${$route.params.plugin}`" />
 
     <BaseCard :title="`Task: ${task.name}`" v-if="task">
       <b-loading :is-full-page="false" v-model="loading" />
@@ -46,15 +43,19 @@ export default {
       loading: false,
       taskTable: {
         id: 'tasks',
-        default_fields: ['details', 'date', 'user.username', 'status', 'success'],
+        default_fields: [
+          'details',
+          'date',
+          'user.username',
+          'status',
+          'success'
+        ],
         fields: [
           {
             name: 'details',
             display_name: 'Details',
-            component: 'FieldDetail',
-            props: {
-              idTask: this.idTask
-            }
+            component: 'FieldPluginTaskDetail',
+            props: { idTask: this.idTask }
           },
           {
             name: 'date',
@@ -74,7 +75,6 @@ export default {
             display_name: 'Result',
             component: 'FieldStatusTag'
           }
-          
         ]
       }
     }

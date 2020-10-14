@@ -1,22 +1,29 @@
 <template>
   <div>
-    <b-table v-if="data && columns" :data="data" scrollable>
+    <b-table v-if="data && fields" :data="data" scrollable>
       <b-table-column
-        v-for="(column, index) in columns"
+        v-for="(column, index) in fields"
         :key="`${column.name}-${index}`"
         v-bind="{
           label: column.display_name || column.name,
+          field: column.name,
           cellClass: column.custom_class,
           headerClass: column.custom_class,
           sticky: column.sticky,
-          centered: column.centered
+          centered: column.centered,
+          sortable: column.sortable !== false
         }"
+        :custom-sort="customSort(column.name)"
       >
         <template v-slot="props">
           <template v-if="column.component">
             <component
               :is="column.component"
-              v-bind="{ props: props.row, ...column.props }"
+              v-bind="{
+                props: props.row,
+                ...column.props,
+                value: getValue(props.row.data, column.name, column.field_type)
+              }"
             ></component>
           </template>
 
@@ -45,6 +52,7 @@ import ActionsTable from './ActionsTable'
 import FieldOwnerLink from './FieldOwnerLink'
 import FieldTagList from './FieldTagList'
 import FieldCheckbox from './FieldCheckbox'
+import FieldRouterLink from './FieldRouterLink'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -58,22 +66,24 @@ export default {
     ActionsTable,
     FieldOwnerLink,
     FieldTagList,
-    FieldCheckbox
+    FieldCheckbox,
+    FieldRouterLink
   },
   data() {
     return {}
   },
   props: {
-    columns: Array,
+    fields: Array,
     data: Array
   },
   methods: {
     getValue(row, field, type) {
       // console.log(row, field, type)
       const value = getNestedObj(row, field)
-      if (value != null) return FieldService.getParsedValue(value, type)
-
-      return null
+      return value != null ? FieldService.getParsedValue(value, type) : null
+    },
+    customSort(field) {
+      return FieldService.getSortFunction(field)
     }
   }
 }

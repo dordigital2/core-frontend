@@ -11,14 +11,14 @@
 
       <BaseTable
         :data="database.active_tables"
-        :columns="columns.active_tables"
+        :fields="fields.active_tables"
       />
     </BaseCard>
 
     <BaseCard title="Archived tables">
       <BaseTable
         :data="database.archived_tables"
-        :columns="columns.archived_tables"
+        :fields="fields.archived_tables"
       />
     </BaseCard>
   </div>
@@ -32,27 +32,25 @@ export default {
   components: {},
   data() {
     return {
-      columns: {
+      fields: {
         active_tables: [
           {
             name: 'name',
-            sortable: true,
+            component: 'FieldRouterLink',
+            props: { route: 'table-view', param: 'idTable' },
             display_name: 'Table name'
           },
           {
             name: 'last_edit_date',
-            sortable: true,
             field_type: 'datetime',
             display_name: 'Last edit'
           },
           {
             name: 'entries',
-            sortable: true,
             display_name: 'Entries'
           },
           {
             name: 'last_edit_user.username',
-            sortable: true,
             display_name: 'Last edit made by'
           },
           {
@@ -66,23 +64,21 @@ export default {
         archived_tables: [
           {
             name: 'name',
-            sortable: true,
+            component: 'FieldRouterLink',
+            props: { route: 'table-view', param: 'idTable' },
             display_name: 'Table name'
           },
           {
             name: 'last_edit_date',
-            sortable: true,
             field_type: 'datetime',
             display_name: 'Archiving date'
           },
           {
             name: 'entries',
-            sortable: true,
             display_name: 'Entries'
           },
           {
             name: 'owner.username',
-            sortable: true,
             display_name: 'Archived by',
             component: 'FieldOwnerLink'
           },

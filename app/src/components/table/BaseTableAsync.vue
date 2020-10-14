@@ -23,7 +23,7 @@
           cellClass: column.custom_class,
           headerClass: column.custom_class,
           sticky: column.sticky,
-          sortable: column.sortable,
+          sortable: column.sortable !== false,
           numeric: ['int', 'float'].indexOf(column.field_type) != -1
         }"
       >
@@ -31,7 +31,15 @@
           <template v-if="column.component">
             <component
               :is="column.component"
-              v-bind="{ props: props.row, ...column.props }"
+              v-bind="{
+                props: props.row,
+                ...column.props,
+                value: getValue(
+                  props.row.data ? props.row.data : props.row,
+                  column.name,
+                  column.field_type
+                )
+              }"
               @update="$emit('update', query)"
             ></component>
           </template>
@@ -74,9 +82,10 @@ import ActionsPlugin from './ActionsPlugin'
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
 import ActionsUser from './ActionsUser'
+import FieldPluginTaskDetail from './FieldPluginTaskDetail'
 import FieldOwnerLink from './FieldOwnerLink'
+import FieldRouterLink from './FieldRouterLink'
 import FieldStatusTag from './FieldStatusTag'
-import FieldDetail from './FieldDetail'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -89,8 +98,9 @@ export default {
     ActionsTable,
     ActionsTableEntity,
     ActionsUser,
-    FieldDetail,
+    FieldPluginTaskDetail,
     FieldOwnerLink,
+    FieldRouterLink,
     FieldStatusTag
   },
   data() {

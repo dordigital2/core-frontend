@@ -3,7 +3,7 @@
     <BaseTitle :title="'Entity view'" />
 
     <BaseCard :title="`Table – ${table.name}`">
-      <BaseTable :data="[entity]" :columns="table.fields" />
+      <BaseTable :data="[entity]" :fields="table.fields" />
     </BaseCard>
 
     <template v-if="tableLinks">

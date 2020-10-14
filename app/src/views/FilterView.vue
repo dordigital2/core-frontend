@@ -9,7 +9,7 @@
         </router-link>
       </template>
 
-      <BaseTable :data="tableViews.results" :columns="columns" />
+      <BaseTable :data="tableViews.results" :fields="fields" />
     </BaseCard>
   </div>
 </template>
@@ -22,10 +22,11 @@ export default {
   components: {},
   data() {
     return {
-      columns: [
+      fields: [
         {
           name: 'name',
-          sortable: true,
+          component: 'FieldRouterLink',
+          props: { route: 'filter-table-view', param: 'idTable' },
           display_name: 'View name'
         },
         {
@@ -36,10 +37,7 @@ export default {
         {
           name: 'tables',
           display_name: 'Tables',
-          component: 'FieldTagList',
-          props: {
-            name: 'tables'
-          }
+          component: 'FieldTagList'
         },
         {
           name: 'owner.username',

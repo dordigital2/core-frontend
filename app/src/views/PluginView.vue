@@ -70,6 +70,8 @@ export default {
         fields: [
           {
             name: 'name',
+            component: 'FieldRouterLink',
+            props: { route: 'plugin-task-view', param: 'idTask' },
             display_name: 'Task name'
           },
           {
@@ -108,7 +110,8 @@ export default {
   methods: {
     init() {
       this.$store.commit('plugin/setPlugin', this.type)
-      
+      this.$store.commit('plugin/setTask', null)
+
       this.PluginService = new PluginService(this.type)
       this.getTasks()
 
@@ -128,8 +131,8 @@ export default {
         this.active.settings = false
       })
     },
-    getTasks() {
-      this.PluginService.getTasks().then(response => {
+    getTasks(query) {
+      this.PluginService.getTasks(query).then(response => {
         this.tasks = response
       })
     }
