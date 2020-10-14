@@ -1,11 +1,11 @@
 <template>
-  <div class="modal-card" style="width: 960px">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Choose which columns to display</p>
-      <button type="button" class="delete" @click="$emit('close')" />
-    </header>
+  <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
+    <div class="modal-card" style="width: 960px">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Choose which columns to display</p>
+        <button type="button" class="delete" @click="$emit('close')" />
+      </header>
 
-    <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <section class="modal-card-body">
         <VField label="Selected columns" rules="">
           <b-taginput v-model="selectedColumns" type="is-dark" :maxtags="0"
@@ -21,7 +21,8 @@
               <a @click.prevent="selectAll">Select all</a> |
               <a @click.prevent="selectNone">Select none</a>
             </div>
-            
+            <br />
+
             <div class="checkbox-list is-2">
               <b-checkbox
                 v-for="(field, index) in table.fields"
@@ -34,14 +35,6 @@
             </div>
           </div>
         </VField>
-
-        <VField label="Column list" rules="required">
-          <FilterEnum
-            v-model="selectedColumns"
-            :choices="table.fields.map(e => e.display_name)"
-            autoupdate
-          />
-        </VField>
       </section>
       <footer class="modal-card-foot">
         <b-button type="is-dark is-outlined" @click="$emit('close')">
@@ -52,8 +45,8 @@
         >
         <b-button type="is-dark" @click="passes(submit)">Apply</b-button>
       </footer>
-    </ValidationObserver>
-  </div>
+    </div>
+  </ValidationObserver>
 </template>
 
 <script>
@@ -90,6 +83,12 @@ export default {
           this.$emit('close')
           this.$emit('update')
         })
+    },
+    selectAll() {
+      this.selectedColumns = this.table.fields.map(e => e.name)
+    },
+    selectNone() {
+      this.selectedColumns = []
     },
     save() {
       this.loading = true
