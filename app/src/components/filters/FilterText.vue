@@ -1,10 +1,10 @@
 <template>
   <div>
-    <slot v-bind="{ update }"></slot>
-
     <VField label="Enter value" rules="required">
       <b-input v-model="innerValue" />
     </VField>
+
+    <slot v-bind="{ update }"></slot>
   </div>
 </template>
 

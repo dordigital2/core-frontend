@@ -1,7 +1,5 @@
 <template>
   <div>
-    <slot v-bind="{ update }"></slot>
-
     <VField label="Choose filter mode" rules="required">
       <b-select v-model="innerValue.type">
         <option
@@ -20,6 +18,8 @@
     <VField label="Enter end date" v-if="innerValue.type == 'interval'" rules="required">
       <VDate v-model="innerValue.values[1]" />
     </VField>
+
+    <slot v-bind="{ update }"></slot>
   </div>
 </template>
 

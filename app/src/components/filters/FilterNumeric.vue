@@ -1,7 +1,5 @@
 <template>
   <div>
-    <slot v-bind="{ update }"></slot>
-
     <VField label="Choose filter mode" rules="required">
       <b-select v-model="innerValue.type">
         <option
@@ -17,9 +15,11 @@
       <b-input type="number" v-model.number="innerValue.values[0]" />
     </VField>
 
-    <VField label="Enter end value" v-if="innerValue.type == 'interval'">
+    <VField label="Enter end value" rules="required" v-if="innerValue.type == 'interval'">
       <b-input type="number" v-model.number="innerValue.values[1]" />
     </VField>
+
+    <slot v-bind="{ update }"></slot>
   </div>
 </template>
 

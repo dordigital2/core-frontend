@@ -4,17 +4,16 @@
       <p class="modal-card-title">
         Filter options
         <span class="info"
-          >Always click on <b>Set filters</b> after you made your selection.</span
+          >Always click on <b>Set filters</b> after you made your
+          selection.</span
         >
       </p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
 
     <section class="modal-card-body" v-if="table">
-      <div class="columns">
+      <div class="columns is-gapless">
         <div class="column">
-          <p class="has-text-weight-semibold is-size-6">Filter list</p>
-
           <b-tabs
             v-model="activeTab"
             class="filter-tabs"
@@ -45,14 +44,14 @@
                   <template #default="props">
                     <div class="tab-content-head">
                       <div class="buttons">
-                        <b-button type="is-dark" @click="passes(props.update)"
-                          >Set filter</b-button
-                        >
                         <b-button
                           type="is-dark is-outlined"
                           :disabled="checkDisabled(field)"
                           @click="removeFilter(field.name)"
                           >Clear filter</b-button
+                        >
+                        <b-button type="is-dark" @click="passes(props.update)"
+                          >Set filter</b-button
                         >
                       </div>
                     </div>
@@ -62,16 +61,19 @@
             </b-tab-item>
           </b-tabs>
         </div>
-        <div class="column is-3 filter-display-container">
-          <p class="has-text-weight-semibold is-size-6">Selected filters</p>
-          <br />
 
-          <FilterDisplay
-            :fields="table.fields"
-            :filterData="filterData"
-            isEditable
-            @remove="removeFilter"
-          />
+        <div class="column is-3 is-scrollable">
+          <div class="cell">
+            <p class="has-text-weight-semibold is-size-6">Selected filters</p>
+            <br />
+
+            <FilterDisplay
+              :fields="table.fields"
+              :filterData="filterData"
+              isEditable
+              @remove="removeFilter"
+            />
+          </div>
         </div>
       </div>
     </section>
@@ -166,8 +168,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$cell-padding: 18px 24px;
+
 .modal-card {
-  height: 60vh;
+  @include desktop {
+    height: 60vh;
+  }
 
   .modal-card-head {
     border-bottom: 1px solid $grey-lighter;
@@ -178,8 +184,23 @@ export default {
   }
 
   .modal-card-body {
-    padding: 15px 24px 0;
+    padding: 0;
     display: flex;
+    overflow: hidden;
+
+    .cell {
+      padding: $cell-padding;
+
+      &.cell-title {
+        background-color: $white;
+        position: sticky;
+        top: 0;
+      }
+    }
+
+    .is-scrollable {
+      overflow-y: auto;
+    }
 
     .columns {
       flex: 1;
@@ -187,6 +208,8 @@ export default {
       margin-bottom: 0 !important;
 
       .column {
+        position: relative;
+        
         &:last-child {
           border-left: 1px solid $grey-lighter;
         }

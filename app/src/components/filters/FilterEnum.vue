@@ -1,7 +1,5 @@
 <template>
   <div>
-    <slot v-bind="{ update }"></slot>
-
     <div class="is-size-6">
       <b-input
         v-model="search"
@@ -10,8 +8,8 @@
         icon-right-clickable
         @icon-right-click="search = null"
       />
-      <a href="#" @click.prevent="selectAll">Select all</a> |
-      <a href="#" @click.prevent="selectNone">Select none</a>
+      <a @click.prevent="selectAll">Select all</a> |
+      <a @click.prevent="selectNone">Select none</a>
     </div>
     <br />
 
@@ -27,6 +25,8 @@
         </b-checkbox>
       </VField>
     </div>
+
+    <slot v-bind="{ update }"></slot>
   </div>
 </template>
 

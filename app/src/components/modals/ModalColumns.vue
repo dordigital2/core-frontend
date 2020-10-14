@@ -16,19 +16,26 @@
         </VField>
 
         <VField label="Column list" rules="required">
-          <div class="checkbox-list is-2">
-            <b-checkbox
-              v-for="(field, index) in table.fields"
-              :key="'check' + index"
-              v-model="selectedColumns"
-              :native-value="field.name"
-            >
-              {{ field.display_name }}
-            </b-checkbox>
+          <div>
+            <div class="is-size-6">
+              <a @click.prevent="selectAll">Select all</a> |
+              <a @click.prevent="selectNone">Select none</a>
+            </div>
+            
+            <div class="checkbox-list is-2">
+              <b-checkbox
+                v-for="(field, index) in table.fields"
+                :key="'check' + index"
+                v-model="selectedColumns"
+                :native-value="field.name"
+              >
+                {{ field.display_name }}
+              </b-checkbox>
+            </div>
           </div>
         </VField>
 
-        <VField label="Column list" rules="required" v-if="false">
+        <VField label="Column list" rules="required">
           <FilterEnum
             v-model="selectedColumns"
             :choices="table.fields.map(e => e.display_name)"
