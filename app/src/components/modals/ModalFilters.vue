@@ -26,8 +26,7 @@
               :label="getFilterLabel(field)"
               :header-class="{
                 'is-highlight':
-                  filterData[field.name] != null &&
-                  filterData[field.name].length
+                  filterData[field.name] != null
               }"
             >
               <ValidationObserver v-slot="{ passes }" slim>
@@ -63,17 +62,17 @@
         </div>
 
         <div class="column is-3 is-scrollable">
-          <div class="cell">
-            <p class="has-text-weight-semibold is-size-6">Selected filters</p>
-            <br />
+          <p class="has-text-weight-semibold is-size-6 cell cell-title">
+            Selected filters
+          </p>
 
-            <FilterDisplay
-              :fields="table.fields"
-              :filterData="filterData"
-              isEditable
-              @remove="removeFilter"
-            />
-          </div>
+          <FilterDisplay
+            class="cell cell-body"
+            :fields="table.fields"
+            :filterData="filterData"
+            isEditable
+            @remove="removeFilter"
+          />
         </div>
       </div>
     </section>
@@ -195,6 +194,11 @@ $cell-padding: 18px 24px;
         background-color: $white;
         position: sticky;
         top: 0;
+        z-index: 1;
+      }
+
+      &.cell-body {
+        padding-top: 0;
       }
     }
 
@@ -209,7 +213,7 @@ $cell-padding: 18px 24px;
 
       .column {
         position: relative;
-        
+
         &:last-child {
           border-left: 1px solid $grey-lighter;
         }
