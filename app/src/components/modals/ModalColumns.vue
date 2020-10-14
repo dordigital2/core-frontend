@@ -10,7 +10,7 @@
         <VField label="Selected columns" rules="">
           <b-taginput v-model="selectedColumns" type="is-dark" :maxtags="0"
             ><template #tag="{tag}">{{
-              getColumnName(tag)
+              getField(tag).display_name
             }}</template></b-taginput
           >
         </VField>
@@ -37,10 +37,13 @@
         </VField>
       </section>
       <footer class="modal-card-foot">
-        <b-button class="is-dark is-outlined" @click="$emit('close')">
+        <b-button type="is-dark is-outlined" @click="$emit('close')">
           Cancel
         </b-button>
-        <b-button class="is-dark" @click="passes(submit)">Apply</b-button>
+        <b-button type="is-primary" @click="passes(save)" v-bind="{ loading }"
+          >Save</b-button
+        >
+        <b-button type="is-dark" @click="passes(submit)">Apply</b-button>
       </footer>
     </ValidationObserver>
   </div>
@@ -54,9 +57,8 @@ export default {
   },
   data() {
     return {
-      selectedColumns: this.table.default_fields,
-      // selectedColumns: [],
-      columnMap: {}
+      selectedColumns: [...this.table.default_fields],
+      loading: false
     }
   },
   mounted() {
@@ -64,10 +66,12 @@ export default {
       this.selectedColumns = this.$route.query.__fields.split(',')
   },
   methods: {
-    getColumnName(name) {
-      return this.table.fields.find(c => c.name == name).display_name
+    getField(name) {
+      return this.table.fields.find(c => c.name == name)
     },
     submit() {
+      this.loading = false
+
       this.$router
         .push({
           query: Object.assign({}, this.$route.query, {
@@ -77,6 +81,22 @@ export default {
         .catch(() => {})
         .then(() => {
           this.$emit('close')
+          this.$emit('update')
+        })
+    },
+    save() {
+      this.loading = true
+
+      this.$store
+        .dispatch('data/patchTable', {
+          idTable: this.table.id,
+          data: {
+            default_fields: this.selectedColumns.map(e => this.getField(e).id)
+          }
+        })
+        .then(this.submit)
+        .catch(() => {
+          this.loading = false
         })
     }
   }

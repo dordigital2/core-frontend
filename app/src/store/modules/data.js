@@ -115,7 +115,7 @@ export default {
 
     patchTable({ dispatch }, { idTable, data }) {
       return TableService.patchTable(idTable, data).then(() => {
-        dispatch('getDatabase').then(
+        return dispatch('getDatabase').then(
           ToastService.open('The table has been updated')
         )
       })

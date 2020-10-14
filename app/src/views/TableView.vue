@@ -147,6 +147,9 @@ export default {
         trapFocus: true,
         props: {
           table: this.table
+        },
+        events: {
+          update: this.getTableEntries
         }
       })
     }
