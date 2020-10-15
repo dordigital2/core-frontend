@@ -34,7 +34,7 @@ import { FilterOptions } from '@/services/field'
 
 export default {
   props: {
-    name: String,
+    field: Object,
     value: Object
   },
   data() {

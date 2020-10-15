@@ -8,11 +8,11 @@ const FieldComponentMap = {
 }
 
 const FieldFilterComponentMap = {
-  enum: 'FilterEnum',
+  enum: 'FilterTypeEnum',
   bool: 'b-checkbox',
-  date: 'FilterDate',
-  int: 'FilterNumeric',
-  float: 'FilterNumeric'
+  date: 'FilterTypeDate',
+  int: 'FilterTypeNumeric',
+  float: 'FilterTypeNumeric'
 }
 
 const FieldTypes = {
@@ -66,7 +66,7 @@ const FieldService = {
   getFilterComponent(type) {
     return FieldFilterComponentMap[type]
       ? FieldFilterComponentMap[type]
-      : 'FilterText'
+      : 'FilterTypeText'
   },
 
   getSortFunction(field) {

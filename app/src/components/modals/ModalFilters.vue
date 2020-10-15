@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: 960px">
+  <div class="modal-card" style="width: 960px;">
     <header class="modal-card-head">
       <p class="modal-card-title">
         Filter options
@@ -11,7 +11,7 @@
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
 
-    <section class="modal-card-body" v-if="table">
+    <section class="modal-card-body" v-if="table && sortedFields">
       <div class="columns is-gapless">
         <div class="column">
           <b-tabs
@@ -21,7 +21,7 @@
             vertical
           >
             <b-tab-item
-              v-for="field in table.fields"
+              v-for="field in sortedFields"
               :key="field.id"
               :label="getFilterLabel(field)"
               :header-class="{
@@ -82,22 +82,22 @@
 <script>
 import FieldService from '@/services/field'
 
-import FilterText from '@/components/filters/FilterText'
-import FilterEnum from '@/components/filters/FilterEnum'
-import FilterNumeric from '@/components/filters/FilterNumeric'
-import FilterDate from '@/components/filters/FilterDate'
 import FilterDisplay from '@/components/filters/FilterDisplay'
+import FilterTypeText from '@/components/filters/FilterTypeText'
+import FilterTypeEnum from '@/components/filters/FilterTypeEnum'
+import FilterTypeNumeric from '@/components/filters/FilterTypeNumeric'
+import FilterTypeDate from '@/components/filters/FilterTypeDate'
 
 import { mapState } from 'vuex'
 
 export default {
   name: 'ModalFilters',
   components: {
-    FilterText,
-    FilterEnum,
-    FilterNumeric,
     FilterDisplay,
-    FilterDate
+    FilterTypeText,
+    FilterTypeEnum,
+    FilterTypeNumeric,
+    FilterTypeDate
   },
   props: {
     table: Object
@@ -105,7 +105,8 @@ export default {
   data() {
     return {
       activeTab: 0,
-      filterData: {}
+      filterData: {},
+      sortedFields: null
     }
   },
   computed: mapState({
@@ -116,6 +117,10 @@ export default {
   mounted() {
     if (this.filters != null)
       this.filterData = JSON.parse(JSON.stringify(this.filters))
+
+    this.sortedFields = this.table.fields.sort((a, b) =>
+      a.display_name < b.display_name ? -1 : 1
+    )
   },
   methods: {
     getComponent(type) {

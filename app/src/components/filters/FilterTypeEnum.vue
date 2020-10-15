@@ -73,7 +73,7 @@ export default {
   },
   watch: {
     value(input) {
-      console.log('value changed')
+      // console.log('value changed')
       this.innerValue = input != null ? input.slice() : []
     },
 

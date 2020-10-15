@@ -13,7 +13,7 @@
 <script>
 export default {
   props: {
-    name: String,
+    field: Object,
     value: String
   },
   data() {

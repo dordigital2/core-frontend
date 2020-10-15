@@ -34,14 +34,13 @@ import { FilterOptions } from '@/services/field'
 
 export default {
   props: {
-    name: String,
-    value: Object,
-    field_type: String
+    field: Object,
+    value: Object
   },
   data() {
     return {
       type: null,
-      choices: FilterOptions[this.field_type],
+      choices: FilterOptions[this.field.field_type],
       innerValue: { type: null, values: [] }
     }
   },
