@@ -183,6 +183,13 @@ export default {
       })
     },
 
+    patchTableView({ dispatch }, { idTable, data }) {
+      return TableViewService.patchTableView(idTable, data).then(() => {
+        dispatch('getTableView', idTable)
+        ToastService.open('The view has been updated')
+      })
+    },
+
     getTableViewEntries({ commit }, { idTable, query }) {
       commit('setLoading', { idTable, status: true })
       return TableViewService.getEntries(idTable, query).then(response => {

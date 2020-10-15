@@ -1,6 +1,8 @@
 <template>
   <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
     <div class="modal-card" style="width: 960px">
+      <b-loading :is-full-page="false" v-model="loading" />
+
       <header class="modal-card-head">
         <p class="modal-card-title">Choose which columns to display</p>
         <button type="button" class="delete" @click="$emit('close')" />
@@ -40,9 +42,7 @@
         <b-button type="is-dark is-outlined" @click="$emit('close')">
           Cancel
         </b-button>
-        <b-button type="is-primary" @click="passes(save)" v-bind="{ loading }"
-          >Save</b-button
-        >
+        <b-button type="is-primary" @click="passes(save)">Save</b-button>
         <b-button type="is-dark" @click="passes(submit)">Apply</b-button>
       </footer>
     </div>
@@ -53,7 +53,8 @@
 export default {
   name: 'ModalColumns',
   props: {
-    table: Object
+    table: Object,
+    filterMode: Boolean
   },
   data() {
     return {
@@ -73,7 +74,7 @@ export default {
       this.loading = false
 
       this.$router
-        .push({
+        .replace({
           query: Object.assign({}, this.$route.query, {
             __fields: this.selectedColumns.join(',')
           })
@@ -94,7 +95,7 @@ export default {
       this.loading = true
 
       this.$store
-        .dispatch('data/patchTable', {
+        .dispatch(this.filterMode ? 'data/patchTableView' : 'data/patchTable', {
           idTable: this.table.id,
           data: {
             default_fields: this.selectedColumns.map(e => this.getField(e).id)

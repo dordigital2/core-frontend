@@ -63,9 +63,8 @@
         </div>
 
         <BaseTableAsync
-          :table="table"
+          v-bind="{ table, filterMode }"
           :tableEntries="tableEntries || {}"
-          :filterMode="filterMode"
           @update="getTableEntries"
           updateQueryNav
         />
@@ -146,7 +145,8 @@ export default {
         hasModalCard: true,
         trapFocus: true,
         props: {
-          table: this.table
+          table: this.table,
+          filterMode: this.filterMode
         },
         events: {
           update: this.getTableEntries

@@ -25,23 +25,17 @@
               :key="field.id"
               :label="getFilterLabel(field)"
               :header-class="{
-                'is-highlight':
-                  filterData[field.name] != null
+                'is-highlight': filterData[field.name] != null
               }"
             >
               <ValidationObserver v-slot="{ passes }" slim>
                 <component
                   v-model="filterData[field.name]"
-                  v-bind="{
-                    placeholder: field.display_name,
-                    choices: field.choices,
-                    name: field.name,
-                    field_type: field.field_type
-                  }"
+                  v-bind="{ field }"
                   :is="getComponent(field.field_type)"
                 >
                   <template #default="props">
-                    <div class="tab-content-head">
+                    <div class="filter-buttons">
                       <div class="buttons">
                         <b-button
                           type="is-dark is-outlined"

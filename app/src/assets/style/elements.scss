@@ -124,18 +124,65 @@
   }
 }
 
+.filter-component {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .filter-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px 24px;
+
+    .control + a {
+      display: inline-block;
+      margin-top: 6px;
+      margin-left: 8px;
+    }
+
+    .input {
+      font-size: $size-6;
+    }
+
+    .checkbox-list {
+      margin-top: 18px;
+    }
+  }
+
+  .filter-buttons {
+    padding: 12px 24px;
+    background-color: $white;
+    border-top: 1px solid $grey;
+
+    .buttons {
+      justify-content: flex-end;
+    }
+  }
+}
+
 .delete {
-  // border-radius: 0;
+  border-radius: 4px;
   background-color: transparent;
-  
-  &:before, &:after {
+
+  &:before,
+  &:after {
     background-color: $black-light;
+  }
+
+  &:hover {
+    background-color: transparent;
+    
+    &:before,
+    &:after {
+      background-color: $primary;
+    }
   }
 }
 
 .is-dark {
   .delete {
-    &:before, &:after {
+    &:before,
+    &:after {
       background-color: $white;
     }
   }
