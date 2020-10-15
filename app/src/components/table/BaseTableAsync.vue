@@ -137,7 +137,7 @@ export default {
 
       selectedFields.forEach(e => {
         const field = this.table.fields.find(f => f.name == e)
-        field && fields.push({ ...field, sortable: true })
+        field && fields.push({ ...field })
       })
 
       if (!this.filterMode)
@@ -147,6 +147,7 @@ export default {
           component: this.tableActionsComponent,
           display_name: ' ',
           sticky: true,
+          sortable: false,
           props: {
             idTable: this.idTable
           }
