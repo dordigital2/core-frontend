@@ -1,9 +1,14 @@
 <template>
-  <div class="container is-fluid">
+  <div
+    class="container is-fluid"
+    :class="{ 'menu-closed': !menuActive }"
+    id="app-container"
+  >
     <nav class="navbar">
       <div class="navbar-brand">
         <router-link :to="{ name: 'dashboard' }" class="navbar-item">
-          <h2>PAUL</h2>
+          <h2 v-if="menuActive">PAŪL</h2>
+          <h2 v-else>P</h2>
         </router-link>
       </div>
 
@@ -23,7 +28,11 @@
       </div>
     </nav>
 
-    <BaseMenu :isAdmin="user && user.is_admin" />
+    <BaseMenu
+      :isAdmin="user && user.is_admin"
+      v-bind="{ menuActive }"
+      @toggleMenu="menuActive = !menuActive"
+    />
 
     <div class="main-view">
       <router-view />
@@ -41,7 +50,9 @@ export default {
     BaseMenu
   },
   data() {
-    return {}
+    return {
+      menuActive: true
+    }
   },
   computed: mapState({
     user: state => state.user

@@ -20,7 +20,9 @@ import Cog from 'vue-material-design-icons/Cog.vue'
 import DnsOutline from 'vue-material-design-icons/DnsOutline.vue'
 import Download from 'vue-material-design-icons/Download.vue'
 import EyeOutline from 'vue-material-design-icons/EyeOutline.vue'
+import MenuIcon from 'vue-material-design-icons/Menu.vue'
 import MenuDown from 'vue-material-design-icons/MenuDown.vue'
+import MenuOpen from 'vue-material-design-icons/MenuOpen.vue'
 import MenuUp from 'vue-material-design-icons/MenuUp.vue'
 import MonitorDashboard from 'vue-material-design-icons/MonitorDashboard.vue'
 import Power from 'vue-material-design-icons/Power.vue'
@@ -50,7 +52,9 @@ export default {
     DnsOutline,
     Download,
     EyeOutline,
+    MenuIcon,
     MenuDown,
+    MenuOpen,
     MenuUp,
     MonitorDashboard,
     Power,

@@ -2,6 +2,12 @@
   <b-menu class="is-size-6" id="base-menu">
     <b-menu-list>
       <b-menu-item
+        :icon="menuActive ? 'menu-open' : 'menu-icon'"
+        label="MENU"
+        class="menu-header"
+        @click="$emit('toggleMenu')"
+      ></b-menu-item>
+      <b-menu-item
         icon="monitor-screenshot"
         label="Dashboard"
         @click="goto('dashboard')"
@@ -67,7 +73,8 @@
 export default {
   name: 'BaseMenu',
   props: {
-    isAdmin: Boolean
+    isAdmin: Boolean,
+    menuActive: Boolean
   },
   data() {
     return {

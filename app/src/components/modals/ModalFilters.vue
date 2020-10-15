@@ -28,7 +28,7 @@
                 'is-highlight': filterData[field.name] != null
               }"
             >
-              <ValidationObserver v-slot="{ passes, reset }" slim>
+              <ValidationObserver v-slot="{ passes, reset }" ref="observer" slim>
                 <component
                   v-model="filterData[field.name]"
                   v-bind="{ field }"
@@ -40,7 +40,7 @@
                         <b-button
                           type="is-dark is-outlined"
                           :disabled="checkDisabled(field)"
-                          @click="removeFilter(field.name) && reset"
+                          @click="removeFilter(field.name, null, reset)"
                           >Clear filter</b-button
                         >
                         <b-button type="is-dark" @click="passes(props.update)"
@@ -142,7 +142,7 @@ export default {
       if (this.filterData[field.name] != null) return false
       return true
     },
-    removeFilter(name, index) {
+    removeFilter(name, index, reset) {
       // console.log('removeFilter', name, index)
 
       if (Array.isArray(this.filterData[name]) && index != null) {
@@ -153,7 +153,7 @@ export default {
         this.$delete(this.filterData, name)
       }
 
-      return true
+      if (reset != null) reset()
     },
     submit() {
       this.$store.commit('data/setFilters', {
