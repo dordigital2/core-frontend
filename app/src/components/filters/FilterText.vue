@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <VField label="Enter value" rules="required">
-      <b-input v-model="innerValue" />
-    </VField>
+  <div class="filter-component">
+    <div class="filter-body">
+      <VField label="Enter value" rules="required">
+        <b-input v-model="innerValue" />
+      </VField>
+    </div>
 
     <slot v-bind="{ update }"></slot>
   </div>
