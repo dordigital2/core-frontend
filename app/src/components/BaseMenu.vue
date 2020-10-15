@@ -1,5 +1,5 @@
 <template>
-  <b-menu class="is-size-6">
+  <b-menu class="is-size-6" id="base-menu">
     <b-menu-list>
       <b-menu-item
         icon="monitor-screenshot"
@@ -84,39 +84,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-.menu {
-  position: fixed;
-  width: 264px;
-  background-color: $blue;
-  font-size: $size-6;
-  padding: 12px 15px 36px;
-  border-radius: $radius;
-
-  /deep/ .menu-list {
-    a {
-      display: flex;
-      align-items: center;
-      padding: 12px 7px;
-    }
-
-    span:not(.icon) {
-      flex-grow: 1;
-    }
-
-    .icon {
-      font-size: $size-3;
-      &:not(.menu-tick) {
-        margin-right: 16px;
-      }
-    }
-
-    li ul {
-      padding-left: 28px;
-      margin-top: 0;
-      // border-left: 0;
-    }
-  }
-}
-</style>

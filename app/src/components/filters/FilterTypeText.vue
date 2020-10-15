@@ -19,7 +19,7 @@ export default {
   data() {
     return {
       type: null,
-      innerValue: null
+      innerValue: this.value
     }
   },
   methods: {

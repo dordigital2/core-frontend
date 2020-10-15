@@ -39,22 +39,25 @@ export default {
   },
   data() {
     return {
-      innerValue: { type: null, values: [null, null] },
+      innerValue: this.computeValue(),
       choices: FilterOptions.date
     }
   },
   methods: {
+    computeValue() {
+      return this.value
+        ? JSON.parse(JSON.stringify(this.value))
+        : { type: null, values: [null, null] }
+    },
     update() {
       if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
 
-      this.$emit('input', JSON.parse(JSON.stringify(this.innerValue)))
+      this.$emit('input', this.innerValue)
     }
   },
   watch: {
-    value(input) {
-      this.innerValue = input
-        ? JSON.parse(JSON.stringify(input))
-        : { type: null, values: [null, null] }
+    value() {
+      this.innerValue = this.computeValue()
     }
   }
 }

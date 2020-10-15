@@ -1,6 +1,12 @@
 <template>
   <div>
-    <b-table v-if="data && fields" :data="data" scrollable>
+    <b-table
+      v-if="data && fields"
+      :data="data"
+      :per-page="10"
+      :paginated="data.length > 10"
+      scrollable
+    >
       <b-table-column
         v-for="(column, index) in fields"
         :key="`${column.name}-${index}`"

@@ -41,22 +41,24 @@ export default {
     return {
       type: null,
       choices: FilterOptions[this.field.field_type],
-      innerValue: { type: null, values: [] }
+      innerValue: this.computeValue()
     }
   },
   methods: {
+    computeValue() {
+      return this.value != null
+        ? JSON.parse(JSON.stringify(this.value))
+        : { type: null, values: [] }
+    },
     update() {
       if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
 
-      this.$emit('input', JSON.parse(JSON.stringify(this.innerValue)))
+      this.$emit('input', this.innerValue)
     }
   },
   watch: {
-    value(input) {
-      this.innerValue =
-        input != null
-          ? JSON.parse(JSON.stringify(input))
-          : { type: null, values: [] }
+    value() {
+      this.innerValue = this.computeValue()
     }
   }
 }

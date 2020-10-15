@@ -41,48 +41,42 @@ export default {
   data() {
     return {
       search: null,
-      filterChoices: this.field.choices.slice(),
-      innerValue: []
+      filterChoices: [...this.field.choices],
+      innerValue: this.computeValue()
     }
   },
-  mounted() {
-    if (this.autoupdate) {
-      this.$watch('innerValue', function() {
-        this.update()
-      })
-    }
-  },
+  mounted() {},
   methods: {
+    computeValue() {
+      return this.value != null ? [...this.value] : []
+    },
     update() {
-      this.$emit(
-        'input',
-        this.innerValue.length ? this.innerValue.slice() : undefined
-      )
+      this.$emit('input', this.innerValue.length ? this.innerValue : undefined)
     },
     selectAll() {
-      this.innerValue = this.innerValue.concat(this.filterChoices)
+      const f = this.filterChoices.filter(e => this.innerValue.indexOf(e) == -1)
+      this.innerValue = this.innerValue.concat(f)
     },
     selectNone() {
       if (this.search == null) this.innerValue = []
       else {
-        this.innerValue = this.innerValue.filter(e => {
-          return this.filterChoices.indexOf(e) == -1
-        })
+        this.innerValue = this.innerValue.filter(
+          e => this.filterChoices.indexOf(e) == -1
+        )
       }
     }
   },
   watch: {
-    value(input) {
-      // console.log('value changed')
-      this.innerValue = input != null ? input.slice() : []
+    value() {
+      this.innerValue = this.computeValue()
     },
 
     search(value) {
       if (value != null)
-        this.filterChoices = this.choices.filter(
+        this.filterChoices = this.field.choices.filter(
           e => e.toLowerCase().indexOf(value.toLowerCase()) != -1
         )
-      else this.filterChoices = this.choices.slice()
+      else this.filterChoices = this.field.choices.slice()
     }
   }
 }
