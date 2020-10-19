@@ -22,7 +22,7 @@
             <div class="column is-6">
               <VField
                 label="Select a table"
-                rules="required"
+                rules=""
                 :name="`Table #${link_index + 1} name`"
               >
                 <b-select
@@ -43,7 +43,7 @@
             <div class="column is-4">
               <VField
                 label="Link field"
-                rules="required"
+                rules=""
                 :name="`Table #${link_index + 1} link `"
                 labelInfo="Please select the column that links the two tables. In order to join information about the same entries in both tables you need to set an identifier present in both. Ex. E-mail. The two link fields must match."
               >
@@ -132,19 +132,21 @@ export default {
         this.$store
           .dispatch('data/getTable', this.tableView.config.primary_table.table)
           .then(() => {
-            this.$store
-              .dispatch(
-                'data/getTable',
-                this.tableView.config.join_tables[0].table
-              )
-              .then(() => {
-                this.$set(this.links, 0, {
-                  ...this.tableView.config.primary_table
+            console.log(this.tableView.config)
+            if (this.tableView.config.join_tables.length)
+              this.$store
+                .dispatch(
+                  'data/getTable',
+                  this.tableView.config.join_tables[0].table
+                )
+                .then(() => {
+                  this.$set(this.links, 0, {
+                    ...this.tableView.config.primary_table
+                  })
+                  this.$set(this.links, 1, {
+                    ...this.tableView.config.join_tables[0]
+                  })
                 })
-                this.$set(this.links, 1, {
-                  ...this.tableView.config.join_tables[0]
-                })
-              })
           })
       })
   },
@@ -176,13 +178,12 @@ export default {
       const resource = {
         name: this.name,
         primary_table: this.links[0],
-        join_tables: [this.links[1]]
+        join_tables: this.links[1].table ? [this.links[1]] : null
       }
 
       if (!this.idTable) {
         TableViewService.postTableView(resource).then(response => {
           ToastService.open('The view has been created successfully')
-
           this.$router.push({
             name: 'filter-table-view',
             params: {
@@ -193,7 +194,6 @@ export default {
       } else {
         TableViewService.putTableView(this.idTable, resource).then(() => {
           ToastService.open('The view has been updated')
-
           this.$router.push({
             name: 'filter-table-view',
             params: {
