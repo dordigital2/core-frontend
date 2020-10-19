@@ -58,6 +58,7 @@ export default {
           display_name: ' ',
           component: 'ActionsTableView',
           custom_class: 'actions',
+          sortable: false,
           sticky: true
         }
       ]
