@@ -31,8 +31,8 @@
               </VField>
             </div>
             <div class="column is-2">
-              <VField label="Delimiter" rules="required">
-                <b-input v-model="delimiter" />
+              <VField label="Delimiter" rules="">
+                <b-input v-model="delimiter" placeholder="leave empty for autodetection.."/>
               </VField>
             </div>
             <div class="column is-7">
