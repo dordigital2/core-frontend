@@ -102,3 +102,13 @@
     }
   }
 }
+
+.select select {
+  background-color: $grey-select;
+  border-color: $grey-select;
+
+  &:hover, &:focus {
+    // border-color: $grey-select;
+    // background-color: $grey-lighter;
+  }
+}

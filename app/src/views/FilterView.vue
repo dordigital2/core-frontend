@@ -48,6 +48,7 @@ export default {
           display_name: 'Show in dashboard',
           component: 'FieldCheckbox',
           centered: true,
+          sortable: false,
           props: {
             type: 'filters',
             action: 'add-to-dashboard'
