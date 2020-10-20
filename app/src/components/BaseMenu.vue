@@ -5,7 +5,7 @@
         :icon="menuActive ? 'menu-open' : 'menu-icon'"
         label="MENU"
         class="menu-header"
-        @click="$emit('toggleMenu')"
+        @click="toggleMenu"
       ></b-menu-item>
       <b-menu-item
         icon="monitor-screenshot"
@@ -34,7 +34,11 @@
         @click="goto('users-view')"
       ></b-menu-item>
 
-      <b-menu-item icon="application-import" :active="isActive.import">
+      <b-menu-item
+        icon="application-import"
+        :active="isActive.import"
+        @click="!menuActive && toggleMenu()"
+      >
         <template #label="props">
           <span>Import data</span>
           <b-icon
@@ -48,7 +52,11 @@
         ></b-menu-item>
       </b-menu-item>
 
-      <b-menu-item icon="cog" :active="isActive.plugins">
+      <b-menu-item
+        icon="cog"
+        :active="isActive.plugins"
+        @click="!menuActive && toggleMenu()"
+      >
         <template #label="props">
           <span>Plugins</span>
           <b-icon
@@ -87,6 +95,9 @@ export default {
   methods: {
     goto(name, opts) {
       this.$router.push({ name, ...opts }).catch(() => {})
+    },
+    toggleMenu() {
+      this.$emit('toggleMenu')
     }
   }
 }

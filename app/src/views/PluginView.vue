@@ -11,6 +11,7 @@
       :options="options"
       v-bind:entity.sync="settings"
       @save="saveSettings"
+      @close="active.settings = false"
     />
 
     <BaseCard title="Tasks" v-if="tasks"

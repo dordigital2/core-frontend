@@ -85,7 +85,7 @@ export default {
       // 1 - have a one-time consumable edit_id in vuex
       // 2 - query param
       // 3 - global EventBus?
-      
+
       if (this.$route.params.idEntity)
         TableService.putEntity(
           this.idTable,

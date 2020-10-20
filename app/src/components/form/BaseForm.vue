@@ -1,10 +1,11 @@
 <template>
-  <ValidationObserver
-    v-slot="{ passes }"
-    @submit.prevent
-    slim
-  >
+  <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
     <BaseCard :title="title">
+      <template #actions>
+        <a class="is-size-4 button-close" @click.prevent="$emit('close')"
+          ><b-icon icon="close"
+        /></a>
+      </template>
       <div class="card-container card-form">
         <div class="columns is-multiline">
           <div
