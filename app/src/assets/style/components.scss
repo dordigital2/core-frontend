@@ -8,10 +8,23 @@
 
     .card-header-title {
       font-size: 18px;
+      flex-wrap: wrap;
 
       .entries {
         color: $primary;
         padding-left: 20px;
+      }
+
+      .info {
+        font-size: $size-6;
+        font-weight: $weight-normal;
+        color: $grey-darker;
+        width: 100%;
+        margin-top: 6px;
+
+        div {
+          max-width: 960px;
+        }
       }
     }
 
@@ -68,7 +81,7 @@
         font-weight: $weight-bold;
 
         .info {
-          font-size: 14px;
+          font-size: $size-6;
           font-weight: normal;
           display: block;
         }

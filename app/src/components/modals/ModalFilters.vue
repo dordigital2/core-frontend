@@ -3,6 +3,7 @@
     <header class="modal-card-head">
       <p class="modal-card-title">
         Filter options
+        
         <span class="info"
           >Always click on <b>Set filters</b> after you made your
           selection.</span

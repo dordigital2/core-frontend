@@ -15,7 +15,7 @@
       :message="errors.length ? errors : null"
     >
       <template slot="label" v-if="label">
-        {{ label }}
+        {{ label }} <span v-if="rules.indexOf('required') != -1">*</span>
         <b-tooltip
           v-if="labelInfo"
           type="is-dark"

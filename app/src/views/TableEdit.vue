@@ -1,11 +1,9 @@
 <template>
-  <div v-if="table">
+  <div v-if="table && fields">
     <BaseTitle :title="title" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <BaseCard :title="title">
-        <b-loading :is-full-page="false" v-model="loading" />
-
+      <BaseCard v-bind="{ title, loading }">
         <div class="card-container">
           <div class="columns">
             <div class="column is-4">
@@ -23,16 +21,6 @@
                   <VField :label="`Column name #${index + 1}`" rules="required">
                     <div class="field-container">
                       <b-input v-model="field.display_name" placeholder="" />
-                      <b-tag
-                        v-if="
-                          false &&
-                            idImport &&
-                            importData &&
-                            importData.fields[index]
-                        "
-                        class="csv-field"
-                        >{{ importData.fields[index].display_name }}</b-tag
-                      >
                     </div>
                   </VField>
                 </div>
@@ -76,10 +64,7 @@
                     :label="`Column format #${index + 1}`"
                     rules="required"
                   >
-                    <b-input
-                      v-if="idImport && field.field_type == 'date'"
-                      v-model="field.field_format"
-                    />
+                    <b-input v-model="field.field_format" />
                   </VField>
                 </div>
               </div>
@@ -98,7 +83,7 @@
 
         <template #footer>
           <b-button class="is-primary" @click="passes(submit)">
-            {{ idTable ? 'Save changes' : 'Finalize' }}
+            {{ idTable ? 'Save changes' : 'Continue' }}
           </b-button>
         </template>
       </BaseCard>
@@ -119,7 +104,7 @@ export default {
       idTable: Number(this.$route.params.idTable),
       idImport: this.$route.query.idImport,
       name: this.$route.query.name,
-      fields: [{ display_name: null, field_type: null, field_format: null }],
+      fields: [{ display_name: null, field_type: 'text', field_format: null }],
       fieldTypes: FieldService.getFieldTypes(),
       loading: false
     }
@@ -141,19 +126,6 @@ export default {
   mounted() {
     if (!this.database) this.$store.dispatch('data/getDatabase')
 
-    // this.$store.dispatch('data/getImportData', this.idImport).then(() => {
-    //   this.fields = [...this.importData.fields]
-    // })
-    // @TODO: Update fields after `getImportData` contains initial detected columns if user refreshes page
-    // temp fix: go back and reimport
-
-    if (this.idImport) {
-      if (!this.importData) {
-        this.$router.go(-1)
-        return
-      }
-    }
-
     if (this.idTable) {
       this.$store.dispatch('data/getTable', this.idTable).then(() => {
         this.name = this.table.name
@@ -163,7 +135,18 @@ export default {
         }))
       })
     } else if (this.idImport) {
-      this.fields = [...this.importData.fields]
+      this.$store
+        .dispatch('data/getImportData', this.idImport)
+        .then(response => {
+          this.fields = response.csv_field_mapping.map(e => {
+            return {
+              original_name: e.original_name,
+              field_name: e.field_name,
+              field_type: e.field_type,
+              field_format: null
+            }
+          })
+        })
     }
   },
   methods: {
@@ -191,13 +174,13 @@ export default {
         this.loading = true
         this.$store
           .dispatch('data/postTable', {
-            import_id: this.importData.import_id,
+            import_id: this.importData.id,
             ...resource
           })
           .then(() => {
             this.$router.push({
               name: 'table-import-result',
-              params: { idImport: this.importData.import_id },
+              params: { idImport: this.importData.id },
               query: { name: this.$route.query.name }
             })
           })
@@ -234,17 +217,6 @@ export default {
 .field-list {
   .column {
     margin-bottom: -15px;
-  }
-}
-
-.field-container {
-  position: relative;
-
-  .csv-field {
-    z-index: 5;
-    position: absolute;
-    top: 6px;
-    right: 6px;
   }
 }
 </style>

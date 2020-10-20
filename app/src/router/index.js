@@ -134,6 +134,12 @@ const routes = [
           import(/* webpackChunkName: "table" */ '@/views/TableImportForm.vue')
       },
       {
+        path: 'table-import-edit/:idTable',
+        name: 'table-import-edit',
+        component: () =>
+          import(/* webpackChunkName: "table" */ '@/views/TableImportEdit.vue')
+      },
+      {
         path: 'table-import-result/:idImport',
         name: 'table-import-result',
         component: () =>

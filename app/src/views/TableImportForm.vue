@@ -1,9 +1,9 @@
 <template>
   <div>
-    <BaseTitle title="Table import data" />
+    <BaseTitle title="Import data" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <BaseCard :title="title">
+      <BaseCard v-bind="{ title, loading }">
         <div class="card-container">
           <div class="columns">
             <div class="column is-5" v-if="isManualImport && database">
@@ -17,22 +17,24 @@
                     v-for="table in database.active_tables"
                     :value="table.id"
                     :key="table.id"
-                  >
-                    Table – {{ table.data.name }}
-                  </option>
+                    v-text="`Table – ${table.data.name}`"
+                  />
                 </b-select>
               </VField>
             </div>
           </div>
           <div class="columns">
-            <div class="column is-3">
+            <div class="column is-narrow">
               <VField label="Select file type" rules="required">
                 <VSelect :choices="['csv']" v-model="filetype" />
               </VField>
             </div>
             <div class="column is-2">
-              <VField label="Delimiter" rules="">
-                <b-input v-model="delimiter" placeholder="leave empty for autodetection.."/>
+              <VField
+                label="Delimiter"
+                labelInfo="Leave empty for autodetection."
+              >
+                <b-input v-model="delimiter" />
               </VField>
             </div>
             <div class="column is-7">
@@ -72,6 +74,7 @@ export default {
       title: null,
       idTable: null,
       isManualImport: null,
+      loading: false,
       filetype: 'csv',
       delimiter: null,
       file: null
@@ -88,7 +91,12 @@ export default {
       this.isManualImport = this.$route.query.manual
 
       if (this.isManualImport) {
-        if (!this.database) this.$store.dispatch('data/getDatabase')
+        if (!this.database) {
+          this.loading = true
+          this.$store.dispatch('data/getDatabase').then(() => {
+            this.loading = false
+          })
+        }
         this.title = 'Import data to existing table'
       } else {
         this.title = `Import data and create table ${JSON.stringify(
@@ -100,29 +108,26 @@ export default {
       const formData = new FormData()
       formData.append('file', this.file)
       formData.append('delimiter', this.delimiter)
+      this.idTable && formData.append('table_id', this.idTable)
 
-      // @TODO: we need to go through table-edit before if isManual
-      if (this.isManualImport) {
-        this.$store
-          .dispatch('data/manualImport', {
-            idTable: this.idTable,
-            data: formData
-          })
-          .then(response => {
-            this.$router.push({
-              name: 'table-import-result',
-              params: { idImport: response.import_id }
-            })
-          })
-      } else {
-        this.$store.dispatch('data/prepareImport', formData).then(response => {
+      this.loading = true
+      this.$store
+        .dispatch('data/prepareImport', formData)
+        .then(response => {
+          this.loading = false
+          
           this.$router.push({
-            name: 'table-edit',
+            name: this.isManualImport ? 'table-import-edit' : 'table-edit',
             params: { ...(this.isManualImport && { idTable: this.idTable }) },
-            query: { idImport: response.import_id, ...this.$route.query }
+            query: {
+              idImport: response.import_id,
+              ...(this.$route.query.name && { name: this.$route.query.name })
+            }
           })
         })
-      }
+        .catch(() => {
+          this.loading = false
+        })
     }
   },
   watch: {

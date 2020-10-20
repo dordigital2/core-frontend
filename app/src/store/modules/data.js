@@ -152,6 +152,7 @@ export default {
     getImportData({ commit }, idImport) {
       return ImportService.getData(idImport).then(response => {
         commit('setImport', response)
+        return response
       })
     },
 

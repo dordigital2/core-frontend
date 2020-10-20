@@ -1,5 +1,7 @@
 <template>
   <div class="card">
+    <b-loading v-model="loading" :is-full-page="false" />
+    
     <div class="card-header">
       <div class="card-header-title">
         {{ title }}
@@ -29,7 +31,8 @@ export default {
     return {}
   },
   props: {
-    title: String
+    title: String,
+    loading: Boolean
   }
 }
 </script>

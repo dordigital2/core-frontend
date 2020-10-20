@@ -4,7 +4,11 @@
 
     <template v-if="importData">
       <BaseCard
-        :title="`Table ${name && JSON.stringify(name)} has been ${name ? 'created' : 'updated'}`"
+        :title="
+          `Table ${name && JSON.stringify(name)} has been ${
+            name ? 'created' : 'updated'
+          }`
+        "
       >
         <template #actions v-if="importData.imports_count" class="da">
           <router-link
@@ -24,7 +28,7 @@
         v-if="importData.errors_count"
       >
         <template #default>
-          <b-table :data="importData.errors">
+          <b-table :data="importData.errors" scrollable>
             <b-table-column
               v-for="(field, index) in importData.csv_field_mapping"
               :key="`column-${index}`"
@@ -35,7 +39,8 @@
               <template v-slot="props"
                 ><span
                   :class="{
-                    'has-text-danger is-bold': props.row.errors[field.field_name]
+                    'has-text-danger is-bold':
+                      props.row.errors[field.field_name]
                   }"
                   >{{ props.row.row[field.field_name] }}</span
                 ></template
