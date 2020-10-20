@@ -58,6 +58,7 @@ export default {
             display_name: ' ',
             component: 'ActionsCharts',
             custom_class: 'actions',
+            sortable: false,
             sticky: true
           }
         ],
@@ -87,6 +88,7 @@ export default {
             display_name: ' ',
             component: 'ActionsTableView',
             custom_class: 'actions',
+            sortable: false,
             sticky: true
           }
         ]

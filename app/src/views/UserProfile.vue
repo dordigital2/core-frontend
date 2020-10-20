@@ -17,7 +17,7 @@
           </router-link>
 
           <b-button
-            v-if="activeUser.is_admin"
+            v-if="activeUser.is_admin && notCurrentUser"
             type="is-dark"
             @click="toggleUserActive"
           >
@@ -83,7 +83,7 @@
 
     <BaseCard
       title="User database access"
-      v-if="user && activeUser && activeUser.is_admin"
+      v-if="user && activeUser && activeUser.is_admin && notCurrentUser"
       style="width: 600px;"
     >
       <template #footer>
@@ -145,9 +145,14 @@ export default {
       }
     }
   },
-  computed: mapState({
-    activeUser: state => state.user
-  }),
+  computed: {
+    ...mapState({
+      activeUser: state => state.user
+    }),
+    notCurrentUser() {
+      return this.user.username != this.activeUser.username
+    }
+  },
   mounted() {
     this.getUser()
   },
@@ -166,7 +171,7 @@ export default {
         type: this.user.is_active ? 'is-danger' : 'is-success',
         onConfirm: () => {
           this.loading.profile = true
-          
+
           UserService.toggleActivate(this.user.id).then(response => {
             this.user = response
             this.loading.profile = false

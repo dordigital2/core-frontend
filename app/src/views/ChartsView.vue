@@ -48,6 +48,7 @@ export default {
           display_name: 'Show in dashboard',
           component: 'FieldCheckbox',
           centered: true,
+          sortable: false,
           props: {
             type: 'charts',
             action: 'add-to-dashboard'
@@ -58,6 +59,7 @@ export default {
           display_name: ' ',
           component: 'ActionsCharts',
           custom_class: 'actions',
+          sortable: false,
           sticky: true
         }
       ]

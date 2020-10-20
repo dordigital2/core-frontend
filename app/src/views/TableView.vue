@@ -28,7 +28,7 @@
           <router-link
             class="button is-primary"
             :to="{
-              name: filterMode ? `filter-edit` : `table-edit`,
+              name: filterMode ? 'filter-edit' : 'table-edit',
               params: { idTable }
             }"
           >
@@ -38,7 +38,7 @@
           <router-link
             v-if="!filterMode"
             class="button is-primary"
-            :to="{ name: `entity-edit`, params: { idTable } }"
+            :to="{ name: 'entity-edit', params: { idTable } }"
           >
             Add new entity
           </router-link>
@@ -52,14 +52,12 @@
       <template #default>
         <div class="card-container">
           Last edit: {{ table.last_edit_date | parseDate }}
-          <span v-if="table.last_edit_user"
-            >by
-            <router-link :to="`user-profile/${table.last_edit_user.id}`">{{
-              table.last_edit_user.first_name +
-                ' ' +
-                table.last_edit_user.last_name
-            }}</router-link></span
-          >
+          <span
+            v-if="table.last_edit_user"
+            v-text="
+              `by ${table.last_edit_user.first_name} ${table.last_edit_user.last_name}`
+            "
+          />
         </div>
 
         <BaseTableAsync

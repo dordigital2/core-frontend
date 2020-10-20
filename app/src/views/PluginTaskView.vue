@@ -55,7 +55,8 @@ export default {
             name: 'details',
             display_name: 'Details',
             component: 'FieldPluginTaskDetail',
-            props: { idTask: this.idTask }
+            props: { idTask: this.idTask },
+            sortable: false
           },
           {
             name: 'date',
