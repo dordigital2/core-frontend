@@ -141,7 +141,7 @@ export default {
           this.fields = response.csv_field_mapping.map(e => {
             return {
               original_name: e.original_name,
-              field_name: e.field_name,
+              display_name: e.display_name,
               field_type: e.field_type,
               field_format: null
             }
