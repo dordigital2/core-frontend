@@ -4,6 +4,13 @@
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <BaseCard v-bind="{ title, loading }">
+        <template #title>
+          <div class="info" v-if="idImport">
+            <div>
+              The table you want to import contains multiple columns. Please name the columns and select the column type for each. The column type refers to the type of data present in a specific column (eg: Column name: Age will have a Column type: Integer (whole number)) . The system provides you with five default column types. If you are not sure of the data type in a column, we recommend you to select the Text type.
+            </div>
+          </div>
+        </template>
         <div class="card-container">
           <div class="columns">
             <div class="column is-4">
@@ -178,6 +185,8 @@ export default {
             ...resource
           })
           .then(() => {
+            this.loading = false
+
             this.$router.push({
               name: 'table-import-result',
               params: { idImport: this.importData.id },
