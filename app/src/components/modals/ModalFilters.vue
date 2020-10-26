@@ -119,7 +119,7 @@ export default {
     if (this.filters != null)
       this.filterData = JSON.parse(JSON.stringify(this.filters))
 
-    this.sortedFields = this.table.fields.sort((a, b) =>
+    this.sortedFields = [...this.table.fields].sort((a, b) =>
       a.display_name < b.display_name ? -1 : 1
     )
   },
