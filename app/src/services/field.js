@@ -3,13 +3,13 @@ import getNestedObj from 'lodash.get'
 
 const FieldComponentMap = {
   enum: 'VSelect',
-  bool: 'b-checkbox',
+  // bool: 'b-checkbox',
   date: 'VDate'
 }
 
 const FieldFilterComponentMap = {
   enum: 'FilterTypeEnum',
-  bool: 'b-checkbox',
+  // bool: 'b-checkbox',
   date: 'FilterTypeDate',
   int: 'FilterTypeNumeric',
   float: 'FilterTypeNumeric'
@@ -20,7 +20,7 @@ const FieldTypes = {
   date: 'Date',
   int: 'Integer (whole number)',
   float: 'Float (decimal number)',
-  bool: 'Yes/No',
+  // bool: 'Yes/No',
   text: 'Text'
 }
 
