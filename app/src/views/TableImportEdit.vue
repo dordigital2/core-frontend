@@ -3,7 +3,7 @@
     <BaseTitle :title="`Import data into ${table.name}`" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <BaseCard title="Match data columns between tables">
+      <BaseCard title="Match data columns between tables" v-bind="{ loading }">
         <template #title>
           <div class="info">
             <div>
@@ -149,16 +149,23 @@ export default {
       this.fields.length > 1 && this.fields.splice(index, 1)
     },
     submit() {
+      this.loading = true
+
       this.$store
         .dispatch('data/manualImport', {
           idTable: this.idTable,
           data: { fields: this.fields, import_id: this.idImport }
         })
         .then(response => {
+          this.loading = false
+          
           this.$router.push({
             name: 'table-import-result',
             params: { idImport: response.import_id }
           })
+        })
+        .catch(() => {
+          this.loading = false
         })
     }
   }
