@@ -112,15 +112,20 @@ export default {
   }),
   watch: {
     user() {
-      if (this.user == null) return null
-
+      this.getCards()
+    }
+  },
+  mounted() {
+    if (this.user) this.getCards()
+  },
+  methods: {
+    getCards() {
       this.user.dashboard.cards.forEach((e, index) => {
         DataService.getInstanceData('cards', e.id).then(response => {
           this.$set(this.cards, index, response.value)
         })
       })
     }
-  },
-  mounted() {}
+  }
 }
 </script>
