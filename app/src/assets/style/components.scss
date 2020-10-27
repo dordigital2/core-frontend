@@ -135,3 +135,24 @@
   canvas {
   }
 }
+
+.card-chart {
+  width: 100%;
+  
+  .card-body {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .card-icon {
+      height: 84px;
+      width: 84px;
+      background: #fbe8a6;
+      border-radius: $radius;
+
+      font-size: 52px;
+      color: #bca34a;
+    }
+  }
+}

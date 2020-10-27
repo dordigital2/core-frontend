@@ -1,8 +1,16 @@
 <template>
-  <div>
+  <div v-if="user">
     <BaseTitle title="Dashboard" :hasBackButton="false" />
 
-    <BaseCard title="Selected charts" v-if="user"
+    <div class="columns">
+      <template v-for="(card, index) in user.dashboard.cards">
+        <div class="column is-4-desktop is-3-widescreen" :key="index">
+          <BaseCardChart :data="cards[index]" :title="card.data.name" />
+        </div>
+      </template>
+    </div>
+
+    <BaseCard title="Selected charts"
       ><template #actions>
         <router-link :to="{ name: 'charts-view' }" class="button is-primary">
           See all
@@ -12,7 +20,7 @@
       <BaseTable :data="user.dashboard.charts" :fields="fields.charts" />
     </BaseCard>
 
-    <BaseCard title="Selected views" v-if="user"
+    <BaseCard title="Selected views"
       ><template #actions>
         <router-link :to="{ name: 'filter-view' }" class="button is-primary">
           See all
@@ -25,12 +33,16 @@
 </template>
 
 <script>
+import { DataService } from '@/services/data'
 import { mapState } from 'vuex'
+import BaseCardChart from '@/components/charts/BaseCardChart'
 
 export default {
   name: 'Dashboard',
+  components: { BaseCardChart },
   data() {
     return {
+      cards: [],
       fields: {
         charts: [
           {
@@ -98,6 +110,17 @@ export default {
   computed: mapState({
     user: state => state.user
   }),
+  watch: {
+    user() {
+      if (this.user == null) return null
+
+      this.user.dashboard.cards.forEach((e, index) => {
+        DataService.getInstanceData('cards', e.id).then(response => {
+          this.$set(this.cards, index, response.value)
+        })
+      })
+    }
+  },
   mounted() {}
 }
 </script>

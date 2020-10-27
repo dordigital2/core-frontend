@@ -24,6 +24,7 @@
           headerClass: column.custom_class,
           sticky: column.sticky,
           sortable: column.sortable !== false,
+          centered: column.centered,
           numeric: ['int', 'float'].indexOf(column.field_type) != -1
         }"
       >
@@ -69,7 +70,7 @@
       >
 
       <template slot="empty">
-        <p class="has-text-centered">
+        <p>
           No data to display.
         </p>
       </template>
@@ -78,14 +79,17 @@
 </template>
 
 <script>
+import ActionsCards from './ActionsCards'
 import ActionsPlugin from './ActionsPlugin'
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
 import ActionsUser from './ActionsUser'
 import FieldPluginTaskDetail from './FieldPluginTaskDetail'
+import FieldCheckbox from './FieldCheckbox'
 import FieldOwnerLink from './FieldOwnerLink'
 import FieldRouterLink from './FieldRouterLink'
 import FieldStatusTag from './FieldStatusTag'
+import FieldTagList from './FieldTagList'
 
 import FieldService from '@/services/field'
 import getNestedObj from 'lodash.get'
@@ -94,14 +98,17 @@ import { mapState } from 'vuex'
 
 export default {
   components: {
+    ActionsCards,
     ActionsPlugin,
     ActionsTable,
     ActionsTableEntity,
     ActionsUser,
     FieldPluginTaskDetail,
+    FieldCheckbox,
     FieldOwnerLink,
     FieldRouterLink,
-    FieldStatusTag
+    FieldStatusTag,
+    FieldTagList
   },
   data() {
     return {

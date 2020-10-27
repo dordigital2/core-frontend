@@ -6,12 +6,14 @@
         label="MENU"
         class="menu-header"
         @click="toggleMenu"
-      ></b-menu-item>
+      />
+
       <b-menu-item
         icon="monitor-screenshot"
         label="Dashboard"
         @click="goto('dashboard')"
-      ></b-menu-item>
+      />
+
       <b-menu-item
         icon="dns-outline"
         label="Manage database"
@@ -21,39 +23,35 @@
         icon="tune"
         label="Filtered views"
         @click="goto('filter-view')"
-      ></b-menu-item>
-      <b-menu-item
-        icon="chart-box-outline"
-        label="Charts"
-        @click="goto('charts-view')"
-      ></b-menu-item>
-      <b-menu-item
-        icon="account-details-outline"
-        label="User management"
-        v-if="isAdmin"
-        @click="goto('users-view')"
-      ></b-menu-item>
+      />
 
-      <b-menu-item
-        icon="application-import"
-        :active="isActive.import"
-        @click="!menuActive && toggleMenu()"
-      >
+      <b-menu-item icon="chart-box-outline" :active="isActive.charts">
         <template #label="props">
-          <span>Import data</span>
+          <span>Data visualization</span>
           <b-icon
             class="menu-tick"
             :icon="props.expanded ? 'menu-up' : 'menu-down'"
           ></b-icon>
         </template>
-        <b-menu-item
-          label="Manual"
-          @click="goto('table-import', { query: { manual: true } })"
-        ></b-menu-item>
+        <b-menu-item label="Charts" @click="goto('charts-view')" />
+        <b-menu-item label="Cards" @click="goto('cards-view')" />
       </b-menu-item>
 
       <b-menu-item
-        icon="cog"
+        icon="account-details-outline"
+        label="User management"
+        v-if="isAdmin"
+        @click="goto('users-view')"
+      />
+
+      <b-menu-item
+        icon="application-import"
+        label="Import data"
+        @click="goto('table-import', { query: { manual: true } })"
+      />
+
+      <b-menu-item
+        icon="cog-outline"
         :active="isActive.plugins"
         @click="!menuActive && toggleMenu()"
       >
@@ -67,11 +65,12 @@
         <b-menu-item
           label="Mailchimp"
           @click="goto('plugin-view', { params: { plugin: 'mailchimp' } })"
-        ></b-menu-item>
+        />
+
         <b-menu-item
           label="Woocommerce"
           @click="goto('plugin-view', { params: { plugin: 'woocommerce' } })"
-        ></b-menu-item>
+        />
       </b-menu-item>
     </b-menu-list>
   </b-menu>

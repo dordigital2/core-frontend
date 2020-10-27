@@ -16,10 +16,11 @@ import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue'
 import Close from 'vue-material-design-icons/Close.vue'
 import CloseCircleOutline from 'vue-material-design-icons/CloseCircleOutline.vue'
-import Cog from 'vue-material-design-icons/Cog.vue'
+import CogOutline from 'vue-material-design-icons/CogOutline.vue'
 import DnsOutline from 'vue-material-design-icons/DnsOutline.vue'
 import Download from 'vue-material-design-icons/Download.vue'
 import EyeOutline from 'vue-material-design-icons/EyeOutline.vue'
+import FlagOutline from 'vue-material-design-icons/FlagOutline.vue'
 import MenuIcon from 'vue-material-design-icons/Menu.vue'
 import MenuDown from 'vue-material-design-icons/MenuDown.vue'
 import MenuOpen from 'vue-material-design-icons/MenuOpen.vue'
@@ -48,10 +49,11 @@ export default {
     ChevronRight,
     Close,
     CloseCircleOutline,
-    Cog,
+    CogOutline,
     DnsOutline,
     Download,
     EyeOutline,
+    FlagOutline,
     MenuIcon,
     MenuDown,
     MenuOpen,

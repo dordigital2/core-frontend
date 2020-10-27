@@ -5,7 +5,8 @@ import {
   DatabaseService,
   TableService,
   ImportService,
-  TableViewService
+  TableViewService,
+  DataService
 } from '@/services/data'
 import { ToastService } from '@/services/buefy'
 
@@ -24,6 +25,8 @@ export default {
     tableViewEntries: null,
     chart: null,
     charts: null,
+    card: null,
+    cards: null,
     loading: {}
   },
   mutations: {
@@ -68,6 +71,12 @@ export default {
     },
     setChart(state, data) {
       state.chart = data
+    },
+    setCards(state, data) {
+      state.cards = data
+    },
+    setCard(state, data) {
+      state.card = data
     },
     setLoading(state, { idTable, status }) {
       Vue.set(state.loading, idTable, status)
@@ -251,6 +260,56 @@ export default {
     deleteChart({ dispatch }, id) {
       return ChartService.deleteChart(id).then(() => {
         dispatch('getCharts').then(
+          ToastService.open('The chart has been deleted')
+        )
+      })
+    },
+
+    // CARDS
+    //
+
+    getCards({ commit }, query) {
+      return DataService.get('cards', query).then(response => {
+        commit('setCards', response)
+      })
+    },
+
+    getCard({ commit }, id) {
+      return DataService.getInstance('cards', id).then(response => {
+        commit('setCard', response)
+        return response
+      })
+    },
+
+    createCard({ dispatch }, id) {
+      return DataService.post('cards', id).then(response => {
+        return dispatch('getCards').then(() => {
+          ToastService.open('The card has been created')
+          return response
+        })
+      })
+    },
+
+    patchCard({ dispatch }, { id, data }) {
+      return DataService.patch('cards', id, data).then(() => {
+        dispatch('getCards').then(() => {
+          ToastService.open('The card property has been changed')
+        })
+      })
+    },
+
+    updateCard({ dispatch }, { id, data }) {
+      return DataService.put('cards', id, data).then(response => {
+        return dispatch('getCards').then(() => {
+          ToastService.open('The chart has been updated')
+          return response
+        })
+      })
+    },
+
+    deleteCard({ dispatch }, id) {
+      return DataService.delete('cards', id).then(() => {
+        dispatch('getCards').then(
           ToastService.open('The chart has been deleted')
         )
       })

@@ -152,10 +152,46 @@ const ChartService = {
   }
 }
 
+// types
+// databases, tables, filters, charts
+
+const DataService = {
+  get(type, query, all) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`${type}/${all ? 'all' : queryString}`)
+  },
+
+  getInstance(type, id) {
+    return ApiService.get(`${type}/${id}/`)
+  },
+
+  getInstanceData(type, id, query) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`${type}/${id}/data/${queryString}`)
+  },
+
+  post(type, data) {
+    return ApiService.post(`${type}/`, data)
+  },
+
+  put(type, id, data) {
+    return ApiService.put(`${type}/${id}/`, data)
+  },
+
+  patch(type, id, data) {
+    return ApiService.patch(`${type}/${id}/`, data)
+  },
+
+  delete(type, id) {
+    return ApiService.delete(`${type}/${id}/`)
+  }
+}
+
 export {
   ChartService,
   DatabaseService,
   ImportService,
   TableService,
-  TableViewService
+  TableViewService,
+  DataService
 }

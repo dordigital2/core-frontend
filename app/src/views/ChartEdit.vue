@@ -12,11 +12,11 @@
         <div class="card-container card-form">
           <div class="columns is-multiline">
             <div class="column is-6">
-              <VField label="Name">
+              <VField label="Name" rules="required">
                 <b-input v-model="chartConfig.name" />
               </VField>
 
-              <VField label="Select chart type">
+              <VField label="Select chart type" rules="required">
                 <b-select expanded v-model="chartConfig.chart_type">
                   <option
                     v-for="(type, key) in chartTypes"
@@ -30,6 +30,7 @@
               <VField
                 label="Choose one of the sources of data you already have imported or configured in your account"
                 v-if="database"
+                rules="required"
               >
                 <b-select
                   expanded

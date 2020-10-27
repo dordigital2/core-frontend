@@ -16,6 +16,10 @@
   }
 }
 
+.tag:not(body) {
+  line-height: 1;
+}
+
 .b-table {
   .table-container {
     overflow: auto;

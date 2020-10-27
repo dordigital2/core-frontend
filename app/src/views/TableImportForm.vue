@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseTitle title="Import data" />
+    <BaseTitle title="Import data" :hasBackButton="!isManualImport" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <BaseCard v-bind="{ title, loading }">

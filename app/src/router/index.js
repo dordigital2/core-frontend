@@ -193,6 +193,24 @@ const routes = [
           import(/* webpackChunkName: "chart" */ '@/views/ChartEdit.vue')
       },
       {
+        path: 'cards/',
+        name: 'cards-view',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/CardsView.vue')
+      },
+      {
+        path: 'card/:idCard',
+        name: 'card-view',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/CardView.vue')
+      },
+      {
+        path: 'card-edit/:idCard?',
+        name: 'card-edit',
+        component: () =>
+          import(/* webpackChunkName: "chart" */ '@/views/CardEdit.vue')
+      },
+      {
         path: 'users',
         name: 'users-view',
         component: () =>
