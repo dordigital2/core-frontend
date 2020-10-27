@@ -9,7 +9,12 @@
         </router-link>
       </template>
 
-      <BaseTable :data="tableViews.results" :fields="fields" />
+      <BaseTableAsync
+        :table="table"
+        :tableEntries="tableViews"
+        tableActionsComponent="ActionsTableView"
+        @update="getViews"
+      />
     </BaseCard>
   </div>
 </template>
@@ -22,47 +27,49 @@ export default {
   components: {},
   data() {
     return {
-      fields: [
-        {
-          name: 'name',
-          component: 'FieldRouterLink',
-          props: { route: 'filter-table-view', param: 'idTable' },
-          display_name: 'View name'
-        },
-        {
-          name: 'creation_date',
-          field_type: 'date',
-          display_name: 'Creation date'
-        },
-        {
-          name: 'tables',
-          display_name: 'Tables',
-          component: 'FieldTagList'
-        },
-        {
-          name: 'owner.username',
-          display_name: 'Created by'
-        },
-        {
-          name: 'show_dashboard',
-          display_name: 'Show in dashboard',
-          component: 'FieldCheckbox',
-          centered: true,
-          sortable: false,
-          props: {
-            type: 'filters',
-            action: 'add-to-dashboard'
+      table: {
+        id: 'views',
+        default_fields: [
+          'name',
+          'creation_date',
+          'tables',
+          'owner.username',
+          'show_dashboard'
+        ],
+        fields: [
+          {
+            name: 'name',
+            component: 'FieldRouterLink',
+            props: { route: 'filter-table-view', param: 'idTable' },
+            display_name: 'View name'
+          },
+          {
+            name: 'creation_date',
+            field_type: 'date',
+            display_name: 'Creation date'
+          },
+          {
+            name: 'tables',
+            display_name: 'Tables',
+            component: 'FieldTagList'
+          },
+          {
+            name: 'owner.username',
+            display_name: 'Created by'
+          },
+          {
+            name: 'show_dashboard',
+            display_name: 'Show in dashboard',
+            component: 'FieldCheckbox',
+            centered: true,
+            sortable: false,
+            props: {
+              type: 'filters',
+              action: 'add-to-dashboard'
+            }
           }
-        },
-        {
-          name: 'actions',
-          display_name: ' ',
-          component: 'ActionsTableView',
-          custom_class: 'actions',
-          sortable: false,
-          sticky: true
-        }
-      ]
+        ]
+      }
     }
   },
   computed: mapState({
@@ -70,7 +77,12 @@ export default {
   }),
   mounted() {
     this.$store.commit('data/setTableView', null)
-    this.$store.dispatch('data/getTableViews')
+    this.getViews()
+  },
+  methods: {
+    getViews(query) {
+      this.$store.dispatch('data/getTableViews', { query })
+    }
   }
 }
 </script>

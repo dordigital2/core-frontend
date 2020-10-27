@@ -31,7 +31,10 @@
 
                 <template v-if="model.task_type == 'segmentation'">
                   <VField label="Filtered view">
-                    <b-select v-model="model.segmentation_task.filtered_view" expanded>
+                    <b-select
+                      v-model="model.segmentation_task.filtered_view"
+                      expanded
+                    >
                       <option
                         v-for="(view, key) in views"
                         :key="key"
@@ -95,7 +98,7 @@ export default {
       })
 
     this.$store.dispatch('plugin/getTaskOptions')
-    this.$store.dispatch('data/getTableViews', true)
+    this.$store.dispatch('data/getTableViews', { all: true })
   },
   methods: {
     save() {

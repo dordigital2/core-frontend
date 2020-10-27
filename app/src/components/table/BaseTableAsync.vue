@@ -83,6 +83,7 @@ import ActionsCards from './ActionsCards'
 import ActionsPlugin from './ActionsPlugin'
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
+import ActionsTableView from './ActionsTableView'
 import ActionsUser from './ActionsUser'
 import FieldPluginTaskDetail from './FieldPluginTaskDetail'
 import FieldCheckbox from './FieldCheckbox'
@@ -102,6 +103,7 @@ export default {
     ActionsPlugin,
     ActionsTable,
     ActionsTableEntity,
+    ActionsTableView,
     ActionsUser,
     FieldPluginTaskDetail,
     FieldCheckbox,

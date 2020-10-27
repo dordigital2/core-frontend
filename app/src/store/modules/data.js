@@ -181,8 +181,9 @@ export default {
 
     // TABLE VIEWS
     //
-    getTableViews({ commit }, getAll) {
-      return TableViewService.getTableViews(getAll).then(response => {
+    getTableViews({ commit }, { query, all }) {
+      return DataService.get('filters', query, all).then(response => {
+        // return TableViewService.getTableViews(query, getAll).then(response => {
         commit('setTableViews', response)
       })
     },
