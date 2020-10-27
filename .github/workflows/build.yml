@@ -11,13 +11,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        - name: executing remote ssh commands
+        - name: executing remote ssh commands on paul-dev
           if: github.ref == 'refs/heads/master'
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.DEV_SERVER_IP }}
             username: ${{ secrets.DEV_SERVER_SSH_USERNAME }}
             key: ${{ secrets.DEV_SERVER_SSH_KEY }}
+            script: "/root/paul-web/deploy/deploy.sh"
+        - name: executing remote ssh commands on paul-demo
+          if: github.ref == 'refs/heads/master'
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.DEMO_SERVER_IP }}
+            username: ${{ secrets.DEMO_SERVER_SSH_USERNAME }}
+            key: ${{ secrets.DEMO_SERVER_SSH_KEY }}
             script: "/root/paul-web/deploy/deploy.sh"
 
 
