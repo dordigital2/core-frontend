@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title is-1">Log in</h1>
+    <h1 class="title is-1">Log in!!</h1>
 
     <div class="subtitle">
       Enter your login credentials
