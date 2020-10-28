@@ -69,7 +69,7 @@ export default {
     charts: state => state.data.charts
   }),
   mounted() {
-    if (!this.charts) this.$store.dispatch('data/getCharts')
+    this.$store.dispatch('data/getCharts')
   }
 }
 </script>
