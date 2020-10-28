@@ -1,5 +1,5 @@
 <template>
-  <div class="card card-chart" v-if="data">
+  <div class="card card-chart" v-if="data != null">
     <div class="card-body">
       <div>
         <p class="is-size-6 has-text-weight-semibold">{{ title }}</p>

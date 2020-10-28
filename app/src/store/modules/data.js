@@ -182,8 +182,10 @@ export default {
     // TABLE VIEWS
     //
     getTableViews({ commit }, { query, all }) {
+      commit('setLoading', { idTable: 'views', status: true })
       return DataService.get('filters', query, all).then(response => {
         // return TableViewService.getTableViews(query, getAll).then(response => {
+        commit('setLoading', { idTable: 'views', status: false })
         commit('setTableViews', response)
       })
     },

@@ -65,6 +65,7 @@
           :tableEntries="tableEntries || {}"
           @update="getTableEntries"
           updateQueryNav
+          customPerPage
         />
       </template>
     </BaseCard>

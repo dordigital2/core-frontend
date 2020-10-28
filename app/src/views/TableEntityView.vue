@@ -23,7 +23,6 @@
           :tableEntries="link.tableEntries || {}"
           tableActionsComponent="ActionsTableEntity"
           @update="getTableEntries(index, $event)"
-          presetPerPage
         />
         <template #title v-if="link.tableEntries">
           <span class="entries">

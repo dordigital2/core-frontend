@@ -21,11 +21,7 @@
                 v-if="database"
                 rules="required"
               >
-                <b-select
-                  expanded
-                  v-model="cardConfig.table"
-                  @input="getTable"
-                >
+                <b-select expanded v-model="cardConfig.table" @input="getTable">
                   <option
                     v-for="(table, key) in database.active_tables"
                     :value="table.id"
@@ -35,28 +31,30 @@
                 </b-select>
               </VField>
 
-              <VField
-                label="Choose data source column"
-                v-if="table"
-              >
-                <b-select expanded v-model="cardConfig.data_column">
-                  <option></option>
-                  <option
-                    v-for="(field, key) in table.fields"
-                    :value="field.id"
-                    :key="key"
-                    v-text="field.display_name"
-                  />
-                </b-select>
-              </VField>
-
-              <VField label="Aggregation function" v-if="table">
+              <VField label="Aggregation function" rules="required" v-if="table">
                 <b-select expanded v-model="cardConfig.data_column_function">
                   <option
                     v-for="(func, key) in cardFunctions"
                     :value="key"
                     :key="key"
                     v-text="func"
+                  />
+                </b-select>
+              </VField>
+
+              <VField
+                label="Choose data source column"
+                rules="required"
+                v-if="table && cardConfig.data_column_function != 'Count'"
+              >
+                <b-select expanded v-model="cardConfig.data_column">
+                  <option
+                    v-for="(field, key) in table.fields.filter(
+                      e => ['int', 'float'].indexOf(e.field_type) != -1
+                    )"
+                    :value="field.id"
+                    :key="key"
+                    v-text="field.display_name"
                   />
                 </b-select>
               </VField>

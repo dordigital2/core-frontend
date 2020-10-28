@@ -37,7 +37,7 @@
       </template>
     </BaseCard>
 
-    <div class="columns">
+    <div class="columns" v-if="cardData">
       <div class="column is-4">
         <BaseCardChart :data="cardData.value" :title="card.name" />
       </div>

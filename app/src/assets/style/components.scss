@@ -138,6 +138,16 @@
 
 .card-chart {
   width: 100%;
+
+  &.button {
+    height: auto;
+    padding: 0;
+    display: block;
+
+    .icon {
+      margin-right: 0;
+    }
+  }
   
   .card-body {
     padding: 24px;

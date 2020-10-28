@@ -4,8 +4,18 @@
 
     <div class="columns">
       <template v-for="(card, index) in user.dashboard.cards">
-        <div class="column is-4-desktop is-3-widescreen" :key="index">
-          <BaseCardChart :data="cards[index]" :title="card.data.name" />
+        <div
+          class="column is-4-desktop is-3-widescreen"
+          :key="index"
+          @click="
+            $router.push({ name: 'card-view', params: { idCard: card.id } })
+          "
+        >
+          <BaseCardChart
+            class="button"
+            :data="cards[index]"
+            :title="card.data.name"
+          />
         </div>
       </template>
     </div>
@@ -33,6 +43,7 @@
 </template>
 
 <script>
+import { FilterQuery } from '@/utils/helpers'
 import { DataService } from '@/services/data'
 import { mapState } from 'vuex'
 import BaseCardChart from '@/components/charts/BaseCardChart'
@@ -121,7 +132,11 @@ export default {
   methods: {
     getCards() {
       this.user.dashboard.cards.forEach((e, index) => {
-        DataService.getInstanceData('cards', e.id).then(response => {
+        DataService.getInstanceData(
+          'cards',
+          e.id,
+          e.data.filters && FilterQuery(e.data.filters)
+        ).then(response => {
           this.$set(this.cards, index, response.value)
         })
       })

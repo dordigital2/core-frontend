@@ -57,7 +57,7 @@
         </template>
       </b-table-column>
 
-      <template slot="bottom-left" v-if="!presetPerPage"
+      <template slot="bottom-left" v-if="customPerPage"
         ><div class="pagination-per-page">
           Show
           <b-input
@@ -125,7 +125,7 @@ export default {
     table: Object,
     tableEntries: Object,
     filterMode: Boolean,
-    presetPerPage: Boolean,
+    customPerPage: Boolean,
     updateQueryNav: { type: Boolean, default: false },
     tableActionsComponent: { type: String, default: 'ActionsTable' }
   },
