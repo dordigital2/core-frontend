@@ -4,7 +4,10 @@ const Parser = {
   date: date =>
     date ? new Date(date).toLocaleDateString('ro-RO').replace(/\./g, '/') : '',
   datetime: date =>
-    date ? new Date(date).toLocaleString('ro-RO').replace(/\./g, '/') : ''
+    date ? new Date(date).toLocaleString('ro-RO').replace(/\./g, '/') : '',
+  number: x => {
+    return Number.isInteger(x) ? x : x.toFixed(2)
+  }
 }
 
 const QueryString = function(params) {
