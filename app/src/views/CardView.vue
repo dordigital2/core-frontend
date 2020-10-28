@@ -1,6 +1,6 @@
 <template>
   <div v-if="card">
-    <BaseTitle title="Card view" backTo="cards-view" />
+    <BaseTitle title="Card view" />
 
     <FilterHead
       v-if="table"
@@ -71,6 +71,8 @@ export default {
     })
   },
   mounted() {
+    this.$store.commit('data/setCard', null)
+    
     this.$store.dispatch('data/getCard', this.idCard).then(() => {
       this.$store.dispatch('data/getTable', this.card.config.table).then(() => {
         if (!this.card.filters) this.getCardData()

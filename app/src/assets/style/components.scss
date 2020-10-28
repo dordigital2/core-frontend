@@ -139,18 +139,21 @@
 .card-chart {
   width: 100%;
 
-  &.button {
-    height: auto;
-    padding: 0;
-    display: block;
-
-    .icon {
-      margin-right: 0;
+  &.card-button {
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-light;
     }
+  }
+
+  .card-header {
+    min-height: auto;
+    padding: 18px 24px 10px;
+    border: 0;
   }
   
   .card-body {
-    padding: 24px;
+    padding: 0 24px 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;

@@ -84,7 +84,6 @@ export default {
     cards: state => state.data.cards
   }),
   mounted() {
-    this.$store.commit('data/setCard', null)
     this.getCards()
   },
   methods: {

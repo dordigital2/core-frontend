@@ -4,18 +4,14 @@
 
     <div class="columns">
       <template v-for="(card, index) in user.dashboard.cards">
-        <div
-          class="column is-4-desktop is-3-widescreen"
-          :key="index"
-          @click="
-            $router.push({ name: 'card-view', params: { idCard: card.id } })
-          "
-        >
-          <BaseCardChart
-            class="button"
-            :data="cards[index]"
-            :title="card.data.name"
-          />
+        <div class="column is-4-desktop is-3-widescreen" :key="index">
+          <router-link :to="{ name: 'card-view', params: { idCard: card.id } }">
+            <BaseCardChart
+              class="card-button"
+              :data="cards[index]"
+              :title="card.data.name"
+            />
+          </router-link>
         </div>
       </template>
     </div>
@@ -121,13 +117,10 @@ export default {
   computed: mapState({
     user: state => state.user
   }),
-  watch: {
-    user() {
-      this.getCards()
-    }
-  },
   mounted() {
-    if (this.user) this.getCards()
+    this.$store.dispatch('getActiveUser').then(() => {
+      this.getCards()
+    })
   },
   methods: {
     getCards() {

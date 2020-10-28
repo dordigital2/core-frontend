@@ -70,7 +70,6 @@ export default {
   }),
   mounted() {
     if (!this.charts) this.$store.dispatch('data/getCharts')
-    this.$store.commit('data/setChart', null)
   }
 }
 </script>
