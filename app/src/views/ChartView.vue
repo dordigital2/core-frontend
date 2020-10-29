@@ -71,7 +71,7 @@ export default {
   },
   mounted() {
     this.$store.commit('data/setChart', null)
-    
+
     this.$store.dispatch('data/getChart', this.idChart).then(() => {
       this.$store
         .dispatch('data/getTable', this.chart.config.table)

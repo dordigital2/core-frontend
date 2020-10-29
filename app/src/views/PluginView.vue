@@ -28,7 +28,7 @@
             class="is-size-4"
             v-if="activeUser && activeUser.is_admin"
             @click="active.settings = !active.settings"
-            ><b-icon icon="cog"></b-icon
+            ><b-icon icon="cog-outline"></b-icon
           ></b-button>
         </div>
       </template>

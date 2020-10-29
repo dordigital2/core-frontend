@@ -26,6 +26,11 @@ export default {
   },
   watch: {
     innerValue(input) {
+      // const time = input.getTime()
+      // const offset = input.getTimezoneOffset() * 60000
+
+      // console.log(new Date(time - offset).toISOString())
+
       if (input) this.$emit('input', input.toISOString())
     },
     value(input) {

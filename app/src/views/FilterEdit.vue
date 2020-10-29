@@ -3,8 +3,24 @@
     <BaseTitle :title="title" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
-      <BaseCard title="Configure view and table link">
+      <BaseCard title="Configure view">
         <div class="card-container">
+          <div class="columns">
+            <div class="column is-6">
+              <VField
+                label="
+                  Select if you want to create a filtered view based on data
+                  from a single table or you need to link two tables to create a
+                  view based on data from multiple tables."
+                rules="required"
+              >
+                <b-select v-model.number="type" expanded>
+                  <option value="0">Single view</option>
+                  <option value="1">Joined tables view</option>
+                </b-select>
+              </VField>
+            </div>
+          </div>
           <div class="columns">
             <div class="column is-6">
               <VField label="View name" rules="required">
@@ -40,7 +56,7 @@
                 </b-select>
               </VField>
             </div>
-            <div class="column is-4">
+            <div class="column is-4" v-if="type">
               <VField
                 label="Link field"
                 rules=""
@@ -70,7 +86,7 @@
               <VField
                 :name="`Table #${link_index + 1} columns `"
                 label="Select which columns you want to keep in the table you are currently building:"
-                rules="required|over:2"
+                rules="required"
               >
                 <div class="checkbox-list is-1">
                   <b-checkbox
@@ -108,10 +124,8 @@ export default {
     return {
       idTable: this.$route.params.idTable,
       name: null,
-      links: [
-        { table: null, join_field: null, fields: [] },
-        { table: null, join_field: null, fields: [] }
-      ],
+      type: 0,
+      links: [{ table: null, join_field: null, fields: [] }],
       title: null
     }
   },
@@ -120,6 +134,15 @@ export default {
     table: state => state.table,
     tableView: state => state.tableView
   }),
+  watch: {
+    type() {
+      // console.log(JSON.stringify(this.type))
+
+      if (this.type)
+        this.links.push({ table: null, join_field: null, fields: [] })
+      else this.links.pop()
+    }
+  },
   mounted() {
     this.title = this.idTable ? 'Edit filtered view' : 'Add filtered view'
 
@@ -128,11 +151,15 @@ export default {
     if (this.idTable)
       this.$store.dispatch('data/getTableView', this.idTable).then(() => {
         this.name = this.tableView.name
+        this.type = Number(
+          this.tableView.config.join_tables &&
+            this.tableView.config.join_tables.length
+        )
 
         this.$store
           .dispatch('data/getTable', this.tableView.config.primary_table.table)
           .then(() => {
-            console.log(this.tableView.config)
+            // console.log(this.tableView.config)
             if (this.tableView.config.join_tables.length)
               this.$store
                 .dispatch(
@@ -143,6 +170,7 @@ export default {
                   this.$set(this.links, 0, {
                     ...this.tableView.config.primary_table
                   })
+
                   this.$set(this.links, 1, {
                     ...this.tableView.config.join_tables[0]
                   })
@@ -174,11 +202,10 @@ export default {
       }
     },
     submit() {
-      // console.log('submit')
       const resource = {
         name: this.name,
         primary_table: this.links[0],
-        join_tables: this.links[1].table ? [this.links[1]] : null
+        join_tables: this.links.length > 1 ? [this.links[1]] : []
       }
 
       if (!this.idTable) {

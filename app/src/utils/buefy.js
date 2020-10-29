@@ -71,14 +71,21 @@ const MyBuefy = {
     // ]
 
     // config.defaultDateFormatter = date => {
+    //   console.log(date)
+    //   const func = e => e.toLocaleDateString('ro-RO')
+
     //   if (Array.isArray(date)) {
-    //     return date.map(e => e.toLocaleDateString('ro-RO')).join('—')
+    //     return date.map(e => func(e)).join('—')
     //   }
 
-    //   return date.toLocaleDateString('ro-RO')
+    //   return func(date)
     // }
 
-    // config.defaultDateParser = (date) => new Date(date.replace('.', '-'))
+    // config.defaultDateParser = date => {
+    //   console.log(date)
+    //   const d = new Date(date)
+    //   return d
+    // }
 
     config.defaultNoticeQueue = false
     config.defaultToastDuration = 3000
