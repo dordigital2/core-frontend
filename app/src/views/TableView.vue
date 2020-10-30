@@ -31,9 +31,8 @@
               name: filterMode ? 'filter-edit' : 'table-edit',
               params: { idTable }
             }"
-          >
-            Edit table
-          </router-link>
+            v-text="filterMode ? 'Edit view' : 'Edit table'"
+          />
 
           <router-link
             v-if="!filterMode"
