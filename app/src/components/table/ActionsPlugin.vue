@@ -9,9 +9,13 @@
       dialogTitle="Do you wish to delete this plug-in task?"
       dialogMessage="This operation permanently removes this plug-in task. Please check the data before proceeding."
       @on-confirm="
-        $store.dispatch('data/deleteTask', {
-          idTask: props.id
-        })
+        $store
+          .dispatch('plugin/deleteTask', {
+            idTask: props.id
+          })
+          .then(() => {
+            $emit('update')
+          })
       "
     />
   </div>

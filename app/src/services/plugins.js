@@ -19,6 +19,10 @@ class PluginService {
     return ApiService.get(`${this.plugin}tasks/${id}/`)
   }
 
+  deleteTask(id) {
+    return ApiService.delete(`${this.plugin}tasks/${id}/`)
+  }
+
   getTaskDetail(idTask, idLog) {
     return ApiService.get(
       `${this.plugin}tasks/${idTask}/task-results/${idLog}/`

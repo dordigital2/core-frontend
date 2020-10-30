@@ -7,6 +7,7 @@ export default {
   state: {
     service: null,
     task: null,
+    tasks: null,
     taskOptions: null,
     loading: {}
   },
@@ -17,6 +18,9 @@ export default {
     setTask(state, data) {
       state.task = data
     },
+    setTasks(state, data) {
+      state.tasks = data
+    },
     setTaskOptions(state, data) {
       state.taskOptions = data
     },
@@ -25,6 +29,12 @@ export default {
     }
   },
   actions: {
+    getTasks({ commit, state }, query) {
+      return state.service.getTasks(query).then(response => {
+        commit('setTasks', response)
+      })
+    },
+
     getTask({ commit, state }, idTask) {
       return state.service.getTask(idTask).then(response => {
         commit('setTask', response)
@@ -34,6 +44,12 @@ export default {
     getTaskOptions({ commit, state }, idTask) {
       return state.service.getTaskOptions(idTask).then(response => {
         commit('setTaskOptions', response.actions.POST)
+      })
+    },
+
+    deleteTask({ commit, state }, { idTask }) {
+      return state.service.deleteTask(idTask).then(() => {
+        commit('setTask', null)
       })
     }
   }

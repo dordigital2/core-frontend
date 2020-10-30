@@ -122,8 +122,9 @@ const TableViewService = {
 }
 
 const ChartService = {
-  getCharts() {
-    return ApiService.get('charts/')
+  getCharts(query) {
+    const queryString = query != null ? '?' + QueryString(query) : ''
+    return ApiService.get(`charts/${queryString}`)
   },
 
   createChart(data) {

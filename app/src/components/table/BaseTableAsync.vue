@@ -35,24 +35,14 @@
               v-bind="{
                 props: props.row,
                 ...column.props,
-                value: getValue(
-                  props.row.data ? props.row.data : props.row,
-                  column.name,
-                  column.field_type
-                )
+                value: getValue(props.row, column.name, column.field_type)
               }"
               @update="$emit('update', query)"
-            ></component>
+            />
           </template>
 
           <template v-else>
-            {{
-              getValue(
-                props.row.data ? props.row.data : props.row,
-                column.name,
-                column.field_type
-              )
-            }}
+            {{ getValue(props.row, column.name, column.field_type) }}
           </template>
         </template>
       </b-table-column>
@@ -80,6 +70,7 @@
 
 <script>
 import ActionsCards from './ActionsCards'
+import ActionsCharts from './ActionsCharts'
 import ActionsPlugin from './ActionsPlugin'
 import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
@@ -100,6 +91,7 @@ import { mapState } from 'vuex'
 export default {
   components: {
     ActionsCards,
+    ActionsCharts,
     ActionsPlugin,
     ActionsTable,
     ActionsTableEntity,
@@ -168,10 +160,10 @@ export default {
   mounted() {},
   methods: {
     getValue(row, field, type) {
-      const value = getNestedObj(row, field)
-      if (value != null) return FieldService.getParsedValue(value, type)
+      const obj = row.data ? row.data : row
+      const value = getNestedObj(obj, field)
 
-      return null
+      return value != null ? FieldService.getParsedValue(value, type) : null
     },
     updateQueryRequest(query) {
       const newQuery = Object.assign({}, this.$route.query, query)

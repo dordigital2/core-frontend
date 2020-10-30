@@ -45,6 +45,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { ToastService } from '@/services/buefy'
 import PluginService from '@/services/plugins'
 import BaseForm from '@/components/form/BaseForm'
 
@@ -58,7 +59,6 @@ export default {
       },
       settings: null,
       options: null,
-      tasks: null,
       taskTable: {
         id: 'tasks',
         default_fields: [
@@ -99,7 +99,8 @@ export default {
   },
   computed: {
     ...mapState({
-      activeUser: state => state.user
+      activeUser: state => state.user,
+      tasks: state => state.plugin.tasks
     }),
     type: function() {
       return this.$route.params.plugin
@@ -130,12 +131,11 @@ export default {
     saveSettings() {
       this.PluginService.saveSettings(this.settings).then(() => {
         this.active.settings = false
+        ToastService.open('Plug-in settings have been saved')
       })
     },
     getTasks(query) {
-      this.PluginService.getTasks(query).then(response => {
-        this.tasks = response
-      })
+      this.$store.dispatch('plugin/getTasks', query)
     }
   },
   watch: {

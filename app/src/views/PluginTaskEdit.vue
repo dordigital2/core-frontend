@@ -14,11 +14,11 @@
           <div class="card-container card-form">
             <div class="columns">
               <div class="column is-6">
-                <VField label="Name">
+                <VField label="Name" rules="required">
                   <b-input v-model="model.name" />
                 </VField>
 
-                <VField label="Task type">
+                <VField label="Task type" rules="required">
                   <b-select v-model="model.task_type" expanded>
                     <option
                       v-for="(option, key) in taskOptions.task_type.choices"
@@ -30,7 +30,7 @@
                 </VField>
 
                 <template v-if="model.task_type == 'segmentation'">
-                  <VField label="Filtered view">
+                  <VField label="Filtered view" rules="required">
                     <b-select
                       v-model="model.segmentation_task.filtered_view"
                       expanded
@@ -48,6 +48,10 @@
                     <b-input v-model="model.segmentation_task.tag" />
                   </VField>
                 </template>
+
+                <VField>
+                  <b-checkbox v-model="model.periodic_task" disabled>Periodic task</b-checkbox>
+                </VField>
               </div>
             </div>
           </div>
@@ -73,7 +77,8 @@ export default {
         segmentation_task: {
           filtered_view: null,
           tag: ''
-        }
+        },
+        periodic_task: false
       },
       idTask: this.$route.params.idTask
     }

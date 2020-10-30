@@ -2,7 +2,7 @@
   <div v-if="user">
     <BaseTitle title="Dashboard" :hasBackButton="false" />
 
-    <div class="columns">
+    <div class="columns is-multiline">
       <template v-for="(card, index) in user.dashboard.cards">
         <div class="column is-4-desktop is-3-widescreen" :key="index">
           <router-link :to="{ name: 'card-view', params: { idCard: card.id } }">

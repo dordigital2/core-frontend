@@ -83,7 +83,9 @@
                 <b-select expanded v-model="chartConfig.y_axis_field">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields"
+                    v-for="(field, key) in table.fields.filter(
+                      e => ['int', 'float'].indexOf(e.field_type) != -1
+                    )"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"

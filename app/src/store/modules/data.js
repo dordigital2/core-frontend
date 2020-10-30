@@ -222,8 +222,8 @@ export default {
     // CHARTS
     //
 
-    getCharts({ commit }) {
-      return ChartService.getCharts().then(response => {
+    getCharts({ commit }, query) {
+      return ChartService.getCharts(query).then(response => {
         commit('setCharts', response)
       })
     },
