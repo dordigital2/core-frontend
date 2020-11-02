@@ -1,6 +1,6 @@
 <template>
   <div v-if="taskOptions">
-    <BaseTitle :title="`Task edit`" />
+    <BaseTitle :title="`Task editor`" />
 
     <ValidationObserver v-slot="{ passes }" @submit.prevent slim>
       <BaseCard title="Task settings"
@@ -19,7 +19,11 @@
                 </VField>
 
                 <VField label="Task type" rules="required">
-                  <b-select v-model="model.task_type" expanded>
+                  <b-select
+                    v-model="model.task_type"
+                    expanded
+                    :disabled="idTask != null"
+                  >
                     <option
                       v-for="(option, key) in taskOptions.task_type.choices"
                       :key="key"
@@ -50,7 +54,9 @@
                 </template>
 
                 <VField>
-                  <b-checkbox v-model="model.periodic_task" disabled>Periodic task</b-checkbox>
+                  <b-checkbox v-model="model.periodic_task" disabled
+                    >Periodic task</b-checkbox
+                  >
                 </VField>
               </div>
             </div>

@@ -7,18 +7,17 @@
 
       <template #actions>
         <div class="buttons">
-          <b-button class="is-size-4" @click="getLog()"
-            ><b-icon icon="refresh"></b-icon
-          ></b-button>
-          
           <router-link
             :to="{ name: 'plugin-task-edit', params: { idTask: task.id } }"
-            class="button is-dark"
+            class="button is-primary"
           >
-            Edit
+            Edit task
           </router-link>
 
-          <b-button type="is-success" @click="runTask">Run</b-button>
+          <b-button type="is-dark" @click="runTask">Run</b-button>
+          <b-button type="" class="is-size-4" @click="getLog()"
+            ><b-icon icon="refresh"></b-icon
+          ></b-button>
         </div>
       </template>
 
