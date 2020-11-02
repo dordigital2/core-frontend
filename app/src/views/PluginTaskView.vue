@@ -7,6 +7,10 @@
 
       <template #actions>
         <div class="buttons">
+          <b-button class="is-size-4" @click="getLog()"
+            ><b-icon icon="refresh"></b-icon
+          ></b-button>
+          
           <router-link
             :to="{ name: 'plugin-task-edit', params: { idTask: task.id } }"
             class="button is-dark"
@@ -87,8 +91,8 @@ export default {
   mounted() {
     this.$store.commit('plugin/setPlugin', this.$route.params.plugin)
     this.$store.dispatch('plugin/getTask', this.idTask)
-
     this.PluginService = new PluginService(this.$route.params.plugin)
+    
     this.getLog()
   },
   methods: {

@@ -21,13 +21,14 @@ import DnsOutline from 'vue-material-design-icons/DnsOutline.vue'
 import Download from 'vue-material-design-icons/Download.vue'
 import EyeOutline from 'vue-material-design-icons/EyeOutline.vue'
 import FlagOutline from 'vue-material-design-icons/FlagOutline.vue'
+import HelpCircleOutline from 'vue-material-design-icons/HelpCircleOutline.vue'
 import MenuIcon from 'vue-material-design-icons/Menu.vue'
 import MenuDown from 'vue-material-design-icons/MenuDown.vue'
 import MenuOpen from 'vue-material-design-icons/MenuOpen.vue'
 import MenuUp from 'vue-material-design-icons/MenuUp.vue'
 import MonitorDashboard from 'vue-material-design-icons/MonitorDashboard.vue'
 import Power from 'vue-material-design-icons/Power.vue'
-import HelpCircleOutline from 'vue-material-design-icons/HelpCircleOutline.vue'
+import Refresh from 'vue-material-design-icons/Refresh.vue'
 import SquareEditOutline from 'vue-material-design-icons/SquareEditOutline.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 import Tune from 'vue-material-design-icons/Tune.vue'
@@ -54,13 +55,14 @@ export default {
     Download,
     EyeOutline,
     FlagOutline,
+    HelpCircleOutline,
     MenuIcon,
     MenuDown,
     MenuOpen,
     MenuUp,
     MonitorDashboard,
     Power,
-    HelpCircleOutline,
+    Refresh,
     SquareEditOutline,
     TrashCanOutline,
     Tune,
