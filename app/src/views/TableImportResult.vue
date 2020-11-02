@@ -23,26 +23,28 @@
         </div>
       </BaseCard>
 
-      <BaseCard
-        :title="`${importData.errors_count} rows have errors`"
-        v-if="importData.errors_count"
-      >
+      <BaseCard v-if="importData.errors_count">
+        <template #title>
+          <span class="has-text-danger"
+            >{{ importData.errors_count }} rows have errors</span
+          >
+        </template>
         <template #default>
-          <b-table :data="importData.errors" scrollable>
+          <b-table :data="importData.errors" scrollable paginated :perPage="10">
             <b-table-column
               v-for="(field, index) in importData.csv_field_mapping"
               :key="`column-${index}`"
               v-bind="{
-                label: field.field_name
+                label: field.original_name
               }"
             >
               <template v-slot="props"
                 ><span
                   :class="{
                     'has-text-danger is-bold':
-                      props.row.errors[field.field_name]
+                      props.row.errors[field.original_name]
                   }"
-                  >{{ props.row.row[field.field_name] }}</span
+                  >{{ props.row.row[field.original_name] }}</span
                 ></template
               >
             </b-table-column>

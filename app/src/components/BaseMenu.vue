@@ -25,7 +25,11 @@
         @click="goto('filter-view')"
       />
 
-      <b-menu-item icon="chart-box-outline" :active="isActive.charts">
+      <b-menu-item
+        icon="chart-box-outline"
+        :active="isActive.charts"
+        @click="!menuActive && toggleMenu()"
+      >
         <template #label="props">
           <span>Data visualization</span>
           <b-icon
