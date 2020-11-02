@@ -31,7 +31,11 @@
                 </b-select>
               </VField>
 
-              <VField label="Aggregation function" rules="required" v-if="table">
+              <VField
+                label="Aggregation function"
+                rules="required"
+                v-if="table"
+              >
                 <b-select expanded v-model="cardConfig.data_column_function">
                   <option
                     v-for="(func, key) in cardFunctions"
@@ -49,9 +53,7 @@
               >
                 <b-select expanded v-model="cardConfig.data_column">
                   <option
-                    v-for="(field, key) in table.fields.filter(
-                      e => ['int', 'float'].indexOf(e.field_type) != -1
-                    )"
+                    v-for="(field, key) in table.fields.filter(isNumeric)"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"
@@ -74,6 +76,7 @@
 
 <script>
 import ChartService from '@/services/chart'
+import FieldService from '@/services/field'
 import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
@@ -87,7 +90,8 @@ export default {
       cardConfig: {
         y_axis_function: 'Count'
       },
-      cardFunctions: ChartService.getFunctions()
+      cardFunctions: ChartService.getFunctions(),
+      isNumeric: FieldService.isNumeric
     }
   },
   computed: {

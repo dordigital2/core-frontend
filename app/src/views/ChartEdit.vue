@@ -83,9 +83,7 @@
                 <b-select expanded v-model="chartConfig.y_axis_field">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields.filter(
-                      e => ['int', 'float'].indexOf(e.field_type) != -1
-                    )"
+                    v-for="(field, key) in table.fields.filter(isNumeric)"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"
@@ -152,6 +150,7 @@
 
 <script>
 import ChartConfig from '@/services/chart'
+import FieldService from '@/services/field'
 import { TableService } from '@/services/data'
 import { mapState } from 'vuex'
 
@@ -167,7 +166,8 @@ export default {
       },
       chartFunctions: ChartConfig.getFunctions(),
       chartTypes: ChartConfig.getChartTypes(),
-      chartTimelineGroups: ChartConfig.getTimelineGroups()
+      chartTimelineGroups: ChartConfig.getTimelineGroups(),
+      isNumeric: FieldService.isNumeric
     }
   },
   computed: {

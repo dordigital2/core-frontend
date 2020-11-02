@@ -79,6 +79,10 @@ const FieldService = {
       if (x === y) return 0
       else return x > y ? order : -order
     }
+  },
+
+  isNumeric(field) {
+    return ['int', 'float'].indexOf(field.field_type) != -1
   }
 }
 

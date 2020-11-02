@@ -7,7 +7,7 @@
 
     <ActionButtonGoto
       icon="square-edit-outline"
-      :path="{ name: 'chart-edit', params: { idChar: props.id } }"
+      :path="{ name: 'chart-edit', params: { idChart: props.id } }"
     />
 
     <ActionButtonDelete
