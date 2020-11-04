@@ -66,7 +66,8 @@ export default {
           'task_type',
           'last_run_date',
           'last_edit_date',
-          'last_edit_user.username'
+          'last_edit_user.username',
+          'schedule_enabled'
         ],
         fields: [
           {
@@ -92,6 +93,11 @@ export default {
           {
             name: 'last_edit_user.username',
             display_name: 'Last edit made by'
+          },
+          {
+            name: 'schedule_enabled',
+            display_name: 'Status',
+            component: 'FieldLiveTag'
           }
         ]
       }
