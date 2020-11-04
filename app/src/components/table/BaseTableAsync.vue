@@ -81,6 +81,7 @@ import FieldCheckbox from './FieldCheckbox'
 import FieldOwnerLink from './FieldOwnerLink'
 import FieldRouterLink from './FieldRouterLink'
 import FieldStatusTag from './FieldStatusTag'
+import FieldLiveTag from './FieldLiveTag'
 import FieldTagList from './FieldTagList'
 
 import FieldService from '@/services/field'
@@ -102,6 +103,7 @@ export default {
     FieldOwnerLink,
     FieldRouterLink,
     FieldStatusTag,
+    FieldLiveTag,
     FieldTagList
   },
   data() {

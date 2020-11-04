@@ -48,7 +48,8 @@ export default {
         id: 'tasks',
         default_fields: [
           'details',
-          'date',
+          'date_start',
+          'duration',
           'user.username',
           'status',
           'success'
@@ -62,9 +63,13 @@ export default {
             sortable: false
           },
           {
-            name: 'date',
+            name: 'date_start',
             display_name: 'Run date',
             field_type: 'datetime'
+          },
+          {
+            name: 'duration',
+            display_name: 'Duration'
           },
           {
             name: 'user.username',
