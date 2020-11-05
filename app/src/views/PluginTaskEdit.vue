@@ -12,7 +12,7 @@
 
         <template #default>
           <div class="card-container card-form">
-            <div class="columns">
+            <div class="columns is-multiline">
               <div class="column is-6">
                 <VField label="Name" rules="required">
                   <b-input v-model="model.name" />
@@ -52,11 +52,18 @@
                     <b-input v-model="model.segmentation_task.tag" />
                   </VField>
                 </template>
+              </div>
 
+              <div class="column is-12">
                 <VField>
-                  <b-checkbox v-model="model.periodic_task" disabled
+                  <b-checkbox v-model="model.periodic_task.enabled"
                     >Periodic task</b-checkbox
                   >
+                </VField>
+
+                <VField v-if="model.periodic_task.enabled">
+                  <CronEditor v-model="model.periodic_task.crontab" />
+                  {{ model.periodic_task.crontab }}
                 </VField>
               </div>
             </div>
@@ -68,13 +75,14 @@
 </template>
 
 <script>
+import CronEditor from '@/components/form/cron/CronEditor'
 import PluginService from '@/services/plugins'
 import { ToastService } from '@/services/buefy'
 import { mapState } from 'vuex'
 
 export default {
   name: 'PluginTaskEdit',
-  components: {},
+  components: { CronEditor },
   data() {
     return {
       model: {
@@ -84,7 +92,10 @@ export default {
           filtered_view: null,
           tag: ''
         },
-        periodic_task: false
+        periodic_task: {
+          enabled: false,
+          crontab: '*/1 * * * *'
+        }
       },
       idTask: this.$route.params.idTask
     }
@@ -106,6 +117,7 @@ export default {
     if (this.idTask)
       this.$store.dispatch('plugin/getTask', this.idTask).then(() => {
         this.model = { ...this.task }
+        // if (this.model.periodic_task.crontab)
       })
 
     this.$store.dispatch('plugin/getTaskOptions')

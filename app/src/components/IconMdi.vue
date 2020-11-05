@@ -14,6 +14,7 @@ import CalendarBlankOutline from 'vue-material-design-icons/CalendarBlankOutline
 import ChartBoxOutline from 'vue-material-design-icons/ChartBoxOutline.vue'
 import ChevronLeft from 'vue-material-design-icons/ChevronLeft.vue'
 import ChevronRight from 'vue-material-design-icons/ChevronRight.vue'
+import Clock from 'vue-material-design-icons/Clock.vue'
 import Close from 'vue-material-design-icons/Close.vue'
 import CloseCircleOutline from 'vue-material-design-icons/CloseCircleOutline.vue'
 import CogOutline from 'vue-material-design-icons/CogOutline.vue'
@@ -48,6 +49,7 @@ export default {
     ChartBoxOutline,
     ChevronLeft,
     ChevronRight,
+    Clock,
     Close,
     CloseCircleOutline,
     CogOutline,

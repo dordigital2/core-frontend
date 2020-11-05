@@ -14,6 +14,7 @@ import {
   Menu,
   Message,
   Modal,
+  Numberinput,
   Pagination,
   Radio,
   Select,
@@ -23,6 +24,7 @@ import {
   Tag,
   Tabs,
   Taginput,
+  Timepicker,
   Toast,
   Tooltip,
   Upload
@@ -110,6 +112,7 @@ const MyBuefy = {
     Vue.use(Menu)
     Vue.use(Message)
     Vue.use(Modal)
+    Vue.use(Numberinput)
     Vue.use(Pagination)
     Vue.use(Radio)
     Vue.use(Snackbar)
@@ -119,6 +122,7 @@ const MyBuefy = {
     Vue.use(Tabs)
     Vue.use(Tag)
     Vue.use(Taginput)
+    Vue.use(Timepicker)
     Vue.use(Toast)
     Vue.use(Tooltip)
     Vue.use(Upload)

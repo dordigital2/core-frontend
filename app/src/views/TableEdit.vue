@@ -71,7 +71,7 @@
                     :label="`Column format #${index + 1}`"
                     rules="required"
                   >
-                    <b-input v-model="field.field_format" />
+                    <VDateformat v-model="field.field_format" />
                   </VField>
                 </div>
               </div>
