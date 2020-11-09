@@ -156,7 +156,7 @@ export default {
               original_name: e.original_name,
               display_name: e.display_name,
               field_type: e.field_type,
-              field_format: '_%d'
+              field_format: null
             }
           })
         })

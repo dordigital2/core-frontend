@@ -1,39 +1,29 @@
 <template>
   <div>
     <VField class="field-group">
-      <b-select placeholder="Day" v-model="model[0]">
-        <option
-          v-for="(item, key) in options[0]"
-          :key="key"
-          :value="key"
-          v-text="item"
-        />
-      </b-select>
+      <template v-for="(prop, index) in model">
+        <b-tooltip type="is-dark" :label="tooltips[index]">
+          <b-select v-if="options[index]" v-model="model[index]" :key="index">
+            <option
+              v-for="(item, key) in options[index]"
+              :key="key"
+              :value="key"
+              v-text="item"
+            />
+          </b-select>
 
-      <b-input class="control-input" v-model="model[1]" maxlength="1" />
-
-      <b-select placeholder="Month" v-model="model[2]">
-        <option
-          v-for="(item, key) in options[2]"
-          :key="key"
-          :value="key"
-          v-text="item"
-        />
-      </b-select>
-
-      <b-input class="control-input" v-model="model[3]" maxlength="1" />
-
-      <b-select placeholder="Year" v-model="model[4]">
-        <option
-          v-for="(item, key) in options[4]"
-          :key="key"
-          :value="key"
-          v-text="item"
-        />
-      </b-select>
+          <b-input
+            v-else
+            :key="index"
+            class="control-input"
+            v-model="model[index]"
+            maxlength="1"
+          />
+        </b-tooltip>
+      </template>
     </VField>
 
-    <VField label="Drag them in the desired order">
+    <VField label="Drag the date components in the desired order">
       <draggable
         v-model="dateList"
         @change="update"
@@ -84,6 +74,13 @@ export default {
           '%Y': '1970'
         }
       },
+      tooltips: [
+        'Day format',
+        "The separator can be a symbol, such as / or .",
+        'Month format',
+        "The separator can be a symbol, such as / or .",
+        'Year format'
+      ],
       innerValue: this.value,
       dateList: [0, 1, 2, 3, 4],
       model: ['%d', '/', '%b', '/', '%Y']
@@ -109,7 +106,7 @@ export default {
 
       const regex = /(%\w)?(.)?(%\w)?(.)?(%\w)/
       const parsed = this.value.match(regex)
-      console.log(parsed)
+      // console.log(parsed)
 
       parsed.forEach((e, i) => {
         if (i && e) {
@@ -169,7 +166,10 @@ export default {
 }
 
 .draggable {
-  margin-top: 16px;
+  border: 1px solid $grey;
+  padding: 6px;
+  display: inline-block;
+  border-radius: $radius-small;
 
   .item {
     background-color: $grey-select;
@@ -177,12 +177,15 @@ export default {
     display: inline-block;
 
     border-radius: $radius-small;
-    margin-right: 8px;
     user-select: none;
     cursor: grab;
 
     &:hover {
       background-color: $grey-dark;
+    }
+
+    &:not(:last-child) {
+      margin-right: 8px;
     }
   }
 }
