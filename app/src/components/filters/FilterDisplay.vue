@@ -28,7 +28,7 @@
 
 <script>
 import FieldService from '@/services/field'
-import { FilterOptions } from '@/services/field'
+import { FilterOptions, FilterRelativeDate } from '@/services/field'
 
 export default {
   props: {
@@ -66,6 +66,8 @@ export default {
           ]
 
           return [values[0] + ' – ' + values[1]]
+        } else if (filter.type == 'relative') {
+          return [ FilterRelativeDate[filter.values[0]] ]
         } else
           return [
             (filter.type != 'exact'

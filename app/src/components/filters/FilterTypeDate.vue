@@ -12,16 +12,29 @@
         </b-select>
       </VField>
 
-      <VField label="Enter date" rules="required">
-        <VDate v-model="innerValue.values[0]" />
-      </VField>
+      <template v-if="!isRelative">
+        <VField label="Enter date" rules="required">
+          <VDate v-model="innerValue.values[0]" />
+        </VField>
 
-      <VField
-        label="Enter end date"
-        v-if="innerValue.type == 'interval'"
-        rules="required"
-      >
-        <VDate v-model="innerValue.values[1]" />
+        <VField
+          label="Enter end date"
+          v-if="innerValue.type == 'interval'"
+          rules="required"
+        >
+          <VDate v-model="innerValue.values[1]" />
+        </VField>
+      </template>
+
+      <VField label="Time frame" v-if="isRelative">
+        <b-select v-model="innerValue.values[0]">
+          <option
+            v-for="(type, key) in relativeDate"
+            :value="key"
+            :key="key"
+            v-text="type"
+          />
+        </b-select>
       </VField>
     </div>
 
@@ -30,7 +43,7 @@
 </template>
 
 <script>
-import { FilterOptions } from '@/services/field'
+import { FilterOptions, FilterRelativeDate } from '@/services/field'
 
 export default {
   props: {
@@ -40,7 +53,13 @@ export default {
   data() {
     return {
       innerValue: this.computeValue(),
-      choices: FilterOptions.date
+      choices: FilterOptions.date,
+      relativeDate: FilterRelativeDate
+    }
+  },
+  computed: {
+    isRelative() {
+      return this.innerValue.type == 'relative'
     }
   },
   methods: {

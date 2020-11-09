@@ -15,7 +15,7 @@
               are not sure of the data type in a column, we recommend you to
               select the Text type.
             </div>
-            <div><br>File: {{ importData.file }}</div>
+            <div><br>File: {{ importData.filename }}</div>
           </div>
         </template>
         <div class="card-container">
@@ -80,8 +80,6 @@
                   >
                     <VDateformat v-model="field.field_format" />
                   </VField>
-
-                  <pre>{{field.field_format}}</pre>
                 </div>
               </div>
 

@@ -47,8 +47,24 @@ const FilterOptions = {
     lt: 'Before date',
     lte: 'Before date, including',
     exact: 'Exact date',
-    interval: 'Date interval'
+    interval: 'Date interval',
+    relative: 'Relative time'
   }
+}
+
+const FilterRelativeDate = {
+  last_day: 'Yesterday',
+  next_day: 'Tomorrow',
+  current_day: 'Today',
+  last_week: 'Last week',
+  next_week: 'Next week',
+  current_week: 'This week',
+  last_month: 'Last month',
+  next_month: 'Next month',
+  current_month: 'This month',
+  last_year: 'Last year',
+  next_year: 'Next year',
+  current_year: 'This year'
 }
 
 const FieldService = {
@@ -88,4 +104,4 @@ const FieldService = {
 
 export default FieldService
 
-export { FilterOptions }
+export { FilterOptions, FilterRelativeDate }
