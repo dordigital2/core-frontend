@@ -116,7 +116,13 @@ export default {
     if (this.idTask)
       this.$store.dispatch('plugin/getTask', this.idTask).then(() => {
         this.model = { ...this.task }
-        // if (this.model.periodic_task.crontab)
+
+        if (this.model.periodic_task == null) {
+          this.model.periodic_task = {
+            enabled: false,
+            crontab: '*/1 * * * *'
+          }
+        }
       })
 
     this.$store.dispatch('plugin/getTaskOptions')

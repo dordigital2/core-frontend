@@ -64,6 +64,7 @@ export default {
         default_fields: [
           'name',
           'task_type',
+          'task_schedule',
           'last_run_date',
           'last_edit_date',
           'last_edit_user.username',
@@ -79,6 +80,11 @@ export default {
           {
             name: 'task_type',
             display_name: 'Type'
+          },
+          {
+            name: 'task_schedule',
+            display_name: 'Schedule',
+            component: 'FieldCronInfo'
           },
           {
             name: 'last_run_date',

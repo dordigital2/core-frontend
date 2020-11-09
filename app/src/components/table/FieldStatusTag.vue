@@ -1,10 +1,9 @@
 <template>
   <div>
-    <div
-      class="tag"
+    <b-tag
       :class="{ 'is-success': props.success, 'is-danger': !props.success }"
       v-text="props.success ? 'Success' : 'Error'"
-    ></div>
+    />
   </div>
 </template>
 

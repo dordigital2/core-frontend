@@ -2,8 +2,8 @@
   <div>
     <VField class="field-group">
       <template v-for="(prop, index) in model">
-        <b-tooltip type="is-dark" :label="tooltips[index]">
-          <b-select v-if="options[index]" v-model="model[index]" :key="index">
+        <b-tooltip type="is-dark" :label="tooltips[index]" :key="index">
+          <b-select v-if="options[index]" v-model="model[index]">
             <option
               v-for="(item, key) in options[index]"
               :key="key"
@@ -14,7 +14,6 @@
 
           <b-input
             v-else
-            :key="index"
             class="control-input"
             v-model="model[index]"
             maxlength="1"
@@ -76,9 +75,9 @@ export default {
       },
       tooltips: [
         'Day format',
-        "The separator can be a symbol, such as / or .",
+        'The separator can be a symbol, such as / or .',
         'Month format',
-        "The separator can be a symbol, such as / or .",
+        'The separator can be a symbol, such as / or .',
         'Year format'
       ],
       innerValue: this.value,

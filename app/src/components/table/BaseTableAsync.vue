@@ -76,12 +76,14 @@ import ActionsTable from './ActionsTable'
 import ActionsTableEntity from './ActionsTableEntity'
 import ActionsTableView from './ActionsTableView'
 import ActionsUser from './ActionsUser'
-import FieldPluginTaskDetail from './FieldPluginTaskDetail'
+
 import FieldCheckbox from './FieldCheckbox'
+import FieldCronInfo from './FieldCronInfo'
+import FieldLiveTag from './FieldLiveTag'
+import FieldPluginTaskDetail from './FieldPluginTaskDetail'
 import FieldOwnerLink from './FieldOwnerLink'
 import FieldRouterLink from './FieldRouterLink'
 import FieldStatusTag from './FieldStatusTag'
-import FieldLiveTag from './FieldLiveTag'
 import FieldTagList from './FieldTagList'
 
 import FieldService from '@/services/field'
@@ -98,12 +100,14 @@ export default {
     ActionsTableEntity,
     ActionsTableView,
     ActionsUser,
-    FieldPluginTaskDetail,
+    
+    FieldCronInfo,
     FieldCheckbox,
+    FieldLiveTag,
+    FieldPluginTaskDetail,
     FieldOwnerLink,
     FieldRouterLink,
     FieldStatusTag,
-    FieldLiveTag,
     FieldTagList
   },
   data() {
