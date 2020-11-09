@@ -63,7 +63,6 @@
 
                 <VField v-if="model.periodic_task.enabled">
                   <CronEditor v-model="model.periodic_task.crontab" />
-                  {{ model.periodic_task.crontab }}
                 </VField>
               </div>
             </div>

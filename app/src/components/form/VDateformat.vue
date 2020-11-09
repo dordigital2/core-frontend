@@ -35,15 +35,36 @@
 
     <VField label="Drag them in the desired order">
       <draggable v-model="dateList" draggable=".item" class="draggable">
-        <span v-if="model.day" class="item" v-text="options.day[model.day]" />
-        <span v-if="model.separator1" class="item" v-text="model.separator1" />
         <span
+          key="day"
+          v-if="model.day"
+          class="item"
+          v-text="options.day[model.day]"
+        />
+        <span
+          key="separator1"
+          v-if="model.separator1"
+          class="item"
+          v-text="model.separator1"
+        />
+        <span
+          key="month"
           v-if="model.month"
           class="item"
           v-text="options.month[model.month]"
         />
-        <span v-if="model.separator2" class="item" v-text="model.separator2" />
-        <span v-if="model.year" class="item" v-text="options.year[model.year]" />
+        <span
+          key="separator2"
+          v-if="model.separator2"
+          class="item"
+          v-text="model.separator2"
+        />
+        <span
+          key="year"
+          v-if="model.year"
+          class="item"
+          v-text="options.year[model.year]"
+        />
       </draggable>
     </VField>
   </div>
@@ -80,7 +101,7 @@ export default {
         }
       },
       innerValue: this.value,
-      dateList: null,
+      dateList: [],
       model: {
         day: '%d',
         separator1: '/',
@@ -90,9 +111,28 @@ export default {
       }
     }
   },
+  methods: {
+    updateDateList() {
+      this.dateList = [
+        this.model.day,
+        this.model.separator1,
+        this.model.month,
+        this.model.separator2,
+        this.model.year
+      ]
+
+      this.$emit('input', this.dateList.join(''))
+    }
+  },
+  mounted() {
+    this.updateDateList()
+  },
   watch: {
-    innerValue(input) {
-      this.$emit('input', input)
+    model: {
+      deep: true,
+      handler() {
+        this.updateDateList()
+      }
     },
     value(input) {
       this.innerValue = input
@@ -106,7 +146,7 @@ export default {
   .control-input {
     margin-right: 0 !important;
     width: 24px;
-    
+
     /deep/ .input {
       border-color: $grey-select;
     }

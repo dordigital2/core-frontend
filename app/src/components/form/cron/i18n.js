@@ -18,12 +18,12 @@ export const defaultLocales = {
         sun: "Sun",
         hasToBeBetween: "Has to be between",
         and: "and",
-        minutes: "MINUTES",
-        hourly: "HOURLY",
-        daily: "DAILY",
-        weekly: "WEEKLY",
-        monthly: "MONTHLY",
-        advanced: "ADVANCED",
+        minutes: "Minutes",
+        hourly: "Hourly",
+        daily: "Daily",
+        weekly: "Weekly",
+        monthly: "Monthly",
+        advanced: "Advanced",
         cronExpression: "Cron expression:"
     },
     pl: {

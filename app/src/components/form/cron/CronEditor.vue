@@ -1,6 +1,6 @@
 <template>
   <div class="enable-bulma" :key="visibleTabs.join()">
-    <b-tabs v-model="activeTab" @input="reset">
+    <b-tabs v-model="activeTab" @input="reset" :animated="false">
       <b-tab-item
         v-if="visibleTabs.includes('minutes')"
         value="0"
@@ -151,8 +151,8 @@
           <b-field grouped>
             <span class="field-item">{{ _$t('cronExpression') }}</span>
             <b-input v-model="editorData.cronExpression"></b-input>
-            <span class="field-item">{{ explanation }}</span>
           </b-field>
+          <span class="field-item">{{ explanation }}</span>
         </div>
       </b-tab-item>
     </b-tabs>
@@ -211,16 +211,16 @@ export default {
 
 <style lang="scss" scoped>
 .cron-container {
-  display: flex;
-  align-item: center;
+  // display: flex;
+  // align-items: center;
 
   /deep/ .field-body .field {
     display: flex;
     align-items: center;
-  }
 
-  /deep/ .control {
-    flex: none;
+    > .control {
+      // flex: none;
+    }
   }
 
   .field-item {
