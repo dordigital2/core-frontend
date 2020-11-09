@@ -1,31 +1,31 @@
 <template>
   <div>
     <VField class="field-group">
-      <b-select placeholder="Day" v-model="model.day">
+      <b-select placeholder="Day" v-model="model[0]">
         <option
-          v-for="(item, key) in options.day"
+          v-for="(item, key) in options[0]"
           :key="key"
           :value="key"
           v-text="item"
         />
       </b-select>
 
-      <b-input class="control-input" v-model="model.separator1" maxlength="1" />
+      <b-input class="control-input" v-model="model[1]" maxlength="1" />
 
-      <b-select placeholder="Month" v-model="model.month">
+      <b-select placeholder="Month" v-model="model[2]">
         <option
-          v-for="(item, key) in options.month"
+          v-for="(item, key) in options[2]"
           :key="key"
           :value="key"
           v-text="item"
         />
       </b-select>
 
-      <b-input class="control-input" v-model="model.separator2" maxlength="1" />
+      <b-input class="control-input" v-model="model[3]" maxlength="1" />
 
-      <b-select placeholder="Year" v-model="model.year">
+      <b-select placeholder="Year" v-model="model[4]">
         <option
-          v-for="(item, key) in options.year"
+          v-for="(item, key) in options[4]"
           :key="key"
           :value="key"
           v-text="item"
@@ -34,37 +34,20 @@
     </VField>
 
     <VField label="Drag them in the desired order">
-      <draggable v-model="dateList" draggable=".item" class="draggable">
-        <span
-          key="day"
-          v-if="model.day"
-          class="item"
-          v-text="options.day[model.day]"
-        />
-        <span
-          key="separator1"
-          v-if="model.separator1"
-          class="item"
-          v-text="model.separator1"
-        />
-        <span
-          key="month"
-          v-if="model.month"
-          class="item"
-          v-text="options.month[model.month]"
-        />
-        <span
-          key="separator2"
-          v-if="model.separator2"
-          class="item"
-          v-text="model.separator2"
-        />
-        <span
-          key="year"
-          v-if="model.year"
-          class="item"
-          v-text="options.year[model.year]"
-        />
+      <draggable
+        v-model="dateList"
+        @change="update"
+        draggable=".item"
+        class="draggable"
+      >
+        <template v-for="key in dateList">
+          <div
+            :key="key"
+            class="item"
+            v-if="model[key].length"
+            v-text="getDisplayValue(key)"
+          />
+        </template>
       </draggable>
     </VField>
   </div>
@@ -82,57 +65,89 @@ export default {
   },
   data() {
     return {
+      // 0 - day, 2 - month, 4 - year
       options: {
-        day: {
+        0: {
           '': 'None',
           '%d': '01',
           '%w': '1'
         },
-        month: {
+        2: {
           '': 'None',
           '%b': 'Jan',
           '%B': 'January',
           '%m': '01'
         },
-        year: {
+        4: {
           '': 'None',
-          '%y': '99',
-          '%Y': '1999'
+          '%y': '70',
+          '%Y': '1970'
         }
       },
       innerValue: this.value,
-      dateList: [],
-      model: {
-        day: '%d',
-        separator1: '/',
-        separator2: '/',
-        month: '%b',
-        year: '%Y'
-      }
+      dateList: [0, 1, 2, 3, 4],
+      model: ['%d', '/', '%b', '/', '%Y']
     }
   },
   methods: {
-    updateDateList() {
-      this.dateList = [
-        this.model.day,
-        this.model.separator1,
-        this.model.month,
-        this.model.separator2,
-        this.model.year
-      ]
+    update() {
+      const value = this.dateList.map(e => this.model[e])
 
-      this.$emit('input', this.dateList.join(''))
+      this.$emit('input', value.join(''))
+    },
+    getDisplayValue(key) {
+      const value = this.model[key]
+
+      if (this.options[key] != null) return this.options[key][value]
+      else return value
     }
   },
   mounted() {
-    this.updateDateList()
+    if (this.value) {
+      this.model = ['', '', '', '', '']
+      this.dateList = []
+
+      const regex = /(%\w)?(.)?(%\w)?(.)?(%\w)/
+      const parsed = this.value.match(regex)
+      console.log(parsed)
+
+      parsed.forEach((e, i) => {
+        if (i && e) {
+          let found = false
+
+          for (let j = 0; j <= 4; j += 2) {
+            if (this.options[j][e]) {
+              this.dateList.push(j)
+              this.model[j] = e
+              found = true
+              break
+            }
+          }
+
+          if (!found) {
+            if (!this.model[1].length) {
+              this.model[1] = e
+              this.dateList.push(1)
+            } else if (!this.model[3].length) {
+              this.model[3] = e
+              this.dateList.push(3)
+            }
+          }
+        }
+      })
+
+      if (this.dateList.length < 5) {
+        for (let i = 0; i < 5; i++) {
+          if (this.dateList.indexOf(i) == -1) this.dateList.push(i)
+        }
+      }
+    }
+
+    this.update()
   },
   watch: {
-    model: {
-      deep: true,
-      handler() {
-        this.updateDateList()
-      }
+    model() {
+      this.update()
     },
     value(input) {
       this.innerValue = input
@@ -159,6 +174,7 @@ export default {
   .item {
     background-color: $grey-select;
     padding: 8px;
+    display: inline-block;
 
     border-radius: $radius-small;
     margin-right: 8px;

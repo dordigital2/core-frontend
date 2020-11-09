@@ -7,7 +7,13 @@
         <template #title>
           <div class="info" v-if="idImport">
             <div>
-              The table you want to import contains multiple columns. Please name the columns and select the column type for each. The column type refers to the type of data present in a specific column (eg: Column name: Age will have a Column type: Integer (whole number)) . The system provides you with five default column types. If you are not sure of the data type in a column, we recommend you to select the Text type.
+              The table you want to import contains multiple columns. Please
+              name the columns and select the column type for each. The column
+              type refers to the type of data present in a specific column (eg:
+              Column name: Age will have a Column type: Integer (whole number))
+              . The system provides you with five default column types. If you
+              are not sure of the data type in a column, we recommend you to
+              select the Text type.
             </div>
           </div>
         </template>
@@ -150,7 +156,7 @@ export default {
               original_name: e.original_name,
               display_name: e.display_name,
               field_type: e.field_type,
-              field_format: null
+              field_format: '_%d'
             }
           })
         })
