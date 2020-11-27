@@ -12,7 +12,7 @@ const Parser = {
 
 const QueryString = function(params) {
   return Object.keys(params)
-    .map(key => key + '=' + params[key])
+    .map(key => key + '=' + encodeURIComponent(params[key]))
     .join('&')
 }
 
