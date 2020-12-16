@@ -18,21 +18,25 @@ const ApiService = {
 
         let msg = ''
 
-        switch (err.response.status) {
-          case 500:
-          case 404:
-            msg = 'Something went wrong'
-            break
-          case null:
-            msg = 'Please check your internet connection'
-            break
-          default:
-            for (let e in err.response.data) {
-              const o = err.response.data[e]
-              msg += (Array.isArray(o) && o[0]) || o + '<br/>'
+        try {
+          switch (err.response.status) {
+            case 500:
+            case 404:
+              msg = 'Something went wrong'
               break
-            }
-            break
+            case null:
+              msg = 'Please check your internet connection'
+              break
+            default:
+              for (let e in err.response.data) {
+                const o = err.response.data[e]
+                msg += (Array.isArray(o) && o[0]) || o + '<br/>'
+                break
+              }
+              break
+          }
+        } catch {
+          if (err.response == null) msg = 'Unable to connect to database'
         }
 
         msg = 'Error<br> ' + msg

@@ -1,4 +1,4 @@
-import config, { setVueInstance } from 'buefy/src/utils/config'
+import Vue from 'vue'
 
 import {
   Button,
@@ -27,106 +27,83 @@ import {
   Timepicker,
   Toast,
   Tooltip,
-  Upload
-} from 'buefy/src/components'
+  Upload,
+  ConfigProgrammatic
+} from 'buefy'
 
-const MyBuefy = {
-  install(Vue) {
-    setVueInstance(Vue)
+ConfigProgrammatic.setOptions({
+  defaultTrapFocus: true,
+  defaultIconComponent: 'icon-mdi',
+  defaultIconPack: 'mdi',
 
-    // Options
-    config.defaultTrapFocus = true
-    config.defaultIconComponent = 'icon-mdi'
-    config.defaultIconPack = 'mdi'
-
-    config.customIconPacks = {
-      mdi: {
-        iconPrefix: '',
-        internalIcons: {
-          // 'check': 'checkmark',
-          // 'check-circle': 'checkmark-circle-outline',
-          'alert-circle': 'alert-circle-outline'
-          // 'chevron-right': 'arrow-forward',
-          // 'chevron-left': 'arrow-back',
-          // 'chevron-down': 'arrow-down',
-          // 'menu-down': 'arrow-dropdown',
-          // 'menu-up': 'arrow-dropup',
-        }
+  customIconPacks: {
+    mdi: {
+      iconPrefix: '',
+      internalIcons: {
+        // 'check': 'checkmark',
+        // 'check-circle': 'checkmark-circle-outline',
+        'alert-circle': 'alert-circle-outline'
+        // 'chevron-right': 'arrow-forward',
+        // 'chevron-left': 'arrow-back',
+        // 'chevron-down': 'arrow-down',
+        // 'menu-down': 'arrow-dropdown',
+        // 'menu-up': 'arrow-dropup',
       }
     }
+  },
 
-    // config.defaultFirstDayOfWeek = 1
-    // config.defaultDayNames = ['Sun', 'L', 'M', 'M', 'J', 'V', 'S']
-    // config.defaultMonthNames = [
-    //   'Ianuarie',
-    //   'Februarie',
-    //   'Martie',
-    //   'Aprilie',
-    //   'Mai',
-    //   'Iunie',
-    //   'Iulie',
-    //   'August',
-    //   'Septembrie',
-    //   'Octombrie',
-    //   'Noiembrie',
-    //   'Decembrie'
-    // ]
+  // defaultDateFormatter: date => {
+  //   console.log(date)
+  //   const func = e => e.toLocaleDateString('ro-RO')
 
-    // config.defaultDateFormatter = date => {
-    //   console.log(date)
-    //   const func = e => e.toLocaleDateString('ro-RO')
+  //   if (Array.isArray(date)) {
+  //     return date.map(e => func(e)).join('—')
+  //   }
 
-    //   if (Array.isArray(date)) {
-    //     return date.map(e => func(e)).join('—')
-    //   }
+  //   return func(date)
+  // },
 
-    //   return func(date)
-    // }
+  // defaultDateParser: date => {
+  //   console.log(date)
+  //   const d = new Date(date)
+  //   return d
+  // },
 
-    // config.defaultDateParser = date => {
-    //   console.log(date)
-    //   const d = new Date(date)
-    //   return d
-    // }
+  defaultNoticeQueue: false,
+  defaultToastDuration: 3000,
+  // defaultToastPosition: 'is-bottom',
+  defaultInputHasCounter: false,
+  defaultUseHtml5Validation: false,
+  defaultDialogConfirmText: 'Confirm',
+  defaultDialogCancelText: 'Cancel'
+  // defaultModalCanCancel: false,
+})
 
-    config.defaultNoticeQueue = false
-    config.defaultToastDuration = 3000
-    // config.defaultToastPosition = 'is-bottom'
-    config.defaultInputHasCounter = false
-    config.defaultUseHtml5Validation = false
-    config.defaultDialogConfirmText = 'Confirm'
-    config.defaultDialogCancelText = 'Cancel'
-    // config.defaultModalCanCancel = false
-
-    // Components
-    Vue.use(Button)
-    Vue.use(Checkbox)
-    Vue.use(Datepicker)
-    Vue.use(Datetimepicker)
-    Vue.use(Dialog)
-    Vue.use(Dropdown)
-    Vue.use(Field)
-    Vue.use(Icon)
-    Vue.use(Input)
-    Vue.use(Loading)
-    Vue.use(Menu)
-    Vue.use(Message)
-    Vue.use(Modal)
-    Vue.use(Numberinput)
-    Vue.use(Pagination)
-    Vue.use(Radio)
-    Vue.use(Snackbar)
-    Vue.use(Switch)
-    Vue.use(Select)
-    Vue.use(Table)
-    Vue.use(Tabs)
-    Vue.use(Tag)
-    Vue.use(Taginput)
-    Vue.use(Timepicker)
-    Vue.use(Toast)
-    Vue.use(Tooltip)
-    Vue.use(Upload)
-  }
-}
-
-export default MyBuefy
+// Components
+Vue.use(Button)
+Vue.use(Checkbox)
+Vue.use(Datepicker)
+Vue.use(Datetimepicker)
+Vue.use(Dialog)
+Vue.use(Dropdown)
+Vue.use(Field)
+Vue.use(Icon)
+Vue.use(Input)
+Vue.use(Loading)
+Vue.use(Menu)
+Vue.use(Message)
+Vue.use(Modal)
+Vue.use(Numberinput)
+Vue.use(Pagination)
+Vue.use(Radio)
+Vue.use(Snackbar)
+Vue.use(Switch)
+Vue.use(Select)
+Vue.use(Table)
+Vue.use(Tabs)
+Vue.use(Tag)
+Vue.use(Taginput)
+Vue.use(Timepicker)
+Vue.use(Toast)
+Vue.use(Tooltip)
+Vue.use(Upload)

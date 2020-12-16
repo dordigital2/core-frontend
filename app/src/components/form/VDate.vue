@@ -1,5 +1,6 @@
 <template>
   <b-datepicker
+    :locale="locale"
     icon="calendar-blank-outline"
     iconPrev="arrow-left"
     iconNext="arrow-right"
@@ -21,7 +22,8 @@ export default {
   },
   data() {
     return {
-      innerValue: this.value ? new Date(this.value) : null
+      innerValue: this.value ? new Date(this.value) : null,
+      locale: 'en-US'
     }
   },
   watch: {

@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import Buefy from './utils/buefy'
 
 import App from './App.vue'
 import router from './router'
@@ -7,6 +6,7 @@ import store from './store'
 
 import ApiService from './services/api'
 
+import './utils/buefy'
 import './components/'
 import './utils/form-validation'
 import './utils/filters'
@@ -15,7 +15,7 @@ import './utils/filters'
 import './assets/style/base.scss'
 
 // Vendor init
-Vue.use(Buefy)
+// 
 
 // Services
 ApiService.init(process.env.VUE_APP_ROOT_API)
