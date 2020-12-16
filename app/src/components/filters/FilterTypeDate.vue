@@ -2,7 +2,7 @@
   <div class="filter-component">
     <div class="filter-body">
       <VField label="Choose filter mode" rules="required">
-        <b-select v-model="innerValue.type">
+        <b-select v-model="innerValue.type" @input="reset">
           <option
             v-for="(choice, index) in choices"
             :key="`choice-${choice}`"
@@ -72,6 +72,11 @@ export default {
       if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
 
       this.$emit('input', this.innerValue)
+    },
+    reset() {
+      if (!this.isRelative && new Date(this.innerValue.values[0]) == 'Invalid Date') {
+        this.innerValue.values[0] = null
+      }
     }
   },
   watch: {

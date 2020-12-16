@@ -50,10 +50,10 @@ const ApiService = {
     )
   },
 
-  getPath(path, appendToken, query) {
+  getPath(path, appendToken) {
     const newPath = axios.defaults.baseURL.slice(-1) == '/' ? path : '/' + path
-    console.log(appendToken)
-    console.log(query)
+    // console.log(appendToken)
+    
     return (
       axios.defaults.baseURL +
       newPath +
