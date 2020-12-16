@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card" style="width: 960px;">
+  <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">
         Filter options
@@ -173,6 +173,8 @@ $cell-padding: 18px 24px;
 
 .modal-card {
   @include desktop {
+    max-width: 1200px;
+    width: 90vw;
     height: 60vh;
   }
 

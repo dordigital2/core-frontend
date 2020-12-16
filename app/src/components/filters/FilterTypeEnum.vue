@@ -13,7 +13,7 @@
         <a @click.prevent="selectNone">Select none</a>
       </div>
 
-      <div class="checkbox-list is-3">
+      <div class="checkbox-list is-4">
         <VField rules="required">
           <b-checkbox
             v-for="(choice, index) in filterChoices"
@@ -81,3 +81,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  /deep/ .b-checkbox.checkbox {
+    align-items: flex-start;
+
+    .check {
+      margin-top: 3px;
+    }
+  }
+</style>

@@ -67,9 +67,10 @@ export default {
         idTable: this.table.id,
         filter: this.filterData
       })
-
-      if (this.filterData) this.updateFilterQuery()
+      
+      if (this.filters) this.updateFilterQuery()
     }
+
   },
   methods: {
     openModalFilters() {
@@ -78,6 +79,7 @@ export default {
         component: ModalFilters,
         hasModalCard: true,
         trapFocus: true,
+        width: '100%',
         props: {
           table: this.table
         },
@@ -91,9 +93,7 @@ export default {
 
     saveFilters() {
       const id =
-        ['charts', 'cards'].indexOf(this.viewType) != -1
-          ? this.$route.params.idChart || this.$route.params.idCard
-          : this.table.id
+        this.$route.params.idChart || this.$route.params.idCard || this.table.id
 
       ApiService.patch(`${this.viewType}/${id}/`, {
         filters: this.filters

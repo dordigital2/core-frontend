@@ -98,6 +98,9 @@ export default {
       },
       tableEntries: function(state) {
         return this.filterMode ? state.tableViewEntries : state.tableEntries
+      },
+      filters: function(state) {
+        return state.filters[this.idTable]
       }
     }),
     title() {
@@ -122,7 +125,8 @@ export default {
         this.idTable
       )
       .then(() => {
-        if (!this.table.filters) this.getTableEntries()
+        // if we have filters from the store/api then FilterHead handles entries update
+        if (!this.table.filters || (!this.filterMode && this.filters)) this.getTableEntries()
       })
   },
   methods: {
