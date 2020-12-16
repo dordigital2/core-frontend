@@ -22,7 +22,7 @@
       </template>
     </VField>
 
-    <VField label="Drag the date components in the desired order">
+    <VField label="Drag the elements to match the order of the data you're importing">
       <draggable
         v-model="dateList"
         @change="update"
