@@ -126,7 +126,7 @@ export default {
       )
       .then(() => {
         // if we have filters from the store/api then FilterHead handles entries update
-        if (!this.table.filters || (!this.filterMode && this.filters)) this.getTableEntries()
+        if (!this.table.filters || (!this.filterMode && !this.filters)) this.getTableEntries()
       })
   },
   methods: {

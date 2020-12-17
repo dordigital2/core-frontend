@@ -11,15 +11,26 @@
 
     <BaseCard :title="`Card — ${card.name}`">
       <template #actions>
-        <router-link
-          class="button is-primary"
-          :to="{
-            name: 'card-edit',
-            params: { idCard }
-          }"
-        >
-          Edit card
-        </router-link>
+        <div class="buttons">
+          <router-link
+            class="button is-dark"
+            :to="{
+              name: 'table-view',
+              params: { idTable: card.config.table }
+            }"
+          >
+            View data source
+          </router-link>
+          <router-link
+            class="button is-primary"
+            :to="{
+              name: 'card-edit',
+              params: { idCard }
+            }"
+          >
+            Edit card
+          </router-link>
+        </div>
       </template>
 
       <template #default>
@@ -72,7 +83,7 @@ export default {
   },
   mounted() {
     this.$store.commit('data/setCard', null)
-    
+
     this.$store.dispatch('data/getCard', this.idCard).then(() => {
       this.$store.dispatch('data/getTable', this.card.config.table).then(() => {
         if (!this.card.filters) this.getCardData()

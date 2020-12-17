@@ -182,6 +182,7 @@ export default {
     // TABLE VIEWS
     //
     getTableViews({ commit }, { query, all }) {
+      // console.log('getTableViews', query, all)
       commit('setLoading', { idTable: 'views', status: true })
       return DataService.get('filters', query, all).then(response => {
         // return TableViewService.getTableViews(query, getAll).then(response => {
@@ -213,7 +214,7 @@ export default {
 
     deleteTableView({ dispatch }, idTable) {
       return TableViewService.deleteTableView(idTable).then(() => {
-        dispatch('getTableViews').then(() => {
+        dispatch('getTableViews', { query: null }).then(() => {
           ToastService.open('The view has been deleted')
         })
       })

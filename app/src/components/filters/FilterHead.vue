@@ -67,10 +67,9 @@ export default {
         idTable: this.table.id,
         filter: this.filterData
       })
-      
-      if (this.filters) this.updateFilterQuery()
     }
-
+    
+    if (this.filters) this.updateFilterQuery()
   },
   methods: {
     openModalFilters() {

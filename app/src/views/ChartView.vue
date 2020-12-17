@@ -11,15 +11,26 @@
 
     <BaseCard :title="`Chart — ${chart.name}`">
       <template #actions>
-        <router-link
-          class="button is-primary"
-          :to="{
-            name: 'chart-edit',
-            params: { idChart }
-          }"
-        >
-          Edit chart
-        </router-link>
+        <div class="buttons">
+          <router-link
+            class="button is-dark"
+            :to="{
+              name: 'table-view',
+              params: { idTable: chart.config.table }
+            }"
+          >
+            View data source
+          </router-link>
+          <router-link
+            class="button is-primary"
+            :to="{
+              name: 'chart-edit',
+              params: { idChart }
+            }"
+          >
+            Edit chart
+          </router-link>
+        </div>
       </template>
 
       <template #default>

@@ -43,7 +43,11 @@ export default {
   },
   methods: {
     getFieldDef(name) {
-      return this.fields.find(e => e.name == name)
+      return (
+        this.fields.find(e => e.name == name) || {
+          display_name: 'Filter undefined'
+        }
+      )
     },
     getValues(filter, name) {
       const field_type = this.getFieldDef(name).field_type
@@ -67,7 +71,7 @@ export default {
 
           return [values[0] + ' – ' + values[1]]
         } else if (filter.type == 'relative') {
-          return [ FilterRelativeDate[filter.values[0]] ]
+          return [FilterRelativeDate[filter.values[0]]]
         } else
           return [
             (filter.type != 'exact'
