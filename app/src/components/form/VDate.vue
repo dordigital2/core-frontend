@@ -1,6 +1,5 @@
 <template>
   <b-datepicker
-    :locale="locale"
     icon="calendar-blank-outline"
     iconPrev="arrow-left"
     iconNext="arrow-right"
@@ -28,15 +27,23 @@ export default {
   },
   watch: {
     innerValue(input) {
-      // const time = input.getTime()
-      // const offset = input.getTimezoneOffset() * 60000
+      if (input) {
+        const date = new Date(input.getTime())
+        date.setHours(date.getHours() - input.getTimezoneOffset() / 60)
+        // console.log('innerValue', date)
+        // console.log(date.toISOString())
 
-      // console.log(new Date(time - offset).toISOString())
-
-      if (input) this.$emit('input', input.toISOString())
+        this.$emit('input', date.toISOString())
+      }
     },
     value(input) {
-      this.innerValue = input ? new Date(input) : null
+      const date = new Date(input)
+
+      date.setHours(date.getHours() + date.getTimezoneOffset() / 60)
+      // console.log('value', date)
+      // console.log(date.toISOString())
+
+      this.innerValue = input ? date : null
     }
   }
 }

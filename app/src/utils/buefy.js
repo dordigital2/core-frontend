@@ -54,13 +54,11 @@ ConfigProgrammatic.setOptions({
 
   // defaultDateFormatter: date => {
   //   console.log(date)
-  //   const func = e => e.toLocaleDateString('ro-RO')
+  //   const formatter = e => e.toLocaleDateString('ro-RO', {
+  //     timezone: 'UTC'
+  //   })
 
-  //   if (Array.isArray(date)) {
-  //     return date.map(e => func(e)).join('—')
-  //   }
-
-  //   return func(date)
+  //   return formatter(date)
   // },
 
   // defaultDateParser: date => {
