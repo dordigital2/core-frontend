@@ -44,19 +44,20 @@
               </div>
               <div class="column is-6">
                 <VField
-                  :label="`Column #${index + 1}`"
-                  rules=""
-                  :labelInfo="
-                    getFieldType(getTableField(field.table_field).field_type)
+                  :label="
+                    `Column #${index + 1} ${getFieldType(
+                      getTableField(field.table_field).field_type
+                    )}`
                   "
+                  rules=""
                   grouped
                 >
                   <b-select v-model="field.table_field" expanded>
                     <option
-                      v-for="(tfield, index) in table.fields"
+                      v-for="(tfield, index) in table.sorted_fields"
                       :key="`tname-${index}`"
                       :value="tfield.id"
-                      v-text="`${tfield.display_name} (${tfield.field_type})`"
+                      v-text="tfield.display_name"
                     />
                   </b-select>
 
@@ -133,7 +134,8 @@ export default {
   },
   methods: {
     getFieldType(type) {
-      return FieldService.getFieldTypes()[type]
+      const t = FieldService.getFieldTypes()[type]
+      return t ? `– ${t}` : ''
     },
     isFormatted(id) {
       if (id == null) return false

@@ -15,7 +15,15 @@ const TableService = {
   },
 
   getTable(idTable) {
-    return ApiService.get(`tables/${idTable}/`)
+    return ApiService.get(`tables/${idTable}/`).then(response => {
+      // add sorted fields
+      
+      response.sorted_fields = [...response.fields].sort((a, b) =>
+        a.display_name < b.display_name ? -1 : 1
+      )
+
+      return response
+    })
   },
 
   postTable(data) {

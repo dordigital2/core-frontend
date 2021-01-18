@@ -70,7 +70,7 @@
                 >
                   <option
                     v-for="field in table[link.table]
-                      ? table[link.table].fields
+                      ? table[link.table].sorted_fields
                       : []"
                     :value="field.id"
                     :key="link_index + '-' + field.id"
@@ -90,7 +90,7 @@
               >
                 <div class="checkbox-list is-1">
                   <b-checkbox
-                    v-for="(field, index) in table[link.table].fields"
+                    v-for="(field, index) in table[link.table].sorted_fields"
                     :key="'check' + index"
                     v-model="link.fields"
                     :native-value="field.id"

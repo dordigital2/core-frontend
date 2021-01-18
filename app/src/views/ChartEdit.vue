@@ -53,7 +53,7 @@
                 <b-select expanded v-model="chartConfig.x_axis_field">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields"
+                    v-for="(field, key) in table.sorted_fields"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"
@@ -68,7 +68,7 @@
                 <b-select expanded v-model="chartConfig.x_axis_field_2">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields"
+                    v-for="(field, key) in table.sorted_fields"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"
@@ -83,7 +83,7 @@
                 <b-select expanded v-model="chartConfig.y_axis_field">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields.filter(isNumeric)"
+                    v-for="(field, key) in table.sorted_fields.filter(isNumeric)"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"
@@ -106,7 +106,7 @@
                 <b-select expanded v-model="chartConfig.timeline_field">
                   <option></option>
                   <option
-                    v-for="(field, key) in table.fields.filter(
+                    v-for="(field, key) in table.sorted_fields.filter(
                       e => e.field_type == 'date'
                     )"
                     :value="field.id"

@@ -3,7 +3,7 @@
     <header class="modal-card-head">
       <p class="modal-card-title">
         Filter options
-        
+
         <span class="info"
           >Always click on <b>Set filters</b> after you made your
           selection.</span
@@ -12,7 +12,7 @@
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
 
-    <section class="modal-card-body" v-if="table && sortedFields">
+    <section class="modal-card-body" v-if="table">
       <div class="columns is-gapless">
         <div class="column">
           <b-tabs
@@ -22,14 +22,18 @@
             vertical
           >
             <b-tab-item
-              v-for="field in sortedFields"
+              v-for="field in table.sorted_fields"
               :key="field.id"
               :label="getFilterLabel(field)"
               :header-class="{
                 'is-highlight': filterData[field.name] != null
               }"
             >
-              <ValidationObserver v-slot="{ passes, reset }" ref="observer" slim>
+              <ValidationObserver
+                v-slot="{ passes, reset }"
+                ref="observer"
+                slim
+              >
                 <component
                   v-model="filterData[field.name]"
                   v-bind="{ field }"
@@ -106,8 +110,7 @@ export default {
   data() {
     return {
       activeTab: 0,
-      filterData: {},
-      sortedFields: null
+      filterData: {}
     }
   },
   computed: mapState({
@@ -118,10 +121,6 @@ export default {
   mounted() {
     if (this.filters != null)
       this.filterData = JSON.parse(JSON.stringify(this.filters))
-
-    this.sortedFields = [...this.table.fields].sort((a, b) =>
-      a.display_name < b.display_name ? -1 : 1
-    )
   },
   methods: {
     getComponent(type) {

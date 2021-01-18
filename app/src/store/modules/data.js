@@ -52,7 +52,8 @@ export default {
     },
     setFilters(state, { idTable, filter }) {
       // state.filters = data
-      Vue.set(state.filters, idTable, filter)
+      if (idTable) Vue.set(state.filters, idTable, filter)
+      else state.filters = {}
     },
     setImport(state, data) {
       state.import = data

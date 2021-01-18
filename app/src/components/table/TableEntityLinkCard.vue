@@ -8,13 +8,13 @@
               <b-select
                 v-if="table"
                 placeholder="Select a field"
-                v-model="source"
+                v-model="sourceField"
                 @input="field = null"
                 expanded
               >
                 <option
-                  v-for="(field, index) in table.fields"
-                  :value="index"
+                  v-for="field in table.sorted_fields"
+                  :value="field.name"
                   :key="field.id"
                 >
                   {{ field.display_name }}
@@ -50,7 +50,7 @@
                 expanded
               >
                 <option
-                  v-for="field in linkTable.fields"
+                  v-for="field in linkTable.sorted_fields"
                   :value="field.name"
                   :key="field.id"
                   :disabled="checkLinkFieldtype(field.field_type)"
@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       linkField: null,
-      source: null,
+      sourceField: null,
       idTable: null,
       loading: false,
       fields: [],
@@ -107,7 +107,7 @@ export default {
     },
     addTableView() {
       this.$emit('input', {
-        sourceField: this.table.fields[this.source].name,
+        sourceField: this.sourceField,
         table: this.linkTable,
         linkField: this.linkField
       })

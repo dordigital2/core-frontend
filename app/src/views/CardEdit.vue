@@ -53,7 +53,7 @@
               >
                 <b-select expanded v-model="cardConfig.data_column">
                   <option
-                    v-for="(field, key) in table.fields.filter(isNumeric)"
+                    v-for="(field, key) in table.sorted_fields.filter(isNumeric)"
                     :value="field.id"
                     :key="key"
                     v-text="field.display_name"

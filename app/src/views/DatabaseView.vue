@@ -100,6 +100,7 @@ export default {
   }),
   mounted() {
     this.$store.dispatch('data/getDatabase')
+    this.$store.commit('data/setFilters', {})
   }
 }
 </script>

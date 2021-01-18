@@ -27,7 +27,7 @@
 
             <div class="checkbox-list is-2">
               <b-checkbox
-                v-for="(field, index) in table.fields"
+                v-for="(field, index) in table.sorted_fields"
                 :key="'check' + index"
                 v-model="selectedColumns"
                 :native-value="field.name"
