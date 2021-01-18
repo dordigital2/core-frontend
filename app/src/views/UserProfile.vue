@@ -202,15 +202,16 @@ export default {
       } else {
         this.loading.profile = true
         const formData = new FormData()
-        formData.append('avatar', this.userModel.file)
+        if (this.userModel.file) formData.append('avatar', this.userModel.file)
         formData.append('first_name', this.userModel.first_name)
         formData.append('last_name', this.userModel.last_name)
         formData.append('email', this.userModel.email)
 
         UserService.putUser(this.userModel.id, formData)
-          .then(() => {
+          .then((r) => {
             this.loading.profile = false
             ToastService.open('User profile has been updated')
+            this.userModel.avatar = r.avatar
           })
           .catch(() => {
             this.loading.profile = false
