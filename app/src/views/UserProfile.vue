@@ -2,10 +2,7 @@
   <div>
     <BaseTitle title="User management" />
 
-    <BaseCard
-      :title="`${user.first_name} ${user.last_name}`"
-      v-if="user && activeUser"
-    >
+    <BaseCard title="Account settings" v-if="user && activeUser">
       <template #actions>
         <div class="buttons">
           <router-link
@@ -37,9 +34,16 @@
           <b-loading :is-full-page="false" v-model="loading.profile" />
 
           <div class="columns">
-            <div class="column is-narrow avatar">
-              <figure class="image">
-                <img :src="userModel.avatar" />
+            <div class="column is-narrow">
+              <figure class="avatar-image image">
+                <img
+                  v-if="userModel.avatar"
+                  :src="userModel.avatar"
+                  class="is-rounded"
+                />
+                <div v-else class="placeholder is-size-2">
+                  <b-icon icon="account"></b-icon>
+                </div>
               </figure>
             </div>
 
@@ -131,7 +135,6 @@ export default {
   data() {
     return {
       file: null,
-      idUser: this.$route.params.idUser,
       editMode: false,
       user: null,
       userModel: {
@@ -153,12 +156,17 @@ export default {
       return this.user.username != this.activeUser.username
     }
   },
+  watch: {
+    $route() {
+      this.getUser()
+    }
+  },
   mounted() {
     this.getUser()
   },
   methods: {
     getUser() {
-      UserService.getUser(this.idUser).then(response => {
+      UserService.getUser(this.$route.params.idUser).then(response => {
         this.user = response
         this.userModel = { ...this.user, file: null }
       })
@@ -208,7 +216,7 @@ export default {
         formData.append('email', this.userModel.email)
 
         UserService.putUser(this.userModel.id, formData)
-          .then((r) => {
+          .then(r => {
             this.loading.profile = false
             ToastService.open('User profile has been updated')
             this.userModel.avatar = r.avatar
@@ -223,17 +231,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.avatar {
-  .image {
-    width: 140px;
-    height: 140px;
-  }
-
-  img {
-    border-radius: 100%;
-    background-color: $grey;
-    height: 100%;
-    object-fit: cover;
-  }
+.avatar-image {
+  width: 140px;
+  height: 140px;
 }
 </style>

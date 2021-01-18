@@ -1,9 +1,9 @@
 <template>
   <div>
-    <BaseTitle title="Change password" />
+    <BaseTitle title="User management" />
 
     <ValidationObserver v-slot="{ passes }" tag="form" @submit.prevent>
-      <BaseCard :title="`${user.first_name} ${user.last_name}`" v-if="user">
+      <BaseCard title="Change password" v-if="user">
         <template #actions></template>
 
         <template #footer>

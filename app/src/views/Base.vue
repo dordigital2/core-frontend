@@ -18,8 +18,17 @@
             v-if="user"
             :to="{ name: 'user-profile', params: { idUser: user.id } }"
             class="navbar-item"
-            v-text="user.username"
-          />
+          >
+            <figure class="avatar-image image is-pulled-left">
+              <img v-if="user.avatar" :src="user.avatar" class="is-rounded" />
+              
+              <div v-else class="placeholder">
+                <b-icon icon="account" class="is-size-4"></b-icon>
+              </div>
+            </figure>
+
+            <p class="has-text-weight-semibold">{{ user.username }}</p>
+          </router-link>
 
           <a href="#" @click="logout()" class="navbar-item"
             ><b-icon icon="power" class="is-size-3" /> <span>Log out</span></a
@@ -69,7 +78,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.column-menu {
-  width: 294px;
+.navbar-item .image {
+  margin-right: 8px;
+  width: 40px;
+  height: 40px;
 }
 </style>
