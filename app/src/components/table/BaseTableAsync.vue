@@ -50,11 +50,15 @@
       <template slot="bottom-left" v-if="customPerPage"
         ><div class="pagination-per-page">
           Show
-          <b-input
-            type="number"
-            v-model.number="perPageModel"
-            @blur="onPerPageChange"
-          />
+          <div class="control">
+            <input
+              class="input"
+              type="number"
+              v-model.number="perPageModel"
+              @keyup.enter="$event.target.blur()"
+              @blur="onPerPageChange"
+            />
+          </div>
           results per page
         </div></template
       >
@@ -100,7 +104,7 @@ export default {
     ActionsTableEntity,
     ActionsTableView,
     ActionsUser,
-    
+
     FieldCronInfo,
     FieldCheckbox,
     FieldLiveTag,
@@ -165,6 +169,9 @@ export default {
   },
   mounted() {},
   methods: {
+    golly(event) {
+      console.log(event)
+    },
     getValue(row, field, type) {
       const obj = row.data ? row.data : row
       const value = getNestedObj(obj, field)
