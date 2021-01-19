@@ -47,7 +47,7 @@
               </figure>
             </div>
 
-            <div class="column is-6-widescreen is-offset-1-widescreen">
+            <div class="column is-8-widescreen">
               <fieldset>
                 <VField label="User info" grouped>
                   <b-input
@@ -197,6 +197,7 @@ export default {
     save(patch) {
       if (patch) {
         this.loading.permissions = true
+
         UserService.patchUser(this.userModel.id, {
           tables_permissions: this.userModel.tables_permissions
         })
@@ -209,17 +210,20 @@ export default {
           })
       } else {
         this.loading.profile = true
+
         const formData = new FormData()
-        if (this.userModel.file) formData.append('avatar', this.userModel.file)
+
+        this.userModel.file && formData.append('avatar', this.userModel.file)
         formData.append('first_name', this.userModel.first_name)
         formData.append('last_name', this.userModel.last_name)
         formData.append('email', this.userModel.email)
 
         UserService.putUser(this.userModel.id, formData)
-          .then(r => {
+          .then(response => {
             this.loading.profile = false
             ToastService.open('User profile has been updated')
-            this.userModel.avatar = r.avatar
+            this.userModel.avatar = response.avatar
+            this.$store.dispatch('getActiveUser')
           })
           .catch(() => {
             this.loading.profile = false

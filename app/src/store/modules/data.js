@@ -106,6 +106,8 @@ export default {
       return TableService.getEntries(idTable, query).then(response => {
         commit('setTableEntries', response)
         commit('setLoading', { idTable, status: false })
+      }).catch(() => {
+        commit('setLoading', { idTable, status: false })
       })
     },
 

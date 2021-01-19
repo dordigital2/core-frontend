@@ -84,8 +84,25 @@
     }
   }
 
+  .table-wrapper + .level {
+    margin-top: -1.5rem;
+  }
+
   .level {
     padding: 20px 24px;
+
+    .input, .pagination-link {
+      border-color: $grey;
+
+      &:hover, &:focus {
+        border-color: $grey-dark;
+      }
+    }
+
+    .level-left {
+      flex: 1;
+      justify-content: space-between;
+    }
 
     .pagination-per-page {
       display: flex;
@@ -99,6 +116,18 @@
           width: 60px;
           text-align: center;
         }
+      }
+
+      span {
+        padding-left: 12px;
+      }
+    }
+
+    .pagination-jump {
+      .input {
+        width: 120px;
+        font-size: $size-6;
+        margin-right: 12px;
       }
     }
   }
@@ -176,7 +205,7 @@
 
   &:hover {
     background-color: transparent;
-    
+
     &:before,
     &:after {
       background-color: $primary;

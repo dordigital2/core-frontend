@@ -22,7 +22,7 @@ const ApiService = {
           switch (err.response.status) {
             case 500:
             case 404:
-              msg = 'Something went wrong'
+              msg = err.response.data.detail || 'Something went wrong'
               break
             case null:
               msg = 'Please check your internet connection'

@@ -4,11 +4,11 @@
       v-if="tableEntries && columns"
       :data="tableEntries.results"
       :loading="loading"
-      :per-page="perPage"
-      :current-page="page"
+      :per-page.sync="perPage"
+      :current-page.sync="page"
       :total="tableEntries.count"
       @page-change="onPageChange"
-      :paginated="tableEntries.count > perPage"
+      paginated
       backend-pagination
       backend-sorting
       scrollable
@@ -47,21 +47,38 @@
         </template>
       </b-table-column>
 
-      <template slot="bottom-left" v-if="customPerPage"
-        ><div class="pagination-per-page">
+      <template slot="bottom-left" v-if="customPerPage">
+        <div class="pagination-per-page">
           Show
           <div class="control">
             <input
               class="input"
               type="number"
-              v-model.number="perPageModel"
+              :value="perPage"
               @keyup.enter="$event.target.blur()"
               @blur="onPerPageChange"
             />
           </div>
-          results per page
-        </div></template
-      >
+          entries per page.
+
+          <span>
+            Showing {{ (page - 1) * perPage + 1 }} to
+            {{ Math.min(page * perPage, tableEntries.count) }}
+          </span>
+        </div>
+
+        <div class="pagination-jump" v-if="tableEntries.count / perPage > 4 ">
+          <div class="control">
+            <input
+              placeholder="Jump to page"
+              class="input"
+              type="number"
+              @keyup.enter="$event.target.blur()"
+              @blur="onPageJump"
+            />
+          </div>
+        </div>
+      </template>
 
       <template slot="empty">
         <p>
@@ -95,6 +112,8 @@ import getNestedObj from 'lodash.get'
 
 import { mapState } from 'vuex'
 
+const maximumPerPage = 100
+
 export default {
   components: {
     ActionsCards,
@@ -118,7 +137,6 @@ export default {
     return {
       idTable: this.table.id,
       perPage: this.$route.query.perPage || 10,
-      perPageModel: this.$route.query.perPage || 10,
       page: this.$route.query.page ? Number(this.$route.query.page) : 1,
       orderBy: this.$route.query.orderBy || null
     }
@@ -169,9 +187,6 @@ export default {
   },
   mounted() {},
   methods: {
-    golly(event) {
-      console.log(event)
-    },
     getValue(row, field, type) {
       const obj = row.data ? row.data : row
       const value = getNestedObj(obj, field)
@@ -191,18 +206,36 @@ export default {
 
       this.$emit('update', newQuery)
     },
+    onPageJump(event) {
+      let page = parseInt(event.target.value)
+      const total = Math.ceil(this.tableEntries.count / this.perPage)
+
+      if (page == this.page) return
+
+      if (page) {
+        if (page < 0) page = 1
+        if (page > total) page = total
+
+        this.page = page
+        this.onPageChange(this.page)
+        event.target.value = null
+      }
+    },
     onPageChange(page) {
       // console.log('onPageChange', page)
       this.updateQueryRequest({ page })
     },
-    onPerPageChange() {
-      this.perPage = Math.min(this.perPageModel, 100)
-      this.perPageModel = this.perPage
-      // this.page = 1
+    onPerPageChange(event) {
+      let perPage = Math.abs(parseInt(event.target.value))
+
+      if (perPage == this.perPage) return
+
+      this.perPage = Math.min(perPage, maximumPerPage)
+      if (perPage > this.tableEntries.count)
+        this.perPage = this.tableEntries.count
       this.updateQueryRequest({ perPage: this.perPage })
     },
     onSort(field, order) {
-      // console.log(field, order)
       this.updateQueryRequest({ __order: (order == 'desc' ? '-' : '') + field })
     }
   }
