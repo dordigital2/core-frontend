@@ -33,7 +33,7 @@ export default {
         // console.log('innerValue', date)
         // console.log(date.toISOString())
 
-        this.$emit('input', date.toISOString())
+        this.$emit('input', date.toISOString().substr(0, 10))
       }
     },
     value(input) {
