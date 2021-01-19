@@ -9,20 +9,24 @@
       />
 
       <b-menu-item
+        tag="router-link"
         icon="monitor-screenshot"
         label="Dashboard"
-        @click="goto('dashboard')"
+        :to="{ name: 'dashboard' }"
       />
 
       <b-menu-item
+        tag="router-link"
         icon="dns-outline"
         label="Manage database"
-        @click="goto('database-view')"
-      ></b-menu-item
-      ><b-menu-item
+        :to="{ name: 'database-view' }"
+      />
+
+      <b-menu-item
+        tag="router-link"
         icon="tune"
         label="Filtered views"
-        @click="goto('filter-view')"
+        :to="{ name: 'filter-view' }"
       />
 
       <b-menu-item
@@ -37,21 +41,31 @@
             :icon="props.expanded ? 'menu-up' : 'menu-down'"
           ></b-icon>
         </template>
-        <b-menu-item label="Charts" @click="goto('charts-view')" />
-        <b-menu-item label="Cards" @click="goto('cards-view')" />
+        <b-menu-item
+          tag="router-link"
+          label="Charts"
+          :to="{ name: 'charts-view' }"
+        />
+        <b-menu-item
+          tag="router-link"
+          label="Cards"
+          :to="{ name: 'cards-view' }"
+        />
       </b-menu-item>
 
       <b-menu-item
+        tag="router-link"
         icon="account-details-outline"
         label="User management"
         v-if="isAdmin"
-        @click="goto('users-view')"
+        :to="{ name: 'users-view' }"
       />
 
       <b-menu-item
+        tag="router-link"
         icon="application-import"
         label="Import data"
-        @click="goto('table-import', { query: { manual: true } })"
+        :to="{ name: 'table-import', query: { manual: true } }"
       />
 
       <b-menu-item
@@ -67,13 +81,15 @@
           ></b-icon>
         </template>
         <b-menu-item
+          tag="router-link"
           label="Mailchimp"
-          @click="goto('plugin-view', { params: { plugin: 'mailchimp' } })"
+          :to="{ name: 'plugin-view', params: { plugin: 'mailchimp' } }"
         />
 
         <b-menu-item
+          tag="router-link"
           label="Woocommerce"
-          @click="goto('plugin-view', { params: { plugin: 'woocommerce' } })"
+          :to="{ name: 'plugin-view', params: { plugin: 'woocommerce' } }"
         />
       </b-menu-item>
     </b-menu-list>
@@ -96,9 +112,6 @@ export default {
     }
   },
   methods: {
-    goto(name, opts) {
-      this.$router.push({ name, ...opts }).catch(() => {})
-    },
     toggleMenu() {
       this.$emit('toggleMenu')
     }

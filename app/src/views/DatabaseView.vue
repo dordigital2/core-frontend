@@ -47,7 +47,8 @@ export default {
           },
           {
             name: 'entries',
-            display_name: 'Entries'
+            display_name: 'Entries',
+            field_type: 'int'
           },
           {
             name: 'last_edit_user.username',
