@@ -11,7 +11,6 @@
 <script>
 export default {
   props: {
-    choices: Array,
     customClass: String,
     disabled: String,
     placeholder: String,

@@ -20,7 +20,7 @@
                 <component
                   :is="getComponent(field.field_type)"
                   v-model="entity[field.name]"
-                  :choices="field.choices"
+                  v-bind="{ field }"
                 />
               </VField>
             </div>

@@ -1,12 +1,6 @@
 <template>
-  <ValidationProvider
-    :name="name || label"
-    :rules="rules"
-    v-slot="{ errors }"
-  >
-    <b-input v-model="innerValue" />
-    {{errors}}
-  </ValidationProvider>
+  <b-input v-if="field.field_type == 'text'" v-model="innerValue" />
+  <b-input v-else type="number" v-model.number="innerValue" />
 </template>
 
 <script>
@@ -14,6 +8,7 @@
 export default {
   props: {
     value: null,
+    field: Object,
     rules: {
       type: [Object, String],
       default: ''

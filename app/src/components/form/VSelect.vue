@@ -5,7 +5,7 @@
     expanded
   >
     <option
-      v-for="(choice, index) in choices"
+      v-for="(choice, index) in field.choices"
       :key="`option-${index}`"
       :value="choice"
       >{{ choice }}</option
@@ -16,7 +16,7 @@
 <script>
 export default {
   props: {
-    choices: Array,
+    field: Object,
     customClass: String,
     disabled: String,
     placeholder: { type: String, default: 'Select' },
