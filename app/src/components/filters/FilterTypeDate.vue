@@ -1,44 +1,47 @@
 <template>
-  <div class="filter-component">
-    <div class="filter-body">
-      <VField label="Choose filter mode" rules="required">
-        <b-select v-model="innerValue.type" @input="reset">
-          <option
-            v-for="(choice, index) in choices"
-            :key="`choice-${choice}`"
-            :value="index"
-            >{{ choice }}</option
-          >
-        </b-select>
-      </VField>
-
-      <template v-if="!isRelative">
-        <VField label="Enter date" rules="required">
-          <VDate v-model="innerValue.values[0]" />
-        </VField>
-
-        <VField
-          label="Enter end date"
-          v-if="innerValue.type == 'interval'"
-          rules="required"
+  <div>
+    <VField label="Choose filter mode" v-bind="{ rules }">
+      <b-select v-model="innerValue.type" @input="reset">
+        <option
+          v-for="(choice, index) in choices"
+          :key="`choice-${choice}`"
+          :value="index"
         >
-          <VDate v-model="innerValue.values[1]" />
-        </VField>
-      </template>
+          {{ choice }}
+        </option>
+      </b-select>
+    </VField>
 
-      <VField label="Time frame" v-if="isRelative">
-        <b-select v-model="innerValue.values[0]">
-          <option
-            v-for="(type, key) in relativeDate"
-            :value="key"
-            :key="key"
-            v-text="type"
-          />
-        </b-select>
+    <template v-if="!isRelative">
+      <VField
+        :disabled="innerValue.blank"
+        label="Enter date"
+        v-bind="{ rules }"
+      >
+        <VDate v-model="innerValue.values[0]" @input="update" />
       </VField>
-    </div>
 
-    <slot v-bind="{ update }"></slot>
+      <VField
+        :disabled="innerValue.blank"
+        label="Enter end date"
+        v-if="innerValue.type == 'interval'"
+        @input="update"
+        v-bind="{ rules }"
+      >
+        <VDate v-model="innerValue.values[1]" @input="update" />
+      </VField>
+    </template>
+
+    <VField label="Time frame" v-if="isRelative">
+      <b-select v-model="innerValue.values[0]" @input="update">
+        <option
+          v-for="(type, key) in relativeDate"
+          :value="key"
+          :key="key"
+          v-text="type"
+        />
+      </b-select>
+    </VField>
   </div>
 </template>
 
@@ -48,7 +51,8 @@ import { FilterOptions, FilterRelativeDate } from '@/services/field'
 export default {
   props: {
     field: Object,
-    value: Object
+    value: Object,
+    rules: String
   },
   data() {
     return {
@@ -64,9 +68,7 @@ export default {
   },
   methods: {
     computeValue() {
-      return this.value
-        ? JSON.parse(JSON.stringify(this.value))
-        : { type: null, values: [null, null] }
+      return JSON.parse(JSON.stringify({ ...this.value }))
     },
     update() {
       if (this.innerValue.type != 'interval') this.innerValue.values.length = 1
@@ -74,9 +76,14 @@ export default {
       this.$emit('input', this.innerValue)
     },
     reset() {
-      if (!this.isRelative && new Date(this.innerValue.values[0]) == 'Invalid Date') {
-        this.innerValue.values[0] = null
+      if (
+        !this.isRelative &&
+        new Date(this.innerValue.values[0]) == 'Invalid Date'
+      ) {
+        this.innerValue.values = []
       }
+
+      this.update()
     }
   },
   watch: {

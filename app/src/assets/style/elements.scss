@@ -93,10 +93,12 @@
   .level {
     padding: 20px 24px;
 
-    .input, .pagination-link {
+    .input,
+    .pagination-link {
       border-color: $border;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         border-color: $grey-dark;
       }
     }
@@ -187,6 +189,33 @@
 
     .checkbox-list {
       margin-top: 18px;
+    }
+
+    &[disabled] {
+      pointer-events: none;
+
+      a {
+        color: $grey-dark;
+      }
+
+      .b-checkbox {
+        color: $grey;
+
+        .check {
+          border-color: $grey;
+        }
+
+        input[type='checkbox']:checked {
+          & + .check {
+            background-color: $grey;
+            border-color: $grey-dark;
+          }
+
+          & ~ .control-label {
+            color: $grey-dark;
+          }
+        }
+      }
     }
   }
 

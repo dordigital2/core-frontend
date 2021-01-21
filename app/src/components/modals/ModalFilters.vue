@@ -29,33 +29,11 @@
                 'is-highlight': filterData[field.name] != null
               }"
             >
-              <ValidationObserver
-                v-slot="{ passes, reset }"
-                ref="observer"
-                slim
-              >
-                <component
-                  v-model="filterData[field.name]"
-                  v-bind="{ field }"
-                  :is="getComponent(field.field_type)"
-                >
-                  <template #default="props">
-                    <div class="filter-buttons">
-                      <div class="buttons">
-                        <b-button
-                          type="is-dark is-outlined"
-                          :disabled="checkDisabled(field)"
-                          @click="removeFilter(field.name, null, reset)"
-                          >Clear filter</b-button
-                        >
-                        <b-button type="is-dark" @click="passes(props.update)"
-                          >Set filter</b-button
-                        >
-                      </div>
-                    </div>
-                  </template>
-                </component>
-              </ValidationObserver>
+              <FilterTypeBase
+                v-model="filterData[field.name]"
+                v-bind="{ field, filterData }"
+                @remove='removeFilter'
+              />
             </b-tab-item>
           </b-tabs>
         </div>
@@ -85,13 +63,8 @@
 </template>
 
 <script>
-import FieldService from '@/services/field'
-
 import FilterDisplay from '@/components/filters/FilterDisplay'
-import FilterTypeText from '@/components/filters/FilterTypeText'
-import FilterTypeEnum from '@/components/filters/FilterTypeEnum'
-import FilterTypeNumeric from '@/components/filters/FilterTypeNumeric'
-import FilterTypeDate from '@/components/filters/FilterTypeDate'
+import FilterTypeBase from '@/components/filters/FilterTypeBase'
 
 import { mapState } from 'vuex'
 
@@ -99,10 +72,7 @@ export default {
   name: 'ModalFilters',
   components: {
     FilterDisplay,
-    FilterTypeText,
-    FilterTypeEnum,
-    FilterTypeNumeric,
-    FilterTypeDate
+    FilterTypeBase,
   },
   props: {
     table: Object
@@ -123,9 +93,6 @@ export default {
       this.filterData = JSON.parse(JSON.stringify(this.filters))
   },
   methods: {
-    getComponent(type) {
-      return FieldService.getFilterComponent(type)
-    },
     getFilterLabel(field) {
       let label = field.display_name
       const filter = this.filterData[field.name]
@@ -137,10 +104,6 @@ export default {
       }
 
       return label
-    },
-    checkDisabled(field) {
-      if (this.filterData[field.name] != null) return false
-      return true
     },
     removeFilter(name, index, reset) {
       // console.log('removeFilter', name, index)

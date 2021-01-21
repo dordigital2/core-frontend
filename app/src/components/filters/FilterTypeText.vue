@@ -1,12 +1,11 @@
 <template>
-  <div class="filter-component">
-    <div class="filter-body">
-      <VField label="Enter value" rules="required">
-        <b-input v-model="innerValue" />
-      </VField>
-    </div>
-
-    <slot v-bind="{ update }"></slot>
+  <div>
+    <VField label="Enter value" v-bind="{ rules }">
+      <b-input
+        v-model="innerValue.values[0]"
+        @input="$emit('input', innerValue)"
+      />
+    </VField>
   </div>
 </template>
 
@@ -14,22 +13,22 @@
 export default {
   props: {
     field: Object,
-    value: String
+    value: Object,
+    rules: String
   },
   data() {
     return {
-      type: null,
-      innerValue: this.value
+      innerValue: this.computeValue()
     }
   },
   methods: {
-    update() {
-      this.$emit('input', this.innerValue)
+    computeValue() {
+      return JSON.parse(JSON.stringify({ ...this.value, type: 'icontains' }))
     }
   },
   watch: {
-    value(input) {
-      this.innerValue = input
+    value() {
+      this.innerValue = this.computeValue()
     }
   }
 }

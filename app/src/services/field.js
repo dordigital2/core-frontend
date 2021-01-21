@@ -24,23 +24,19 @@ const FieldTypes = {
   text: 'Text'
 }
 
+const FilterOptionsNumeric = {
+  // blank: 'Empty or "blank" fields',
+  gt: 'Greater than',
+  gte: 'Greater than or equal',
+  lt: 'Lower than',
+  lte: 'Lower than or equal',
+  exact: 'Equal to',
+  interval: 'Interval'
+}
+
 const FilterOptions = {
-  int: {
-    gt: 'Greater than',
-    gte: 'Greater than or equal',
-    lt: 'Lower than',
-    lte: 'Lower than or equal',
-    exact: 'Equal to',
-    interval: 'Interval'
-  },
-  float: {
-    gt: 'Greater than',
-    gte: 'Greater than or equal',
-    lt: 'Lower than',
-    lte: 'Lower than or equal',
-    exact: 'Equal to',
-    interval: 'Interval'
-  },
+  int: FilterOptionsNumeric,
+  float: FilterOptionsNumeric,
   date: {
     gt: 'After date',
     gte: 'After date, including',
@@ -49,6 +45,9 @@ const FilterOptions = {
     exact: 'Exact date',
     interval: 'Date interval',
     relative: 'Relative time'
+  },
+  text: {
+    icontains: ''
   }
 }
 
@@ -76,7 +75,7 @@ const FieldService = {
     return FieldTypes
   },
   getComponent(type) {
-    return FieldComponentMap[type] ? FieldComponentMap[type] : 'b-input'
+    return FieldComponentMap[type] ? FieldComponentMap[type] : 'VInput'
   },
 
   getFilterComponent(type) {

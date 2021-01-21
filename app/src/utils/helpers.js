@@ -27,19 +27,18 @@ const FilterQuery = function(filterData) {
   Object.keys(filterData).forEach(key => {
     let e = filterData[key]
 
+    console.log('filterData', key, e)
     if (e != null) {
-      if (Array.isArray(e) && e.length) {
-        query[key] = e.join(',')
-      } else if (typeof e == 'object') {
-        if (e.type == 'interval') {
-          query[`${key}__gte`] = e.values[0]
-          query[`${key}__lte`] = e.values[1]
-        } else {
-          query[`${key}__${e.type}`] = e.values[0]
-        }
-      } else if (typeof e == 'boolean') {
-        query[`${key}`] = e
-      } else query[`${key}__icontains`] = e.toString()
+      if (e.blank) {
+        query[key] = '__BLANK'
+      } else if (e.type == 'enum' && e.values.length) {
+        query[key] = e.values.join(',')
+      } else if (e.type == 'interval') {
+        query[`${key}__gte`] = e.values[0]
+        query[`${key}__lte`] = e.values[1]
+      } else {
+        query[`${key}__${e.type}`] = e.values[0]
+      }
     }
   })
 

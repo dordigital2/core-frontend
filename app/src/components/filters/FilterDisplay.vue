@@ -52,15 +52,9 @@ export default {
     getValues(filter, name) {
       const field_type = this.getFieldDef(name).field_type
 
-      if (Array.isArray(filter)) {
-        let filterLtd = filter.slice(0, this.maxtags)
-        if (filter.length > this.maxtags)
-          filterLtd.push(`+ ${filter.length - this.maxtags} more`)
-
-        return filterLtd
-      }
-
       if (typeof filter == 'object') {
+        if (filter.blank) return ['Empty values']
+
         if (filter.values[0] == null) return null
 
         if (filter.type == 'interval') {
@@ -72,6 +66,12 @@ export default {
           return [values[0] + ' – ' + values[1]]
         } else if (filter.type == 'relative') {
           return [FilterRelativeDate[filter.values[0]]]
+        } else if (filter.type == 'enum') {
+          let filterLtd = filter.values.slice(0, this.maxtags)
+          if (filter.values.length > this.maxtags)
+            filterLtd.push(`+ ${filter.values.length - this.maxtags} more`)
+
+          return filterLtd
         } else
           return [
             (filter.type != 'exact'

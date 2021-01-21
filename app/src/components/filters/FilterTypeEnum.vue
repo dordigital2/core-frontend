@@ -1,33 +1,30 @@
 <template>
-  <div class="filter-component">
-    <div class="filter-body">
-      <div class="is-size-6">
-        <b-input
-          v-model="search"
-          placeholder="Search"
-          icon-right="close"
-          icon-right-clickable
-          @icon-right-click="search = null"
-        />
-        <a @click.prevent="selectAll">Select all</a> |
-        <a @click.prevent="selectNone">Select none</a>
-      </div>
-
-      <div class="checkbox-list is-4">
-        <VField rules="required">
-          <b-checkbox
-            v-for="(choice, index) in filterChoices"
-            :key="index"
-            :native-value="choice"
-            v-model="innerValue"
-          >
-            {{ choice }}
-          </b-checkbox>
-        </VField>
-      </div>
+  <div>
+    <div class="is-size-6">
+      <b-input
+        v-model="search"
+        placeholder="Search"
+        icon-right="close"
+        icon-right-clickable
+        @icon-right-click="search = null"
+      />
+      <a @click.prevent="selectAll">Select all</a> |
+      <a @click.prevent="selectNone">Select none</a>
     </div>
 
-    <slot v-bind="{ update }"></slot>
+    <div class="checkbox-list is-4">
+      <VField v-bind="{ rules }">
+        <b-checkbox
+          v-for="(choice, index) in filterChoices"
+          :key="index"
+          :native-value="choice"
+          v-model="innerValue.values"
+          @input="update"
+        >
+          {{ choice }}
+        </b-checkbox>
+      </VField>
+    </div>
   </div>
 </template>
 
@@ -35,8 +32,8 @@
 export default {
   props: {
     field: Object,
-    value: Array,
-    autoupdate: Boolean
+    value: Object,
+    rules: String
   },
   data() {
     return {
@@ -48,22 +45,28 @@ export default {
   mounted() {},
   methods: {
     computeValue() {
-      return this.value != null ? [...this.value] : []
-    },
-    update() {
-      this.$emit('input', this.innerValue.length ? this.innerValue : undefined)
+      return JSON.parse(JSON.stringify({ ...this.value, type: 'enum' }))
     },
     selectAll() {
-      const f = this.filterChoices.filter(e => this.innerValue.indexOf(e) == -1)
-      this.innerValue = this.innerValue.concat(f)
+      const f = this.filterChoices.filter(
+        e => this.innerValue.values.indexOf(e) == -1
+      )
+      this.innerValue.values = this.innerValue.values.concat(f)
+
+      this.update()
     },
     selectNone() {
-      if (this.search == null) this.innerValue = []
+      if (this.search == null) this.innerValue.values = []
       else {
-        this.innerValue = this.innerValue.filter(
+        this.innerValue.values = this.innerValue.values.filter(
           e => this.filterChoices.indexOf(e) == -1
         )
       }
+
+      this.update()
+    },
+    update() {
+      this.$emit('input', this.innerValue)
     }
   },
   watch: {
@@ -83,11 +86,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  /deep/ .b-checkbox.checkbox {
-    align-items: flex-start;
+/deep/ .b-checkbox.checkbox {
+  align-items: flex-start;
 
-    .check {
-      margin-top: 3px;
-    }
+  .check {
+    margin-top: 3px;
   }
+}
 </style>
