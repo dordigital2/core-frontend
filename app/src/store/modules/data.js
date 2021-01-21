@@ -151,9 +151,9 @@ export default {
       })
     },
 
-    deleteEntity({ dispatch }, { idTable, idEntity }) {
+    deleteEntity({ dispatch }, { idTable, idEntity, query }) {
       return TableService.deleteEntity(idTable, idEntity).then(() => {
-        dispatch('getTableEntries', { idTable }).then(() => {
+        dispatch('getTableEntries', { idTable, query }).then(() => {
           ToastService.open('The entity has been deleted')
         })
       })

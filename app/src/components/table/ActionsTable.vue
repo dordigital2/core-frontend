@@ -16,7 +16,8 @@
       @on-confirm="
         $store.dispatch('data/deleteEntity', {
           idTable,
-          idEntity: props.id
+          idEntity: props.id,
+          query: $route.query
         })
       "
     />

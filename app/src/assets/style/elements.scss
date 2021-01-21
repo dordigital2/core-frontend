@@ -27,6 +27,8 @@
 
   .table {
     border: 0;
+    border-radius: 0;
+    border-bottom: 1px solid $border;
     margin-top: -1px;
     // overflow: hidden;
 
@@ -92,11 +94,16 @@
     padding: 20px 24px;
 
     .input, .pagination-link {
-      border-color: $grey;
+      border-color: $border;
 
       &:hover, &:focus {
         border-color: $grey-dark;
       }
+    }
+
+    .input {
+      height: 35px;
+      font-size: $size-6;
     }
 
     .level-left {
