@@ -35,9 +35,10 @@ nav.navbar {
 
     .main-header {
       display: flex;
-      align-items: center;
-      margin-top: -64px;
-      margin-bottom: 24px;
+      align-items: flex-start;
+      margin-top: -68px;
+      margin-bottom: 28px;
+      padding-right: 220px;
 
       .title {
         line-height: 40px;

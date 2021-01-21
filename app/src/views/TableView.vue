@@ -111,13 +111,11 @@ export default {
     },
     exportPath() {
       return ApiService.getPath(
-        this.filterMode
-          ? 'filters'
-          : 'tables' +
-              '/' +
-              this.idTable +
-              '/csv-export/?' +
-              QueryString(this.$route.query),
+        (this.filterMode ? 'filters' : 'tables') +
+          '/' +
+          this.idTable +
+          '/csv-export/?' +
+          QueryString(this.$route.query),
         true
       )
     }
