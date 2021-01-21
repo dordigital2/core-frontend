@@ -76,6 +76,7 @@ import ModalColumns from '@/components/modals/ModalColumns'
 import FilterHead from '@/components/filters/FilterHead'
 
 import ApiService from '@/services/api'
+import { QueryString } from '@/utils/helpers'
 import { mapState } from 'vuex'
 
 export default {
@@ -110,9 +111,14 @@ export default {
     },
     exportPath() {
       return ApiService.getPath(
-        `${this.filterMode ? 'filters' : 'tables'}/${this.idTable}/csv-export/`,
-        true,
-        this.$route.query
+        this.filterMode
+          ? 'filters'
+          : 'tables' +
+              '/' +
+              this.idTable +
+              '/csv-export/?' +
+              QueryString(this.$route.query),
+        true
       )
     }
   },
@@ -126,7 +132,8 @@ export default {
       )
       .then(() => {
         // if we have filters from the store/api then FilterHead handles entries update
-        if (!this.table.filters || (!this.filterMode && !this.filters)) this.getTableEntries()
+        if (!this.table.filters || (!this.filterMode && !this.filters))
+          this.getTableEntries()
       })
   },
   methods: {

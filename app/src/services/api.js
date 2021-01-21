@@ -57,7 +57,7 @@ const ApiService = {
     return (
       axios.defaults.baseURL +
       newPath +
-      (appendToken && `?token=${TokenService.getToken()}`)
+      (appendToken && `&token=${TokenService.getToken()}`)
     )
   },
 
