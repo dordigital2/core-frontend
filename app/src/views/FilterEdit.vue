@@ -38,8 +38,9 @@
             <div class="column is-6">
               <VField
                 label="Select a table"
-                rules=""
+                rules="required"
                 :name="`Table #${link_index + 1} name`"
+                :key="`tb-${link_index}`"
               >
                 <b-select
                   v-model="link.table"
@@ -59,7 +60,8 @@
             <div class="column is-4" v-if="type">
               <VField
                 label="Link field"
-                rules=""
+                rules="required"
+                :key="`l-${link_index}`"
                 :name="`Table #${link_index + 1} link `"
                 labelInfo="Please select the column that links the two tables. In order to join information about the same entries in both tables you need to set an identifier present in both. Ex. E-mail. The two link fields must match."
               >
@@ -159,7 +161,10 @@ export default {
         this.$store
           .dispatch('data/getTable', this.tableView.config.primary_table.table)
           .then(() => {
-            // console.log(this.tableView.config)
+            this.$set(this.links, 0, {
+              ...this.tableView.config.primary_table
+            })
+
             if (this.tableView.config.join_tables.length)
               this.$store
                 .dispatch(
@@ -167,10 +172,6 @@ export default {
                   this.tableView.config.join_tables[0].table
                 )
                 .then(() => {
-                  this.$set(this.links, 0, {
-                    ...this.tableView.config.primary_table
-                  })
-
                   this.$set(this.links, 1, {
                     ...this.tableView.config.join_tables[0]
                   })
