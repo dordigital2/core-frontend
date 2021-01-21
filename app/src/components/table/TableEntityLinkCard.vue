@@ -9,7 +9,7 @@
                 v-if="table"
                 placeholder="Select a field"
                 v-model="sourceField"
-                @input="field = null"
+                @input="linkField = null"
                 expanded
               >
                 <option
@@ -42,7 +42,11 @@
           </div>
 
           <div class="column">
-            <VField label="Linked field" labelInfo="Field types must match" rules="required">
+            <VField
+              label="Linked field"
+              labelInfo="Field types must match"
+              rules="required"
+            >
               <b-select
                 placeholder="Select a field"
                 v-model="linkField"
@@ -86,7 +90,7 @@ export default {
       idTable: null,
       loading: false,
       fields: [],
-      linkTable: { fields: [] }
+      linkTable: { sorted_fields: [] }
     }
   },
   props: {
@@ -113,9 +117,12 @@ export default {
       })
     },
     checkLinkFieldtype(type) {
-      if (this.source == null) return false
+      if (this.sourceField == null) return false
 
-      return this.table.fields[this.source].field_type != type
+      return (
+        this.table.fields.find(e => e.name == this.sourceField).field_type !=
+        type
+      )
     }
   },
   mounted() {
