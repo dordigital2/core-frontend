@@ -17,7 +17,7 @@
               <component
                 :is="getComponent(field.type)"
                 v-model="model[key]"
-                :choices="field.choices"
+                v-bind="{ field }"
               />
             </VField>
           </div>
