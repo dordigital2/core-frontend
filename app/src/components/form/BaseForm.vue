@@ -17,7 +17,7 @@
               <component
                 :is="getComponent(field.type)"
                 v-model="model[key]"
-                v-bind="{ field }"
+                v-bind="{ field: { ...field, field_type: 'text' } }"
               />
             </VField>
           </div>
