@@ -8,11 +8,7 @@
     <ActionButtonDelete
       dialogTitle="Do you wish to delete this profile?"
       dialogMessage="This operation permanently removes this profile. Please check the data before proceeding."
-      @on-confirm="
-        $store.dispatch('data/deleteUser', {
-          idUser: props.id
-        })
-      "
+      @on-confirm="$store.dispatch('data/deleteUser', props.id)"
     />
   </div>
 </template>

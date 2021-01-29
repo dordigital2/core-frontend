@@ -16,13 +16,12 @@
 </template>
 
 <script>
-import UserService from '@/services/user'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Users',
   data() {
     return {
-      users: null,
       userTable: {
         id: 'users',
         default_fields: ['username', 'first_name', 'last_name', 'email'],
@@ -49,14 +48,15 @@ export default {
       }
     }
   },
+  computed: mapState({
+    users: state => state.data.users
+  }),
   mounted() {
     this.getUsers()
   },
   methods: {
     getUsers(query) {
-      UserService.getUsers(query).then(response => {
-        this.users = response
-      })
+      this.$store.dispatch('data/getUsers', query)
     }
   }
 }

@@ -40,7 +40,7 @@
                 label="Select a table"
                 rules="required"
                 :name="`Table #${link_index + 1} name`"
-                :key="`tb-${link_index}`"
+                :key="`field-table-${link_index}`"
               >
                 <b-select
                   v-model="link.table"
@@ -61,7 +61,7 @@
               <VField
                 label="Link field"
                 rules="required"
-                :key="`l-${link_index}`"
+                :key="`field-link-${link_index}`"
                 :name="`Table #${link_index + 1} link `"
                 labelInfo="Please select the column that links the two tables. In order to join information about the same entries in both tables you need to set an identifier present in both. Ex. E-mail. The two link fields must match."
               >

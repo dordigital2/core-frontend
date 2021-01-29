@@ -27,6 +27,7 @@ export default {
     charts: null,
     card: null,
     cards: null,
+    users: null,
     loading: {}
   },
   mutations: {
@@ -79,6 +80,9 @@ export default {
     setCard(state, data) {
       state.card = data
     },
+    setUsers(state, data) {
+      state.users = data
+    },
     setLoading(state, { idTable, status }) {
       Vue.set(state.loading, idTable, status)
     }
@@ -103,12 +107,14 @@ export default {
     getTableEntries({ commit }, { idTable, query }) {
       commit('setLoading', { idTable, status: true })
 
-      return TableService.getEntries(idTable, query).then(response => {
-        commit('setTableEntries', response)
-        commit('setLoading', { idTable, status: false })
-      }).catch(() => {
-        commit('setLoading', { idTable, status: false })
-      })
+      return TableService.getEntries(idTable, query)
+        .then(response => {
+          commit('setTableEntries', response)
+          commit('setLoading', { idTable, status: false })
+        })
+        .catch(() => {
+          commit('setLoading', { idTable, status: false })
+        })
     },
 
     getEntity({ commit }, { idTable, idEntity }) {
@@ -319,6 +325,22 @@ export default {
         dispatch('getCards').then(
           ToastService.open('The chart has been deleted')
         )
+      })
+    },
+
+    // USERS
+    // 
+    
+    getUsers({ commit }, query) {
+      return DataService.get('users', query).then(response => {
+        commit('setUsers', response)
+      })
+    },
+    deleteUser({ dispatch }, id) {
+      return DataService.delete('users', id).then(() => {
+        dispatch('getUsers').then(() => {
+          ToastService.open('The user has been deleted')
+        })
       })
     }
   }
