@@ -90,6 +90,10 @@
     margin-top: -1.5rem;
   }
 
+  .table-wrapper.has-sticky-header tr:first-child th {
+    background: $table-head-background-color;
+  }
+
   .level {
     padding: 20px 24px;
 

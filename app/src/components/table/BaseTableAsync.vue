@@ -12,6 +12,7 @@
       backend-pagination
       backend-sorting
       scrollable
+      :sticky-header="fixedHeader"
       @sort="onSort"
     >
       <b-table-column
@@ -147,7 +148,8 @@ export default {
     filterMode: Boolean,
     customPerPage: Boolean,
     updateQueryNav: { type: Boolean, default: false },
-    tableActionsComponent: { type: String, default: 'ActionsTable' }
+    tableActionsComponent: { type: String, default: 'ActionsTable' },
+    fixedHeader: { type: Boolean, default: false }
   },
   computed: {
     ...mapState('data', {

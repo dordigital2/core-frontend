@@ -18,6 +18,8 @@ $datepicker-item-disabled-color: $grey-dark;
 $datepicker-header-color: $grey-darker;
 $datepicker-shadow: 0px 4px 10px rgba(48, 60, 108, 0.25);
 
+$table-sticky-header-height: 400px;
+
 @import 'buefy/src/scss/components/_checkbox.scss';
 // @import 'buefy/src/scss/components/_dropdown.scss';
 @import 'buefy/src/scss/components/_datepicker.scss';
