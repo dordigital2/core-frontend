@@ -7,7 +7,7 @@
     <nav class="navbar">
       <div class="navbar-brand">
         <router-link :to="{ name: 'dashboard' }" class="navbar-item">
-          <h2 v-if="menuActive">PAŪL</h2>
+          <h2 v-if="menuActive">CORE</h2>
           <h2 v-else>P</h2>
         </router-link>
       </div>
