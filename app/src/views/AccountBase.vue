@@ -3,7 +3,7 @@
     <nav class="navbar">
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item">
-          <h2>PAUL</h2>
+          <h2>CORE</h2>
         </router-link>
       </div>
 
