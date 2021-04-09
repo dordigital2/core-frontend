@@ -14,9 +14,8 @@
             close-icon="close"
             :closable="
               isEditable &&
-                (!filter.length ||
-                  (filter.length > maxtags && index < maxtags) ||
-                  filter.length <= maxtags)
+                ((filter.values.length > maxtags && index < maxtags) ||
+                  filter.values.length <= maxtags)
             "
             >{{ tag }}</b-tag
           >

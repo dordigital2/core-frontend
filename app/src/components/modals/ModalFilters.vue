@@ -4,10 +4,9 @@
       <p class="modal-card-title">
         Filter options
 
-        <span class="info"
-          >Always click on <b>Set filters</b> after you made your
-          selection.</span
-        >
+        <span class="info">
+          Always click on <b>Set filters</b> after you made your selection.
+        </span>
       </p>
       <button type="button" class="delete" @click="$emit('close')" />
     </header>
@@ -32,7 +31,7 @@
               <FilterTypeBase
                 v-model="filterData[field.name]"
                 v-bind="{ field, filterData }"
-                @remove='removeFilter'
+                @remove="removeFilter"
               />
             </b-tab-item>
           </b-tabs>
@@ -53,6 +52,7 @@
         </div>
       </div>
     </section>
+    
     <footer class="modal-card-foot">
       <b-button class="is-dark is-outlined" @click="$emit('close')">
         Cancel
@@ -72,7 +72,7 @@ export default {
   name: 'ModalFilters',
   components: {
     FilterDisplay,
-    FilterTypeBase,
+    FilterTypeBase
   },
   props: {
     table: Object
@@ -98,20 +98,24 @@ export default {
       const filter = this.filterData[field.name]
 
       if (filter != null) {
-        if (Array.isArray(filter)) {
-          if (filter.length) label += ` (${this.filterData[field.name].length})`
-        } else label += ' (1)'
+        if (filter.values.length)
+          label += ` (${this.filterData[field.name].values.length})`
+        else label += ' (1)'
       }
 
       return label
     },
     removeFilter(name, index, reset) {
-      // console.log('removeFilter', name, index)
+      console.log('removeFilter', name, index, this.filterData[name])
 
-      if (Array.isArray(this.filterData[name]) && index != null) {
-        this.filterData[name].splice(index, 1)
+      if (index != null) {
+        if (this.filterData[name].values.length > 1) {
+          this.$delete(this.filterData[name].values, index)
 
-        if (!this.filterData[name].length) this.$delete(this.filterData, name)
+          this.filterData[name] = {
+            ...this.filterData[name]
+          }
+        } else this.$delete(this.filterData, name)
       } else {
         this.$delete(this.filterData, name)
       }

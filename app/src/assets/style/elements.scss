@@ -236,6 +236,10 @@
       font-size: $size-6;
       margin-bottom: 0;
     }
+
+    .buttons {
+      flex-wrap: nowrap;
+    }
   }
 }
 
